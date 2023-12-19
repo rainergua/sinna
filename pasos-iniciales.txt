@@ -1,0 +1,17 @@
+Pasos para iniciar una aplicacion 
+Paso 1
+Crear el directorio de la aplicacion, acceder a él y ejecutar 
+$ npm init
+Paso 2
+Instalar express, y otros paquetes 
+$ npm install express --save
+$ npm install nodemon --save	//Para hacer el hotReload de la APP
+$ npm install dotenv --save	//para poder usar un archivo de entorno .env
+$ npm install pg --save		//para acceder a bases de datos postgres
+$ npm install cors --save	//Para evitar el bloqueo de cors
+$ npm install jsonwebtoken --save	//Gestion de Tokens
+
+Paso 3 crear las carpetas controllers, middlewares, routes, config, 
+
+public, uploads
+models
