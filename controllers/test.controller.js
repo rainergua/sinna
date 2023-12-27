@@ -24,7 +24,7 @@ const test = async(req, res) => {
 
 
 const testdb = async(req,res) =>{
-    const response = await con.query(`select * from codificacion.cod_matriz `);
+    const response = await con.query(`select * from com_personas`);
     res.status(200).json(response.rows)
     
 }
