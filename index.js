@@ -1,3 +1,4 @@
+// Ingreso a la aplicación 
 const app = require('./app.js');
 const dotenv = require('dotenv');
 const port = process.env.PORT || 3000;
