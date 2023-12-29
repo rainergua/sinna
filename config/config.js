@@ -17,10 +17,10 @@ const { Pool } = require('pg');
 });*/
 
 const con = new Pool({
-	user: "postgres",
-	host: "localhost",
-	password: "12345678",
-	database: "postgres",
-	port: "5433",
+	user: "sinna",
+	host: "137.184.232.160",
+	password: "sinna2023",
+	database: "sinna",
+	port: "5444",
 });
 module.exports = con;
