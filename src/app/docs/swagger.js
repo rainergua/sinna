@@ -1,7 +1,10 @@
+const dotenv = require('dotenv');
 const swaggerJSDoc = require("swagger-jsdoc")
 const swaggerUi = require("swagger-ui-express")
 const path = require("path")
 
+dotenv.config();
+const port = process.env.PORT || 3000;
 //Metadata info about our API
 
 const options = {
@@ -13,11 +16,11 @@ const options = {
         },
         servers: [
             {
-                url:"http://localhost:3000"
+                url: `http://172.16.100.201:${port}`
             }
         ]
     },
-    apis: [`${path.join(__dirname, "./test.routes.js")}`]
+    apis: [`${path.join(__dirname, "../routes/test.routes.js")}`]
 };
 //Docs in JSON format
 const swaggerSpec = swaggerJSDoc(options);
@@ -28,7 +31,7 @@ const swaggerDocs = (app, port) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(swaggerSpec);
     });
-    console.log('Version 1 Docs are avalable at localhost:${port}/api/docs')
+    console.log(`Version 1 Docs are avalable at localhost:${port}/api/docs`)
 };
 
 module.exports = { swaggerDocs }
