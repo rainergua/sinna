@@ -5,22 +5,25 @@ const path = require("path")
 
 dotenv.config();
 const port = process.env.PORT || 3000;
+const uri = process.env.URI || 'http://localhost';
 //Metadata info about our API
 
 const options = {
     definition: {
         openapi: "3.0.0",
         info: {
-            title: "SINNA - Modulo de Informacion de Defensorias MID API", 
+            title: "SINNA BACKEND API", 
             version: "1.0.0"
         },
         servers: [
             {
-                url: `http://172.16.100.201:${port}`
+                url: `${uri}:${port}`
             }
         ]
     },
-    apis: [`${path.join(__dirname, "../routes/test.routes.js")}`]
+    apis: [`${path.join(__dirname, "../routes/test.routes.js")}`, 
+            `${path.join(__dirname, "../routes/mid_defensorias.routes.js")}`,
+        ]
 };
 //Docs in JSON format
 const swaggerSpec = swaggerJSDoc(options);
@@ -31,7 +34,7 @@ const swaggerDocs = (app, port) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(swaggerSpec);
     });
-    console.log(`Version 1 Docs are avalable at localhost:${port}/api/docs`)
+    console.log(`La documentación de la API puede ser consultada en ${uri}:${port}/api/docs`)
 };
 
 module.exports = { swaggerDocs }
