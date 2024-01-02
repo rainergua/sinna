@@ -72,7 +72,7 @@ const {
  * @swagger
  * /api/mid/gestiondef:
  *  post:
- *      summary: Envía los datos para la gestión de Defensorias (ABM)
+ *      summary: Envía los datos para la gestión de Defensorias (ABM). El obejto en el request debe llarse <v_json>
  *      tags: [Alta, Bajas, Modicificaiones]
  *      requestBody:
  *          required: true
