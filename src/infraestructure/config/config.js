@@ -18,7 +18,7 @@ const { Pool } = require('pg');
 // Server MJ
 const con = new Pool({
 	user: "sinna",
-	host: "172.16.100.201",
+	host: "137.184.232.160",
 	password: "sinna2023",
 	database: "sinna",
 	port: "5432",
