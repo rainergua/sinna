@@ -87,7 +87,7 @@ const {
  * 
  */
 
-router.post('/gestiondef', gestionDefensoria);
+router.post('/gestiondef', verificaToken,gestionDefensoria);
 
 /*router.get('/testdb', testdb);
 
