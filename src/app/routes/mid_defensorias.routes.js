@@ -3,6 +3,8 @@ const verificaToken = require('../middlewares/verificaToken')
 const router = express.Router();
 const { 
     gestionDefensoria,
+    obtieneDepto,
+    obtieneProv,
     getToken,
 } = require ('../controllers/mid_defensorias.controller')
 /**
@@ -73,7 +75,7 @@ const {
  * /api/mid/gestiondef:
  *  post:
  *      summary: Envía los datos para la gestión de Defensorias (ABM). El obejto en el request debe llarse <v_json>
- *      tags: [Alta, Bajas, Modicificaiones]
+ *      tags: [Alatas, Bajhas, Modificaciones]
  *      requestBody:
  *          required: true
  *          content:
@@ -89,11 +91,40 @@ const {
 
 router.post('/gestiondef', gestionDefensoria);
 
-/*router.get('/testdb', testdb);
+/**
+ * @swagger
+ * /api/mid/obtienedepto:
+ *  get:
+ *      summary: Obtiene los departamentos de Pais
+ *      tags: [departamentos]
+ *      responses:
+ *          200:
+ *              description: Peticion Exitosa
+ * 
+ */
+router.get('/obtienedepto', obtieneDepto);
+/**
+ * @swagger
+ * /api/mid/obtieneprov/{id}:
+ *  get:
+ *      summary: Obtiene las provincias de un departamento
+ *      tags: [departamentos]
+ *      responses:
+ *          200:
+ *              description: Peticion Exitosa
+ *      parameters:
+ *           - name: id
+ *             in: path
+ *             description: Id del Departamento
+ *             required: true
+ *             schema:
+ *                  type: integer  
+ *                  style: simple
+ * 
+ */
+router.get('/obtieneprov/:id', obtieneProv);
 
-router.get('/testdbres', verificaToken, testdbres);
-
-router.get('/gettoken', getToken);*/
+/*router.get('/gettoken', getToken);*/
 
 //router.post('/gettoken', getToken);
 

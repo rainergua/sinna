@@ -9,12 +9,12 @@ const cors = require("cors")
 
 // Create a new Express app
 const app = express();
+dotenv.config(); 
 const port = process.env.PORT || 3000;
 const uri = process.env.URI || 'http://localhost';
 // Configure middleware
 // middleware to parse request bodies as JSON
 app.use(express.json());
-dotenv.config(); 
 
 app.use(cors({
     origin: `${uri}:${port}`, // Specify the allowed origin
