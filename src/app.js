@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 
 const testRoutes = require ('./app/routes/test.routes')
 const mid_defensorias= require ("./app/routes/mid_defensorias.routes")
+const modefa_centros_acogimiento= require ("./app/routes/modefa_centros_acogimiento.routes")
 
 const cors = require("cors")
 
@@ -25,5 +26,6 @@ app.use(cors({
 // Define routes
 app.use('/api',testRoutes);
 app.use('/api/mid',mid_defensorias);
+app.use('/api/modefa',modefa_centros_acogimiento);
 
 module.exports = app;
