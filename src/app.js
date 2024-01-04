@@ -5,6 +5,9 @@ const dotenv = require('dotenv');
 const testRoutes = require ('./app/routes/test.routes')
 const mid_defensorias= require ("./app/routes/mid_defensorias.routes")
 const modefa_centros_acogimiento= require ("./app/routes/modefa_centros_acogimiento.routes")
+const mospaRoutes= require ("./app/routes/mospa.routes")
+const workflowRoutes= require ("./app/routes/workflow.routes")
+
 
 const cors = require("cors")
 
@@ -27,5 +30,7 @@ app.use(cors({
 app.use('/api',testRoutes);
 app.use('/api/mid',mid_defensorias);
 app.use('/api/modefa',modefa_centros_acogimiento);
+app.use('/api/mospa',mospaRoutes);
+app.use('/api/workflow',workflowRoutes);
 
 module.exports = app;

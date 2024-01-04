@@ -24,6 +24,7 @@ const options = {
     apis: [`${path.join(__dirname, "../routes/test.routes.js")}`, 
             `${path.join(__dirname, "../routes/mid_defensorias.routes.js")}`,
             `${path.join(__dirname, "../routes/modefa_centros_acogimiento.routes.js")}`,
+            `${path.join(__dirname, "../routes/mospa.routes.js")}`,
         ]
 };
 //Docs in JSON format
