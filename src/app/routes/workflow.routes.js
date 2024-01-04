@@ -3,6 +3,7 @@ const verificaToken = require('../middlewares/verificaToken')
 const router = express.Router();
 const {
     listarTransacciones,
+    listarMenus,
 } = require ('../controllers/workflow.controller')
 /**
  * @swagger
@@ -19,7 +20,7 @@ const {
  *                  description: numero de la tabla transaccional
  *              estado:
  *                  type:varchar
- *                  description: es el estado conusultado para obtener las transacciones
+ *                  description: es el estado consultado para obtener las transacciones
  *          required:
  *              - ci_usuario
  *              - tabla
@@ -49,6 +50,7 @@ const {
  */
 
 router.post('/listarTransacciones', verificaToken,listarTransacciones);
+router.post('/listarMenus', verificaToken,listarMenus);
 
 
 module.exports = router;

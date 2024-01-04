@@ -12,8 +12,6 @@ const listarTransacciones = async (req, res) => {
         text: `select * from workflow.f_obtener_lista_transacciones('${req.body.ci_usuario}', '${req.body.tabla}', '${req.body.estado}') `,
 
     };
-    console.log(query);
-
     await con
         .query(query)
         .then((result) =>{
@@ -29,7 +27,28 @@ const listarTransacciones = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const listarMenus = async (req, res) => {
+
+    const query = {
+        text: `select * from workflow.f_obtener_lista_menu('${req.body.ci_usuario}', '${req.body.modulo}') `,
+    };
+    console.log(query);
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows;
+            console.log(resultado)
+            res.status(200).json({
+                datoAdicional: resultado,
+                mensaje:"Menus obtenidos",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
 module.exports = {
     listarTransacciones,
-
+    listarMenus,
 }
