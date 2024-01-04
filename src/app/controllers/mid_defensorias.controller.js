@@ -31,7 +31,7 @@ const gestionDefensoria = async (req, res) => {
  */
 const obtieneDepto = async (req, res) => {
     const query = {
-        text: `select * from parametricas.f_listar_deparatmentos()`,
+        text: `select * from parametricas.f_listar_departamentos()`,
             };
     await con
         .query(query)
