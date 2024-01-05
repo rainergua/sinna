@@ -8,7 +8,6 @@ const modefa_centros_acogimiento= require ("./app/routes/modefa_centros_acogimie
 const mospaRoutes= require ("./app/routes/mospa.routes")
 const workflowRoutes= require ("./app/routes/workflow.routes")
 
-
 const cors = require("cors")
 
 // Create a new Express app

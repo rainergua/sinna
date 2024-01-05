@@ -6,6 +6,9 @@ const {
     obtieneDepto,
     obtieneProv,
     getToken,
+    obtieneMun,
+    obtieneDefensorias,
+    obtieneDef,
 } = require ('../controllers/mid_defensorias.controller')
 /**
  * @swagger
@@ -72,10 +75,10 @@ const {
  */
 /**
  * @swagger
- * /api/mid/gestiondef:
+ * /api/mid/gestiondefensoria:
  *  post:
  *      summary: Envía los datos para la gestión de Defensorias (ABM). El obejto en el request debe llarse <v_json>
- *      tags: [Alatas, Bajhas, Modificaciones]
+ *      tags: [Altas, Bajas, Modificaciones]
  *      requestBody:
  *          required: true
  *          content:
@@ -89,14 +92,14 @@ const {
  * 
  */
 
-router.post('/gestiondef', verificaToken,gestionDefensoria);
+router.post('/gestiondefensoria', gestionDefensoria);
 
 /**
  * @swagger
  * /api/mid/obtienedepto:
  *  get:
- *      summary: Obtiene los departamentos de Pais
- *      tags: [departamentos]
+ *      summary: Obtiene los departamentos del Pais
+ *      tags: [Departamentos]
  *      responses:
  *          200:
  *              description: Peticion Exitosa
@@ -105,10 +108,22 @@ router.post('/gestiondef', verificaToken,gestionDefensoria);
 router.get('/obtienedepto', obtieneDepto);
 /**
  * @swagger
- * /api/mid/obtieneprov/{id}:
+ * /api/mid/obtienedefensorias:
  *  get:
- *      summary: Obtiene las provincias de un departamento
- *      tags: [departamentos]
+ *      summary: Obtiene todas las defensorias del Pais
+ *      tags: [Defensorias]
+ *      responses:
+ *          200:
+ *              description: Peticion Exitosa
+ * 
+ */
+router.get('/obtienedefensorias', obtieneDefensorias);
+/**
+ * @swagger
+ * /api/mid/obtienedef/{id}:
+ *  get:
+ *      summary: Obtiene Una defensoria con id = ${id}
+ *      tags: [Defensorias]
  *      responses:
  *          200:
  *              description: Peticion Exitosa
@@ -122,8 +137,48 @@ router.get('/obtienedepto', obtieneDepto);
  *                  style: simple
  * 
  */
-router.get('/obtieneprov/:id', obtieneProv);
+router.get('/obtienedef/:id', obtieneDef);
+/**
+ * @swagger
+ * /api/mid/obtieneprov/{id}:
+ *  get:
+ *      summary: Obtiene las provincias de un departamento
+ *      tags: [Provincias]
+ *      responses:
+ *          200:
+ *              description: Peticion Exitosa
+ *      parameters:
+ *           - name: id
+ *             in: path
+ *             description: Id del Departamento
+ *             required: true
+ *             schema:
+ *                  type: string  
+ *                  style: simple
+ * 
+ */
 
+router.get('/obtieneprov/:id', obtieneProv);
+/**
+ * @swagger
+ * /api/mid/obtienemun/{id}:
+ *  get:
+ *      summary: Obtiene los municpios de una provincia
+ *      tags: [Municipios]
+ *      responses:
+ *          200:
+ *              description: Peticion Exitosa
+ *      parameters:
+ *           - name: id
+ *             in: path
+ *             description: Id del Departamento
+ *             required: true
+ *             schema:
+ *                  type: string  
+ *                  style: simple
+ * 
+ */
+router.get('/obtienemun/:id', obtieneMun);
 /*router.get('/gettoken', getToken);*/
 
 //router.post('/gettoken', getToken);
