@@ -8,7 +8,6 @@ const modefa_centros_acogimiento= require ("./app/routes/modefa_centros_acogimie
 const mospaRoutes= require ("./app/routes/mospa.routes")
 const workflowRoutes= require ("./app/routes/workflow.routes")
 
-
 const cors = require("cors")
 
 // Create a new Express app
@@ -21,7 +20,7 @@ const uri = process.env.URI || 'http://localhost';
 app.use(express.json());
 
 app.use(cors({
-    origin: `${uri}:${port}`, // Specify the allowed origin
+    origin: `*`, // Specify the allowed origin
     methods: 'GET,POST', // Specify the allowed HTTP methods
     allowedHeaders: 'Content-Type,Authorization', // Specify the allowed headers
   }));

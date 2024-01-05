@@ -13,13 +13,13 @@ const {
  *          type: object
  *          properties:
  *              ci_usuario:
- *                  type: varchar
+ *                  type: string
  *                  description: ci del usuario, para identificar el perfil asignado
  *              tabla:
- *                  type: varchar
+ *                  type: string
  *                  description: numero de la tabla transaccional
  *              estado:
- *                  type:varchar
+ *                  type: string
  *                  description: es el estado consultado para obtener las transacciones
  *          required:
  *              - ci_usuario
