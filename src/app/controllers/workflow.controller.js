@@ -32,7 +32,7 @@ const listarMenus = async (req, res) => {
     const query = {
         text: `select * from workflow.f_obtener_lista_menu('${req.body.ci_usuario}', '${req.body.modulo}') `,
     };
-    console.log(query);
+
     await con
         .query(query)
         .then((result) =>{
