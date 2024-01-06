@@ -11,6 +11,8 @@ const storage = multer.diskStorage({
       folder = 'uploads';
     }
     const destFolder = path.join(__dirname, '..', 'public', folder);
+    //const destFolder = path.join('D:\\archivos', folder);
+    console.log(destFolder)
     fs.ensureDirSync(destFolder);
 
     // Set the destination folder for the uploaded file
