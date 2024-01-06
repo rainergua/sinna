@@ -21,7 +21,7 @@ const uri = process.env.URI || 'http://localhost';
 app.use(express.json());
 
 app.use(cors({
-    origin: `${uri}:${port}`, // Specify the allowed origin
+    origin: '*', // Specify the allowed origin
     methods: 'GET,POST', // Specify the allowed HTTP methods
     allowedHeaders: 'Content-Type,Authorization', // Specify the allowed headers
   }));
