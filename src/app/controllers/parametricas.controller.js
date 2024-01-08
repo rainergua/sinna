@@ -6,10 +6,10 @@ const con = require('../../infraestructure/config/config');
  * @param {v_json} req json que envia los datos al SP
  * @param {res_json} res response en formato json
  */
-const listarTransacciones = async (req, res) => {
+const listarParametricas = async (req, res) => {
 
     const query = {
-        text: `select * from workflow.f_obtener_lista_transacciones('${req.body.ci_usuario}', '${req.body.tabla}', '${req.body.estado}') `,
+        text: `select * from parametricas.f_listar_parametricas('${req.body.id_parametro_padre}') `,
 
     };
     await con
@@ -20,17 +20,17 @@ const listarTransacciones = async (req, res) => {
             console.log(resultado)
             res.status(200).json({
                 datoAdicional: resultado,
-                mensaje:"Listado de transacciones obtenidas correctamente. Si no salen resultados, es porque el perfil no tiene asignada las transacciones, revisar el Workflow.",
+                mensaje:"Parametros obtenidos correctamente",
                 cod:200
             })}
         )
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
-const listarMenus = async (req, res) => {
+const listarDepartamentos = async (req, res) => {
 
     const query = {
-        text: `select * from workflow.f_obtener_lista_menu('${req.body.ci_usuario}', '${req.body.modulo}') `,
+        text: `select * from parametricas.f_listar_departamentos() `,
     };
 
     await con
@@ -41,17 +41,17 @@ const listarMenus = async (req, res) => {
             console.log(resultado)
             res.status(200).json({
                 datoAdicional: resultado,
-                mensaje:"Menus obtenidos",
+                mensaje:"Departamentos obtenidos",
                 cod:200
             })}
         )
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
-const obtenerModulos = async (req, res) => {
+const listarProvincias = async (req, res) => {
 
     const query = {
-        text: `select * from workflow.f_acceso_modulo('${req.body.ci_usuario}') `,
+        text: `select * from parametricas.f_listar_provincias('${req.body.id_departamento}') `,
     };
 
     await con
@@ -62,7 +62,28 @@ const obtenerModulos = async (req, res) => {
             console.log(resultado)
             res.status(200).json({
                 datoAdicional: resultado,
-                mensaje:"Modulos obtenidos",
+                mensaje:"Provincias obtenidos",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
+const listarMunicipios = async (req, res) => {
+
+    const query = {
+        text: `select * from parametricas.f_listar_municipios('${req.body.id_provincia}') `,
+    };
+
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows;
+            console.log(resultado)
+            res.status(200).json({
+                datoAdicional: resultado,
+                mensaje:"Municipios obtenidos",
                 cod:200
             })}
         )
@@ -70,7 +91,8 @@ const obtenerModulos = async (req, res) => {
 }
 
 module.exports = {
-    listarTransacciones,
-    listarMenus,
-    obtenerModulos,
+    listarDepartamentos,
+    listarProvincias,
+    listarMunicipios,
+    listarParametricas
 }
