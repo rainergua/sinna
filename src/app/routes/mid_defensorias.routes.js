@@ -98,18 +98,6 @@ router.post('/gestiondefensoria', upload.single('file'), gestionDefensoria);
 
 /**
  * @swagger
- * /api/mid/obtienedepto:
- *  get:
- *      summary: Obtiene los departamentos del Pais
- *      tags: [Departamentos]
- *      responses:
- *          200:
- *              description: Peticion Exitosa
- * 
- */
-router.get('/obtienedepto', obtieneDepto);
-/**
- * @swagger
  * /api/mid/obtienedefensorias:
  *  get:
  *      summary: Obtiene todas las defensorias del Pais
@@ -140,47 +128,7 @@ router.get('/obtienedefensorias', obtieneDefensorias);
  * 
  */
 router.get('/obtienedef/:id', obtieneDef);
-/**
- * @swagger
- * /api/mid/obtieneprov/{id}:
- *  get:
- *      summary: Obtiene las provincias de un departamento
- *      tags: [Provincias]
- *      responses:
- *          200:
- *              description: Peticion Exitosa
- *      parameters:
- *           - name: id
- *             in: path
- *             description: Id del Departamento
- *             required: true
- *             schema:
- *                  type: string  
- *                  style: simple
- * 
- */
 
-router.get('/obtieneprov/:id', obtieneProv);
-/**
- * @swagger
- * /api/mid/obtienemun/{id}:
- *  get:
- *      summary: Obtiene los municpios de una provincia
- *      tags: [Municipios]
- *      responses:
- *          200:
- *              description: Peticion Exitosa
- *      parameters:
- *           - name: id
- *             in: path
- *             description: Id del Departamento
- *             required: true
- *             schema:
- *                  type: string  
- *                  style: simple
- * 
- */
-router.get('/obtienemun/:id', obtieneMun);
 /*router.get('/gettoken', getToken);*/
 
 //router.post('/gettoken', getToken);
