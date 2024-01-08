@@ -27,6 +27,7 @@ const options = {
             `${path.join(__dirname, "../routes/mospa.routes.js")}`,
             `${path.join(__dirname, "../routes/workflow.routes.js")}`,
             `${path.join(__dirname, "../routes/parametricas.routes.js")}`,
+
         ]
 };
 //Docs in JSON format
