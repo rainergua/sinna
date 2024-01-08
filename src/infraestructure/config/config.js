@@ -25,11 +25,11 @@ const con = new Pool({
 });*/
 // BD Ivan
 const con = new Pool({
-	user: "postgres",
-	host: "localhost",
-	password: "admin",
+	user: "sinna",
+	host: "137.184.232.160",
+	password: "sinna2023",
 	database: "sinna",
-	port: "5432",
+	port: "5444",
 });
 
 module.exports = con;

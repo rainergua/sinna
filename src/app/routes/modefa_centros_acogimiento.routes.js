@@ -22,31 +22,24 @@ router.get('/centro-parametricas', getParametricas);
 
 /**
  * @swagger
- * /api/modefa/territorio/{ine}/{nivel}:
+ * /api/modefa/territorio/{id}:
  *  get:
- *      summary: Obtiene datos de acuerdo al nivel de territorio y codigo ine
+ *      summary: Obtiene datos de acuerdo al id_parametro_padre
  *      tags: [centros_acogimiento]
  *      responses:
  *          200:
  *              description: Peticion Exitosa
  *      parameters:
- *           - name: ine
+ *           - name: id
  *             in: path
- *             description: codigo ine
- *             required: true
- *             schema:
- *                  type: string
- *                  style: simple
- *           - name: nivel
- *             in: path
- *             description: nivel del territorio
+ *             description: Llave padre 
  *             required: true
  *             schema:
  *                  type: integer
  *                  style: simple
  * 
  */
-router.get('/territorio/:ine/:nivel', getTerritorio);
+router.get('/territorio/:id', getTerritorio);
 
 /**
  * @swagger
@@ -61,13 +54,16 @@ router.get('/territorio/:ine/:nivel', getTerritorio);
  *              nombre:
  *                  type: string
  *                  description: nombre del centro
- *              nit:
+ *              acreditacion:
  *                  type: string
- *                  description: NIT del centro
+ *                  description: acreditacion del centro
  *              descripcion:
  *                  type: string
  *                  description: Breve descripción del centro
- *              ubicacion:
+ *              latitud:
+ *                  type: string
+ *                  description: Ubicación del centro
+ *              longitud:
  *                  type: string
  *                  description: Ubicación del centro
  *              direccion:
@@ -85,25 +81,25 @@ router.get('/territorio/:ine/:nivel', getTerritorio);
  *              website:
  *                  type: string
  *                  description: Web site del centro
- *              departamento:
+ *              id_departamento:
  *                  type: string
- *                  description: codigo INE del departamento
- *              municipio:
+ *                  description: codigo id del departamento
+ *              id_municipio:
  *                  type: string
- *                  description: codigo INE del municipio
+ *                  description: codigo id del municipio
  *              capacidad:
  *                  type: integer
- *                  description: codigo INE del municipio
+ *                  description: Capacidad del centro
  *              responsable:
  *                  type: string
  *                  description: nombre del responsable
- *              tipo_administracion_centro:
+ *              id_tipo_administracion_centro:
  *                  type: integer
  *                  description: ID del tipo del centro
- *              rango_edad:
+ *              id_rango_edad:
  *                  type: integer
  *                  description: ID de Rango de edad
- *              sexo:
+ *              id_sexo:
  *                  type: integer
  *                  description: Id del genero
  *              fotografía:
@@ -125,21 +121,22 @@ router.get('/territorio/:ine/:nivel', getTerritorio);
  *          example:
  *              id_centro: 1
  *              nombre: Centro Nuevo
- *              nit: 4785447017
+ *              acreditacion: 4785447017
  *              descripcion: descripción del centro
  *              direccion: dirección del centro
- *              ubicacion: Calle nueva
+ *              latitud: -16.50154931432432, 
+ *              longitud: -68.14037510816706,
  *              telefono: 2546687
  *              celular: 76254277
  *              email: centro@gmail.com
  *              website: http://www.centro.com
- *              departamento: "010000"
- *              municipio: "010101"
+ *              id_departamento: 3
+ *              id_municipio: 152
  *              capacidad: 100
  *              responsable: Nombre
- *              tipo_administracion_centro: 7
- *              rango_edad: 11
- *              sexo: 16
+ *              id_tipo_administracion_centro: 7
+ *              id_rango_edad: 11
+ *              id_sexo: 16
  *              fotografia:
  *              transaccion: CREAR_CDA
  *              estado: ACTIVO
