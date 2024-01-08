@@ -8,7 +8,7 @@ const con = require('../../infraestructure/config/config');
  */
 const gestionDefensoria = async (req, res) => {
     const v_json = req.body
-    console.log(v_json)
+    //console.log(v_json)
     const query = {
         text: `call sinna_mid.p_centro_dna($1) `,
         values:[v_json]
@@ -18,7 +18,7 @@ const gestionDefensoria = async (req, res) => {
         .then((result) =>{
             //formateamos el resultado para que retorne solo Rows y Fields
             const resultado =  {rows: result.rows, fields: result.fields}
-            console.log(resultado)
+            //console.log(resultado)
             res.status(200).json({
                 datos: resultado,
             })}
@@ -37,7 +37,7 @@ const obtieneDepto = async (req, res) => {
         .query(query)
         .then((result) =>{
             //formateamos el resultado para que retorne solo Rows y Fields
-            console.log(con)
+            //console.log(con)
             const resultado =  result.rows
             //console.log(resultado)
             res.status(200).json({
@@ -52,18 +52,18 @@ const obtieneDepto = async (req, res) => {
  */
 const obtieneProv = async (req, res) => {
     const cod_depto = req.params.id
-    console.log(cod_depto)
+    //console.log(cod_depto)
     const query = {
         text: `select * from parametricas.f_listar_provincias($1) `,
         values:[cod_depto]
             };
-    console.log(query)
+    //console.log(query)
     await con
         .query(query)
         .then((result) =>{
             //formateamos el resultado para que retorne solo Rows y Fields
             const resultado =  result.rows
-            //console.log(resultado)
+            ////console.log(resultado)
             res.status(200).json({
                 datos: resultado,
             })}
@@ -76,18 +76,18 @@ const obtieneProv = async (req, res) => {
  */
 const obtieneMun = async (req, res) => {
     const cod_prov = req.params.id
-    console.log(cod_prov)
+    //console.log(cod_prov)
     const query = {
         text: `select * from parametricas.f_listar_municipios($1) `,
         values:[cod_prov]
             };
-    console.log(query)
+    //console.log(query)
     await con
         .query(query)
         .then((result) =>{
             //formateamos el resultado para que retorne solo Rows y Fields
             const resultado =  result.rows
-            //console.log(resultado)
+            ////console.log(resultado)
             res.status(200).json({
                 datos: resultado,
             })}
@@ -104,13 +104,13 @@ const obtieneDefensorias = async (req, res) => {
     const query = {
         text: `select * from sinna_mid.listar_dnas() order by id_defensorias`
             };
-    console.log(query)
+    //console.log(query)
     await con
         .query(query)
         .then((result) =>{
             //formateamos el resultado para que retorne solo Rows y Fields
             const resultado =  result.rows
-            //console.log(resultado)
+            ////console.log(resultado)
             res.status(200).json({
                 datos: resultado,
             })}
@@ -129,13 +129,13 @@ const obtieneDef= async (req, res) => {
         text: `select * from sinna_mid.listar_centros_dna($1)`,
         values:[id_def]
             };
-    console.log(query)
+    //console.log(query)
     await con
         .query(query)
         .then((result) =>{
             //formateamos el resultado para que retorne solo Rows y Fields
             const resultado =  result.rows
-            //console.log(resultado)
+            ////console.log(resultado)
             res.status(200).json({
                 datos: resultado,
             })}

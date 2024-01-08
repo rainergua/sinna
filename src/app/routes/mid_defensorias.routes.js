@@ -1,6 +1,8 @@
 const express = require('express');
 const verificaToken = require('../middlewares/verificaToken')
 const router = express.Router();
+
+const  upload = require ('../middlewares/imageUploadMiddleware')
 const { 
     gestionDefensoria,
     obtieneDepto,
@@ -92,7 +94,7 @@ const {
  * 
  */
 
-router.post('/gestiondefensoria', gestionDefensoria);
+router.post('/gestiondefensoria', upload.single('file'), gestionDefensoria);
 
 /**
  * @swagger
