@@ -8,7 +8,7 @@ const {
  * @swagger
  * components:
  *  schemas:
- *      Workflow:
+ *      Workflow_transacciones:
  *          type: object
  *          properties:
  *              ci_usuario:
@@ -41,7 +41,7 @@ const {
  *              application/json:
  *                  schema:
  *                      type: object
- *                      $ref: '#/components/schemas/Workflow'
+ *                      $ref: '#/components/schemas/Workflow_transacciones'
  *      responses:
  *          200:
  *              description: Listado de transacciones obtenidas correctamente
@@ -54,7 +54,7 @@ router.post('/listarTransacciones', verificaToken,listarTransacciones);
  * @swagger
  * components:
  *  schemas:
- *      Workflow:
+ *      Workflow_menus:
  *          type: object
  *          properties:
  *              ci_usuario:
@@ -82,7 +82,7 @@ router.post('/listarTransacciones', verificaToken,listarTransacciones);
  *              application/json:
  *                  schema:
  *                      type: object
- *                      $ref: '#/components/schemas/Workflow'
+ *                      $ref: '#/components/schemas/Workflow_menus'
  *      responses:
  *          200:
  *              description: Listado de menus obtenido correctamente
@@ -94,7 +94,7 @@ router.post('/listarMenus', verificaToken,listarMenus);
  * @swagger
  * components:
  *  schemas:
- *      Workflow:
+ *      Workflow_modulos:
  *          type: object
  *          properties:
  *              ci_usuario:
@@ -117,7 +117,7 @@ router.post('/listarMenus', verificaToken,listarMenus);
  *              application/json:
  *                  schema:
  *                      type: object
- *                      $ref: '#/components/schemas/Workflow'
+ *                      $ref: '#/components/schemas/Workflow_modulos'
  *      responses:
  *          200:
  *              description: Listado de modulos obtenidos correctamente
