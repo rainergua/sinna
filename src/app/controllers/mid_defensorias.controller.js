@@ -26,76 +26,6 @@ const gestionDefensoria = async (req, res) => {
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
 /**
- * @param {v_json} req json que envia los datos al SP
- * @param {res_json} res response en formato json
- */
-const obtieneDepto = async (req, res) => {
-    const query = {
-        text: `select * from parametricas.f_listar_departamentos()`,
-            };
-    await con
-        .query(query)
-        .then((result) =>{
-            //formateamos el resultado para que retorne solo Rows y Fields
-            //console.log(con)
-            const resultado =  result.rows
-            //console.log(resultado)
-            res.status(200).json({
-                datos: resultado,
-            })}
-        )
-        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
-}
-/**
- * @param {v_json} req json que envia los datos al SP
- * @param {res_json} res response en formato json
- */
-const obtieneProv = async (req, res) => {
-    const cod_depto = req.params.id
-    //console.log(cod_depto)
-    const query = {
-        text: `select * from parametricas.f_listar_provincias($1) `,
-        values:[cod_depto]
-            };
-    //console.log(query)
-    await con
-        .query(query)
-        .then((result) =>{
-            //formateamos el resultado para que retorne solo Rows y Fields
-            const resultado =  result.rows
-            ////console.log(resultado)
-            res.status(200).json({
-                datos: resultado,
-            })}
-        )
-        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
-}
-/**
- * @param {v_json} req json que envia los datos al SP
- * @param {res_json} res response en formato json
- */
-const obtieneMun = async (req, res) => {
-    const cod_prov = req.params.id
-    //console.log(cod_prov)
-    const query = {
-        text: `select * from parametricas.f_listar_municipios($1) `,
-        values:[cod_prov]
-            };
-    //console.log(query)
-    await con
-        .query(query)
-        .then((result) =>{
-            //formateamos el resultado para que retorne solo Rows y Fields
-            const resultado =  result.rows
-            ////console.log(resultado)
-            res.status(200).json({
-                datos: resultado,
-            })}
-        )
-        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
-}
-//select * from sinna_mid.listar_dnas()
-/**
  * 
  * @param {*} req 
  * @param {*} res 
@@ -110,7 +40,7 @@ const obtieneDefensorias = async (req, res) => {
         .then((result) =>{
             //formateamos el resultado para que retorne solo Rows y Fields
             const resultado =  result.rows
-            ////console.log(resultado)
+            console.log(result)
             res.status(200).json({
                 datos: resultado,
             })}
@@ -160,9 +90,6 @@ const getToken = async(req, res) =>{
 }
 module.exports = {
     gestionDefensoria, 
-    obtieneDepto, 
-    obtieneProv,
-    obtieneMun,
     obtieneDefensorias,
     obtieneDef,
     getToken

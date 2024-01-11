@@ -2,10 +2,57 @@ const jwt = require('jsonwebtoken');
 
 const con = require('../../infraestructure/config/config');
 
-/**
- * @param {v_json} req json que envia los datos al SP
- * @param {res_json} res response en formato json
- */
+const obtieneDepto = async (req, res) => {
+    const query = {
+        text: `select * from parametricas.f_listar_departamentos()`,
+            };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows
+            const resultado =  result.rows
+            res.status(200).json({
+                datos: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+
+const obtieneProv = async (req, res) => {
+    const cod_depto = req.params.id
+    const query = {
+        text: `select * from parametricas.f_listar_provincias($1) `,
+        values:[cod_depto]
+            };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows
+            const resultado =  result.rows
+            res.status(200).json({
+                datos: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+const obtieneMun = async (req, res) => {
+    const cod_prov = req.params.id
+    const query = {
+        text: `select * from parametricas.f_listar_municipios($1) `,
+        values:[cod_prov]
+            };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows
+            const resultado =  result.rows
+            res.status(200).json({
+                datos: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+
 const listarParametricas = async (req, res) => {
 
     const query = {
@@ -94,5 +141,8 @@ module.exports = {
     listarDepartamentos,
     listarProvincias,
     listarMunicipios,
-    listarParametricas
+    listarParametricas,
+    obtieneDepto,
+    obtieneMun,
+    obtieneProv,
 }
