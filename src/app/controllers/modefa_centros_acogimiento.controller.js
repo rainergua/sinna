@@ -4,6 +4,7 @@ const con = require('../../infraestructure/config/config');
 
 const getParametricas = async (req, res) => {
     try {
+        //console.log(req.user);
         const tipo_administracion = await con.query(`select * from sinna_modefa.f_combos_parametricas(6)`);
         const rango_edad = await con.query(`select * from sinna_modefa.f_combos_parametricas(10)`);
         const sexo = await con.query(`select * from sinna_modefa.f_combos_parametricas(15)`);

@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 const verificaToken = require('../middlewares/verificaToken')
 const router = express.Router();
 const {
@@ -122,7 +123,10 @@ router.post('/listarMenus', verificaToken,listarMenus);
  *          200:
  *              description: Listado de modulos obtenidos correctamente
  */
-router.post('/obtenerModulos', verificaToken,obtenerModulos);
+router.post('/obtenerModulos', 
+    passport.authenticate('jwt', {session:false}),
+    obtenerModulos
+);
 
 
 module.exports = router;

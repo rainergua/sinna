@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 const router = express.Router();
 const { 
     getParametricas,
@@ -9,16 +10,29 @@ const {
 
 /**
  * @swagger
+ * securityDefinitions:
+ *   bearerAuth:
+ *     type: apiKey
+ *     name: Authorization
+ *     in: header
+ */
+/**
+ * @swagger
  * /api/modefa/centro-parametricas:
  *  get:
  *      summary: Obtiene las parametricas para el registro de centros de acogida
  *      tags: [centros_acogimiento]
+ *      security:
+ *          - bearerAuth: []
  *      responses:
  *          200:
  *              description: Peticion Exitosa
  * 
  */
-router.get('/centro-parametricas', getParametricas);
+router.get('/centro-parametricas',
+    passport.authenticate('jwt', {session:false}),
+    getParametricas
+);
 
 /**
  * @swagger

@@ -8,6 +8,7 @@ const modefa_centros_acogimiento= require ("./app/routes/modefa_centros_acogimie
 const mospaRoutes= require ("./app/routes/mospa.routes")
 const workflowRoutes= require ("./app/routes/workflow.routes")
 const parametricasRoutes= require ("./app/routes/parametricas.routes")
+const authRoutes= require ("./app/routes/auth.routes")
 
 const cors = require("cors")
 
@@ -26,6 +27,8 @@ app.use(cors({
     allowedHeaders: 'Content-Type,Authorization', // Specify the allowed headers
   }));
 
+require('./utils/auth');
+
 // Define routes
 app.use('/api',testRoutes);
 app.use('/api/mid',mid_defensorias);
@@ -33,5 +36,6 @@ app.use('/api/modefa',modefa_centros_acogimiento);
 app.use('/api/mospa',mospaRoutes);
 app.use('/api/workflow',workflowRoutes);
 app.use('/api/parametricas',parametricasRoutes);
+app.use('/api/auth',authRoutes);
 
 module.exports = app;
