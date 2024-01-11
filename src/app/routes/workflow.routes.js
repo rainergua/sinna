@@ -49,7 +49,10 @@ const {
  *
  */
 
-router.post('/listarTransacciones', verificaToken,listarTransacciones);
+router.post('/listarTransacciones',
+    passport.authenticate('jwt', {session:false}),
+    listarTransacciones
+);
 
 /**
  * @swagger
@@ -89,7 +92,10 @@ router.post('/listarTransacciones', verificaToken,listarTransacciones);
  *              description: Listado de menus obtenido correctamente
  */
 
-router.post('/listarMenus', verificaToken,listarMenus);
+router.post('/listarMenus',
+    passport.authenticate('jwt', {session:false}),
+    listarMenus
+);
 
 /**
  * @swagger

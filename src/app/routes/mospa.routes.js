@@ -1,5 +1,6 @@
 const express = require('express');
 const verificaToken = require('../middlewares/verificaToken')
+const passport =require('passport')
 const router = express.Router();
 const {
     listarCentros,
@@ -43,7 +44,7 @@ const {
  *
  */
 
-router.post('/listarCentros', verificaToken,listarCentros);
+router.post('/listarCentros', passport.authenticate('jwt',{session:false}),listarCentros);
 
 
 module.exports = router;

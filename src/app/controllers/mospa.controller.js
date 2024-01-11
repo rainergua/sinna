@@ -9,7 +9,7 @@ const con = require('../../infraestructure/config/config');
 const listarCentros = async (req, res) => {
 
     const query = {
-        text: `select * from sinna_mospa.f_listar_centros('{ "tipo_centro":${req.body.tipo_centro}, "alcance":${req.body.alcance}, "estado":"${req.body.estado}" , "ci_usuario":"${req.body.ci_usuario}"}') `,
+        text: `select * from sinna_mospa.f_listar_centros('{ "tipo_centro":${req.body.tipo_centro}, "alcance":${req.body.alcance}, "estado":"${req.body.estado}" , "ci_usuario":"${req.user.ci_usuario}"}') `,
 
     };
 
