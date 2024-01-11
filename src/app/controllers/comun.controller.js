@@ -8,7 +8,6 @@ const getPersonaCi= async (req, res) => {
         text: `select * from comun.listar_personas_ci($1)`,
         values:[ci]
             };
-    console.log(query)
     await con
         .query(query)
         .then((result) =>{
