@@ -9,7 +9,7 @@ const con = require('../../infraestructure/config/config');
 const listarTransacciones = async (req, res) => {
 
     const query = {
-        text: `select * from workflow.f_obtener_lista_transacciones('${req.body.ci_usuario}', '${req.body.tabla}', '${req.body.estado}') `,
+        text: `select * from workflow.f_obtener_lista_transacciones('${req.user.ci}', '${req.body.tabla}', '${req.body.estado}') `,
 
     };
     await con
@@ -30,7 +30,7 @@ const listarTransacciones = async (req, res) => {
 const listarMenus = async (req, res) => {
 
     const query = {
-        text: `select * from workflow.f_obtener_lista_menu('${req.body.ci_usuario}', '${req.body.modulo}') `,
+        text: `select * from workflow.f_obtener_lista_menu('${req.user.ci}', '${req.body.modulo}') `,
     };
 
     await con
