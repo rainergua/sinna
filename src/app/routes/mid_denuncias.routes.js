@@ -1,10 +1,12 @@
 const express = require('express');
-const verificaToken = require('../middlewares/verificaToken')
 const router = express.Router();
 
 const  upload = require ('../middlewares/imageUploadMiddleware')
 const { 
-    getParametrosDenuncia
+    getParametrosDenuncia,
+    gestionDenuncias,
+    obtieneDenuncias,
+    obtieneDen,
 } = require ('../controllers/mid_denuncias.controller')
 
 /**
@@ -19,5 +21,11 @@ const {
  * 
  */
 router.get('/obtieneparametros', getParametrosDenuncia);
+
+router.post('/gestiondenuncias', gestionDenuncias);
+
+router.get('/obtienedenuncias', obtieneDenuncias);
+
+router.get('/obtieneden/:id', obtieneDen);
 
 module.exports = router;

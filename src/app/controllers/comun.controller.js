@@ -20,6 +20,29 @@ const getPersonaCi= async (req, res) => {
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
+
+
+const listarPersonas = async (req, res) => {
+
+    const query = {
+        text: `select * from comun.listar_personas() `,
+    };
+
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows;
+            console.log(resultado)
+            res.status(200).json({
+                datoAdicional: resultado,
+                mensaje:"Personas obtenidos",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
 module.exports = {
     getPersonaCi,
+    listarPersonas
 }

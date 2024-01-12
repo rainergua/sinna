@@ -3,7 +3,8 @@ const verificaToken = require('../middlewares/verificaToken')
 const router = express.Router();
 
 const { 
-    getPersonaCi
+    getPersonaCi,
+    listarPersonas
 } = require ('../controllers/comun.controller')
 
 /**
@@ -26,5 +27,7 @@ const {
  * 
  */
 router.get('/getpersonaci/:ci', getPersonaCi);
+
+router.get('/listarPersonas', listarPersonas);
 
 module.exports = router;
