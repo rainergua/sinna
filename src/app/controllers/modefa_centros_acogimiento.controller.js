@@ -40,6 +40,7 @@ const getTerritorio = async (req, res) => {
 }
 
 const gestionCentroAcogida = async (req, res) => {
+    req.body.ci_usuario = req.user.ci;
     const v_json = req.body
 
     const query = {
