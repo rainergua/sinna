@@ -53,7 +53,7 @@ router.get('/centro-parametricas',
  *                  style: simple
  * 
  */
-router.get('/territorio/:id', getTerritorio);
+router.get('/territorio/:id', passport.authenticate('jwt', {session:false}), getTerritorio);
 
 /**
  * @swagger
@@ -174,7 +174,7 @@ router.get('/territorio/:id', getTerritorio);
  *              description: Peticion Exitosa
  * 
  */
-router.post('/centro-acogida', gestionCentroAcogida);
+router.post('/centro-acogida', passport.authenticate('jwt', {session:false}), gestionCentroAcogida);
 
 /**
  * @swagger
@@ -187,7 +187,7 @@ router.post('/centro-acogida', gestionCentroAcogida);
  *              description: Peticion Exitosa
  * 
  */
-router.post('/list-centro-acogida', listaCentroAcogida);
+router.post('/list-centro-acogida', passport.authenticate('jwt', {session:false}),listaCentroAcogida);
 
 
 module.exports = router;
