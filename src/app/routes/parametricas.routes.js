@@ -1,47 +1,31 @@
 const express = require('express');
-const verificaToken = require('../middlewares/verificaToken')
 const router = express.Router();
+const passport = require("passport");
+
+
 const {
-    listarParametricas, listarDepartamentos, listarProvincias, listarMunicipios, obtieneDepto, obtieneProv, obtieneMun,
+    /*listarParametricas,
+    listarDepartamentos,
+    listarProvincias,
+    listarMunicipios,*/
+    obtieneDepto,
+    obtieneProv,
+    obtieneMun, obtieneParam,
 } = require ('../controllers/parametricas.controller')
+
 /**
  * @swagger
- * components:
- *  schemas:
- *      Parametricas:
- *          type: object
- *          properties:
- *              id_parametro_padre:
- *                  type: integer
- *                  description: id del parametro padre para obtener el listado
- *          required:
- *              - id_parametro_padre
- *          example:
- *              id_parametro_padre: 4
- */
-/**
- * @swagger
- * /api/parametricas/listarParametricas:
- *  post:
- *      summary: Obtiene el conjunto de parametros para los combos de los formularios
- *      tags: [Listar]
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      type: object
- *                      $ref: '#/components/schemas/Parametricas'
+ * /api/parametricas/obtieneparm:
+ *  get:
+ *      summary: Obtiene listado de parametricas
+ *      tags: [Parametricas]
  *      responses:
  *          200:
- *              description: Listado de parametricas
+ *              description: Peticion Exitosa
  *
  */
 
-router.post('/listarParametricas', verificaToken,listarParametricas);
-router.get('/listarDepartamentos', verificaToken,listarDepartamentos);
-router.post('/listarProvincias', verificaToken,listarProvincias);
-router.post('/listarMunicipios', verificaToken,listarMunicipios);
+router.get('/obtieneparam', passport.authenticate('jwt',{session:false}),obtieneParam);
 
 /**
  * @swagger
@@ -54,7 +38,7 @@ router.post('/listarMunicipios', verificaToken,listarMunicipios);
  *              description: Peticion Exitosa
  * 
  */
-router.get('/obtienedepto', obtieneDepto);
+router.get('/obtienedepto', passport.authenticate('jwt',{session:false}), obtieneDepto);
 /**
  * @swagger
  * /api/parametricas/obtieneprov/{id}:
@@ -75,7 +59,7 @@ router.get('/obtienedepto', obtieneDepto);
  * 
  */
 
-router.get('/obtieneprov/:id', obtieneProv);
+router.get('/obtieneprov/:id', passport.authenticate('jwt',{session:false}), obtieneProv);
 /**
  * @swagger
  * /api/parametricas/obtienemun/{id}:
@@ -95,5 +79,5 @@ router.get('/obtieneprov/:id', obtieneProv);
  *                  style: simple
  * 
  */
-router.get('/obtienemun/:id', obtieneMun);
+router.get('/obtienemun/:id', passport.authenticate('jwt',{session:false}), obtieneMun);
 module.exports = router;
