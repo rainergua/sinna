@@ -53,11 +53,11 @@ const obtieneMun = async (req, res) => {
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
 
-const listarParametricas = async (req, res) => {
-
+const obtieneParam = async (req, res) => {
+    const id_parametro_padre = req.params.id
     const query = {
-        text: `select * from parametricas.f_listar_parametricas('${req.body.id_parametro_padre}') `,
-
+        text: `select * from parametricas.f_listar_parametricas($1) `,
+        values:[id_parametro_padre]
     };
     await con
         .query(query)
@@ -74,7 +74,7 @@ const listarParametricas = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
-const listarDepartamentos = async (req, res) => {
+/*const listarDepartamentos = async (req, res) => {
 
     const query = {
         text: `select * from parametricas.f_listar_departamentos() `,
@@ -135,13 +135,10 @@ const listarMunicipios = async (req, res) => {
             })}
         )
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
-}
+}*/
 
 module.exports = {
-    listarDepartamentos,
-    listarProvincias,
-    listarMunicipios,
-    listarParametricas,
+    obtieneParam,
     obtieneDepto,
     obtieneMun,
     obtieneProv,
