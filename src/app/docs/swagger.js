@@ -38,6 +38,7 @@ const options = {
             `${path.join(__dirname, "../routes/workflow.routes.js")}`,
             `${path.join(__dirname, "../routes/parametricas.routes.js")}`,
             `${path.join(__dirname, "../routes/auth.routes.js")}`,
+            `${path.join(__dirname, "../routes/comun_personas.routes.js")}`,
 
         ]
 };

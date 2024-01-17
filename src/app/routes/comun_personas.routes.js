@@ -3,10 +3,8 @@ const passport = require('passport');
 const router = express.Router();
 const { 
     getParametricas,
-    gestionPersonas,
-    mostrarPersonas,
     gestionPersona,
-    mostrarPersona,
+    mostrarPersona
 } = require ('../controllers/comun_personas.controller')
 
 /**
