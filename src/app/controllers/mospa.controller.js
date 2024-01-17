@@ -31,7 +31,7 @@ const listarCentros = async (req, res) => {
 const gestionCentros = async (req, res) => {
 
     const query = {
-        text: `select * from sinna_mospa.p_gestion_centros('{ "tipo_centro":${req.body.tipo_centro},"alcance":${req.body.alcance},"estado":"${req.body.estado}","ci_usuario":"${req.user.ci}" }') `,
+        text: `call sinna_mospa.p_gestion_centros('{ "json":${req.body.datos} }') `,
 
     };
 
