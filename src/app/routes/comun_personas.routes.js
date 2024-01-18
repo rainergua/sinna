@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 const { 
-    getParametricas,
+    parametricasPersona,
     gestionPersona,
     mostrarPersona
 } = require ('../controllers/comun_personas.controller')
@@ -17,7 +17,7 @@ const {
  */
 /**
  * @swagger
- * /api/persona-parametricas:
+ * /api/persona/persona-parametricas:
  *  get:
  *      summary: Obtiene las parametricas para el registro de personas
  *      tags: [personas]
@@ -30,7 +30,7 @@ const {
  */
 router.get('/persona-parametricas',
     passport.authenticate('jwt', {session:false}),
-    getParametricas
+    parametricasPersona
 );
 
 /**
@@ -160,7 +160,7 @@ router.get('/persona-parametricas',
  */
 /**
  * @swagger
- * /api/persona:
+ * /api/persona/persona:
  *  post:
  *      summary: Envía los datos para la gestión de personas (ABM). El objeto en el request debe llamarse <v_json>
  *      tags: [personas]
@@ -180,7 +180,7 @@ router.post('/persona', gestionPersona);
 
 /**
  * @swagger
- * /api/mostrar-persona:
+ * /api/persona/mostrar-persona:
  *  post:
  *      summary: lista de personas registradas en el SINNA
  *      tags: [personas]
