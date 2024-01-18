@@ -74,7 +74,7 @@ router.get('/persona-parametricas',
  *                  type: integer
  *                  description: Cédula de identidad (expedición)
  *              vulnerabilidad:
- *                  type integer
+ *                  type: integer
  *                  description: Situación de vulnerabilidad de la persona
  *              direccion:
  *                  type: string

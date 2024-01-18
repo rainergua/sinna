@@ -5,10 +5,11 @@ const router = express.Router();
 const  upload = require ('../middlewares/imageUploadMiddleware')
 const { 
     gestionDefensoria,
-    obtieneDepto,
-    obtieneProv,
+    updFileDef,
+    //obtieneDepto,
+    //obtieneProv,
     getToken,
-    obtieneMun,
+    //obtieneMun,
     obtieneDefensorias,
     obtieneDef,
 } = require ('../controllers/mid_defensorias.controller')
@@ -94,7 +95,9 @@ const {
  * 
  */
 
-router.post('/gestiondefensoria', upload.single('file'), gestionDefensoria);
+router.post('/gestiondefensoria', gestionDefensoria);
+
+router.post('/updfiledef', upload.single('file'), updFileDef);
 
 /**
  * @swagger

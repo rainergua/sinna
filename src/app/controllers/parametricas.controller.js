@@ -4,7 +4,7 @@ const con = require('../../infraestructure/config/config');
 
 const obtieneDepto = async (req, res) => {
     const query = {
-        text: `select * from parametricas.f_listar_departamentos()`,
+        text: `select *, id_parametro as id, nombre as value from parametricas.f_listar_departamentos()`,
             };
     await con
         .query(query)
@@ -21,7 +21,7 @@ const obtieneDepto = async (req, res) => {
 const obtieneProv = async (req, res) => {
     const cod_depto = req.params.id
     const query = {
-        text: `select * from parametricas.f_listar_provincias($1) `,
+        text: `select *, id_parametro as id, nombre as value from parametricas.f_listar_provincias($1) `,
         values:[cod_depto]
             };
     await con
@@ -38,7 +38,7 @@ const obtieneProv = async (req, res) => {
 const obtieneMun = async (req, res) => {
     const cod_prov = req.params.id
     const query = {
-        text: `select * from parametricas.f_listar_municipios($1) `,
+        text: `select *, id_parametro as id, nombre as value from parametricas.f_listar_municipios($1) `,
         values:[cod_prov]
             };
     await con
