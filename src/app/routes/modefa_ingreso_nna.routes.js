@@ -4,7 +4,9 @@ const router = express.Router();
 const { 
     getCentroAcogidaUsuario,
     getBuscarPersonaMid,
-    getListarAcogidosNna
+    getListarAcogidosNna,
+    getParametricasIngreso,
+    gestionAcogidaNaa
 } = require ('../controllers/modefa_ingreso_nna.controller')
 
 /**
@@ -54,7 +56,10 @@ router.get('/centro-usuario',
  */
 router.get('/buscar-mid/:buscar', passport.authenticate('jwt', {session:false}), getBuscarPersonaMid);
 
-
 router.post('/acogidos-nna', passport.authenticate('jwt', {session:false}), getListarAcogidosNna);
+
+router.get('/ingreso-parametrica', passport.authenticate('jwt', {session:false}), getParametricasIngreso);
+
+router.post('/gestion-acogida', passport.authenticate('jwt', {session:false}), gestionAcogidaNaa);
 
 module.exports = router;

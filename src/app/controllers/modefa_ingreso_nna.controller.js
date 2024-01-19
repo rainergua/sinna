@@ -43,8 +43,44 @@ const getListarAcogidosNna = async (req, res) => {
     }
 }
 
+const getParametricasIngreso = async (req, res) => {
+    try {
+        //console.log(req.user);
+        ///arreglar aqui mandar el municipio
+        const juzgado = await con.query(`select * from sinna_modefa.f_buscar_juzgado(58)`);
+        const montivo_ingreso = await con.query(`select * from sinna_modefa.f_combos_parametricas(199)`);
+        res.status(200).json({
+            datoAdicional: {
+                juzgado: juzgado.rows,
+                montivo_ingreso: montivo_ingreso.rows,
+            },
+            mensaje:"Paramétricas de ingreso de NNA a CDA",
+            cod:200}
+        );
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
+const gestionAcogidaNaa = async (req, res) => {
+    try {
+        req.body.ci_usuario = req.user.ci;
+        const v_json = req.body
+        const query = {
+            text: `call sinna_modefa.p_acogida_nna($1) `,
+            values:[v_json]        
+        };
+        const resultado = await con.query(query)
+        res.status(200).json(resultado.rows[0]);
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
 module.exports = {
     getCentroAcogidaUsuario,
     getBuscarPersonaMid,
     getListarAcogidosNna,
+    getParametricasIngreso,
+    gestionAcogidaNaa
 }
