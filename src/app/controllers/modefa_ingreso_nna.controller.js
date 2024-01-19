@@ -49,10 +49,12 @@ const getParametricasIngreso = async (req, res) => {
         ///arreglar aqui mandar el municipio
         const juzgado = await con.query(`select * from sinna_modefa.f_buscar_juzgado(58)`);
         const montivo_ingreso = await con.query(`select * from sinna_modefa.f_combos_parametricas(199)`);
+        const modalidad_egreso = await con.query(`select * from sinna_modefa.f_combos_parametricas(222)`);
         res.status(200).json({
             datoAdicional: {
                 juzgado: juzgado.rows,
                 montivo_ingreso: montivo_ingreso.rows,
+                modalidad_egreso: modalidad_egreso.rows,
             },
             mensaje:"Paramétricas de ingreso de NNA a CDA",
             cod:200}
