@@ -5,12 +5,14 @@ const dotenv = require('dotenv');
 const testRoutes = require ('./app/routes/test.routes')
 const mid_defensorias= require ("./app/routes/mid_defensorias.routes")
 const modefa_centros_acogimiento= require ("./app/routes/modefa_centros_acogimiento.routes")
+const modefa_ingreso_nna= require ("./app/routes/modefa_ingreso_nna.routes")
 const mospaRoutes= require ("./app/routes/mospa.routes")
 const workflowRoutes= require ("./app/routes/workflow.routes")
 const parametricasRoutes= require ("./app/routes/parametricas.routes")
 const mid_denuncias = require("./app/routes/mid_denuncias.routes")
 const comunRoutes = require("./app/routes/comun.routes")
 const authRoutes= require ("./app/routes/auth.routes")
+const personaRoutes = require("./app/routes/comun_personas.routes")
 
 const cors = require("cors")
 
@@ -37,9 +39,11 @@ app.use('/api/mid',mid_defensorias);
 app.use('/api/mid',mid_denuncias);
 app.use('/api/comun',comunRoutes);
 app.use('/api/modefa',modefa_centros_acogimiento);
+app.use('/api/modefa',modefa_ingreso_nna);
 app.use('/api/mospa',mospaRoutes);
 app.use('/api/workflow',workflowRoutes);
 app.use('/api/parametricas',parametricasRoutes);
 app.use('/api/auth',authRoutes);
+app.use('/api/persona',personaRoutes);
 
 module.exports = app;

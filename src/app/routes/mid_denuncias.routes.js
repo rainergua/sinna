@@ -7,6 +7,7 @@ const {
     gestionDenuncias,
     obtieneDenuncias,
     obtieneDen,
+    getPersonaDenuncia
 } = require ('../controllers/mid_denuncias.controller')
 
 /**
@@ -21,6 +22,8 @@ const {
  * 
  */
 router.get('/obtieneparametros', getParametrosDenuncia);
+
+router.get('/obtienepersonasdenuncia', getPersonaDenuncia);
 
 router.post('/gestiondenuncias', gestionDenuncias);
 
