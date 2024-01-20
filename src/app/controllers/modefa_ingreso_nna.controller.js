@@ -45,7 +45,6 @@ const getListarAcogidosNna = async (req, res) => {
 
 const getParametricasIngreso = async (req, res) => {
     try {
-        //console.log(req.user);
         ///arreglar aqui mandar el municipio
         const juzgado = await con.query(`select * from sinna_modefa.f_buscar_juzgado(58)`);
         const montivo_ingreso = await con.query(`select * from sinna_modefa.f_combos_parametricas(199)`);
@@ -79,10 +78,44 @@ const gestionAcogidaNaa = async (req, res) => {
     }
 }
 
+const getParametricasTransferencia = async (req, res) => {
+    try {
+        ///arreglar aqui mandar el municipio
+        const juzgado = await con.query(`select * from sinna_modefa.f_buscar_juzgado(58)`);
+        const territorio = await con.query(`select * from sinna_modefa.f_combos_territorial(1)`);
+      res.status(200).json({
+            datoAdicional: {
+                juzgado: juzgado.rows,
+                territorio: territorio.rows,
+            },
+            mensaje:"Paramétricas de traspaso de NNA a CDA",
+            cod:200}
+        );
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
+const getCentrosMunicipio = async (req, res) => {
+    try {
+        let id = req.params.id;
+        const centros = await con.query(`select * from sinna_modefa.f_combo_centros(${id})`);
+        res.status(200).json({
+            datoAdicional: centros.rows,
+            mensaje:"Lista de centros de acuerdo a un municipio",
+            cod:200}
+        );
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
 module.exports = {
     getCentroAcogidaUsuario,
     getBuscarPersonaMid,
     getListarAcogidosNna,
     getParametricasIngreso,
-    gestionAcogidaNaa
+    gestionAcogidaNaa,
+    getParametricasTransferencia,
+    getCentrosMunicipio
 }

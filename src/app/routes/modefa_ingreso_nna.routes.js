@@ -6,7 +6,9 @@ const {
     getBuscarPersonaMid,
     getListarAcogidosNna,
     getParametricasIngreso,
-    gestionAcogidaNaa
+    gestionAcogidaNaa,
+    getParametricasTransferencia,
+    getCentrosMunicipio
 } = require ('../controllers/modefa_ingreso_nna.controller')
 
 /**
@@ -61,5 +63,9 @@ router.post('/acogidos-nna', passport.authenticate('jwt', {session:false}), getL
 router.get('/ingreso-parametrica', passport.authenticate('jwt', {session:false}), getParametricasIngreso);
 
 router.post('/gestion-acogida', passport.authenticate('jwt', {session:false}), gestionAcogidaNaa);
+
+router.get('/transferencia-parametrica', passport.authenticate('jwt', {session:false}), getParametricasTransferencia);
+
+router.get('/centros-municipio/:id', passport.authenticate('jwt', {session:false}), getCentrosMunicipio);
 
 module.exports = router;
