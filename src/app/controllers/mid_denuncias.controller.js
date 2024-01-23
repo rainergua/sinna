@@ -88,7 +88,7 @@ const obtieneDenuncias = async (req, res) => {
  * @param {*} res 
  */
 const obtieneDen= async (req, res) => {
-    const id_def = req.params.id
+    const id_den = req.params.id
     const query = {
         text: `select * from sinna_mid.listar_denuncias($1)`,
         values:[id_den]
@@ -107,13 +107,22 @@ const obtieneDen= async (req, res) => {
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
 /**
- * 
+ * TODO: Implementar la funcion en la base de datos para obtener familiares
  * @param {*} req 
  * @param {*} res 
  */
-const getPersonaDenuncia= async(req, res) => {
+const obtieneFamiliares= async (req, res) => {
+    const cod_denuncia = req.params.cod_denuncia
     const query = {
-        text: `select * from comun.com_personas`
+        text: `select md.cod_caso, md.id_denuncia, cfh.id_familiar, cfh.nna, cfh.relacion_familiar, 
+        cp.primer_apellido, cp.segundo_apellido, cp.nombres,
+        cp.direccion, pc.nombre  
+        from comun.com_familiares_hermanos cfh 
+        inner join comun.com_personas cp on cfh.id_persona = cp.id_persona 
+        inner join sinna_mid.mid_denuncias md on cfh.nna = md.id_persona 
+        inner join parametricas.par_clasificador pc on cfh.relacion_familiar = pc.id_parametro 
+        where md.id_denuncia = $1`,
+        values:[cod_denuncia]
             };
     //console.log(query)
     await con
@@ -121,13 +130,162 @@ const getPersonaDenuncia= async(req, res) => {
         .then((result) =>{
             //formateamos el resultado para que retorne solo Rows y Fields
             const resultado =  result.rows
-            console.log(result)
             res.status(200).json({
                 datos: resultado,
             })}
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
+/**
+ * TODO: Implementar la funcion en la base de datos para obtener denunciados
+ * @param {*} req 
+ * @param {*} res 
+ */
+const obtienedendo = async(req, res) =>{const cod_denuncia = req.params.cod_denuncia
+    const query = {
+        text: `select md.cod_caso, mdp.id_denuncia , mdp.tipo_denunciado, cp.primer_apellido, cp.segundo_apellido, cp.nombres,
+        cp.direccion, pc.nombre, md.cod_caso 
+        from sinna_mid.mid_denuncias_personas mdp
+        inner join comun.com_personas cp on mdp.id_persona = cp.id_persona 
+        inner join sinna_mid.mid_denuncias md on mdp.id_denuncia  = md.id_denuncia  
+        inner join parametricas.par_clasificador pc on mdp.tipo_denunciado  = pc.id_parametro 
+        where md.id_denuncia = $1 and tipo_denunciante is null`,
+        values:[cod_denuncia]
+            };
+    //console.log(query)
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows
+            //console.log(resultado)
+            res.status(200).json({
+                datos: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+    }
+/**
+ * TODO: Implementar la funcion en la base de datos para obtener denunciantes
+ * @param {*} req 
+ * @param {*} res 
+ */    
+const obtienedente = async(req, res) =>{
+    const cod_denuncia = req.params.cod_denuncia
+    const query = {
+        text: `select md.cod_caso, mdp.id_denuncia , mdp.tipo_denunciante, cp.primer_apellido, cp.segundo_apellido, cp.nombres,
+        cp.direccion, pc.nombre, md.cod_caso 
+        from sinna_mid.mid_denuncias_personas mdp
+        inner join comun.com_personas cp on mdp.id_persona = cp.id_persona 
+        inner join sinna_mid.mid_denuncias md on mdp.id_denuncia  = md.id_denuncia  
+        inner join parametricas.par_clasificador pc on mdp.tipo_denunciante  = pc.id_parametro 
+        where md.id_denuncia = $1 and tipo_denunciado is null`,
+        values:[cod_denuncia]
+            };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows
+            //console.log(resultado)
+            res.status(200).json({
+                datos: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+    }
+
+/**
+ * TODO: Implementar la funcion en la base de datos para obtener los datos para impresión de denuncia
+ * @param {*} req 
+ * @param {*} res 
+ */    
+const obtienedatosPrint = async(req, res) =>{
+    const cod_denuncia = req.params.cod_denuncia
+    console.log("El codigo de denuncia es:", cod_denuncia)
+    const query = {
+        text: `select md.id_denuncia, md.cod_caso, md.id_defensoria, md.id_persona, md.fecha_denuncia, md.caso,
+            cp.convencional, cp.primer_apellido, cp.segundo_apellido, cp.nombres, cp.vulnerabilidad, 
+            cp.vive_con, cp.fecha_nac, cp.direccion, cp.telefono, cp.sexo, md2.descripcion as defensoria,
+            pc.nombre as pobvul, pc2.nombre as vivecon, pc3.nombre as genero, pt.nombre as municipio
+            from sinna_mid.mid_denuncias md 
+            inner join comun.com_personas cp on md.id_persona = cp.id_persona 
+            inner join sinna_mid.mid_defensorias md2 on md.id_defensoria = md2.id_defensorias 
+            inner join parametricas.par_territorial pt on md2.municipio  = pt.id_parametro 
+            inner join parametricas.par_clasificador pc on pc.id_parametro=cp.vulnerabilidad 
+            inner join parametricas.par_clasificador pc2 on pc2.id_parametro=cp.vive_con 
+            inner join parametricas.par_clasificador pc3 on pc3.id_parametro=cp.sexo
+            where md.id_denuncia =  $1`,
+        values:[cod_denuncia]
+            };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows
+            //console.log(resultado)
+            res.status(200).json({
+                datos: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+    }
+
+/**
+ * TODO: Implementar procedimiento para Guardar (Gestionar los familiares) familiares en función a las denucias
+ * @param {*} req 
+ * @param {*} res 
+ */
+const guardaFam= async (req, res) => {
+    const {
+        nna,id_persona,relacion_familiar,id_centro,direccion,latitud,longitud,telefono,observaciones
+    } = req.body
+    
+    const query = {
+        text: `insert into comun.com_familiares_hermanos
+        (nna,id_persona,relacion_familiar,id_centro,direccion,latitud,longitud,telefono,observaciones)
+        values($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+        values:[nna,id_persona,relacion_familiar,id_centro,direccion,latitud,longitud,telefono,observaciones]
+            };
+    await con
+        .query(query)
+        .then((result) =>{
+            const resultado =  result
+            res.status(200).json({
+                datos: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+/**
+ * TODO: Implementar procedimiento para Guardar (Gestionar los familiares) familiares en función a las denucias
+ * @param {*} req 
+ * @param {*} res 
+ */
+const guardaDenPer= async (req, res) => {
+    const { id_denuncia,tipo_denunciante,tipo_denunciado,id_persona,relacion_denuncia,observaciones,
+            id_creado_por,estado,transaccion
+    } = req.body
+    
+    const query = {
+        text: `insert into sinna_mid.mid_denuncias_personas
+        (id_denuncia,tipo_denunciante,tipo_denunciado,id_persona,relacion_denuncia,observaciones,
+            id_creado_por,estado,transaccion)
+        values($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+        values:[id_denuncia,tipo_denunciante,tipo_denunciado,id_persona,relacion_denuncia,observaciones,
+                id_creado_por,estado,transaccion]
+            };
+    await con
+        .query(query)
+        .then((result) =>{
+            const resultado =  result
+            res.status(200).json({
+                datos: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+
 const getToken = async(req, res) =>{
     try {
     const token = jwt.sign({
@@ -148,5 +306,10 @@ module.exports = {
     gestionDenuncias, 
     obtieneDenuncias,
     obtieneDen,
-    getPersonaDenuncia
+    obtieneFamiliares,
+    guardaFam,
+    obtienedendo,
+    obtienedente,
+    obtienedatosPrint,
+    guardaDenPer
 }

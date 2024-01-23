@@ -35,7 +35,7 @@ const parametricasPersona = async (req, res) => {
 
 // Gestión de las personas
 const gestionPersona = async (req, res) => {
-    req.body.ci_usuario = req.user.ci;
+    //req.body.ci_usuario = req.user.ci;
     const v_json = req.body
 
     const query = {
