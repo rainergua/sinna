@@ -13,6 +13,7 @@ const mid_denuncias = require("./app/routes/mid_denuncias.routes")
 const comunRoutes = require("./app/routes/comun.routes")
 const authRoutes= require ("./app/routes/auth.routes")
 const personaRoutes = require("./app/routes/comun_personas.routes")
+const familiaRoutes = require("./app/routes/comun_familiar.routes")
 
 const cors = require("cors")
 
@@ -45,5 +46,6 @@ app.use('/api/workflow',workflowRoutes);
 app.use('/api/parametricas',parametricasRoutes);
 app.use('/api/auth',authRoutes);
 app.use('/api/persona',personaRoutes);
+app.use('/api/familia',familiaRoutes);
 
 module.exports = app;

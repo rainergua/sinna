@@ -35,9 +35,9 @@ const parametricasPersona = async (req, res) => {
 
 // Gestión de las personas
 const gestionPersona = async (req, res) => {
-    //req.body.ci_usuario = req.user.ci;
-    const v_json = req.body
-
+    req.body.ci_usuario = req.user.ci;
+    const v_json = req.body;
+    //console.log(v_json);
     const query = {
         text: `call comun.p_personas($1) `,
         values:[v_json]        
@@ -57,11 +57,10 @@ const gestionPersona = async (req, res) => {
 
 // Listar a las personas registradas en el SINNA
 const mostrarPersona = async (req, res) => {
-    //req.body.ci_usuario = req.user.ci;
     try {
         const listado = await con.query(`select * from comun.f_mostrar_personas()`);
         res.status(200).json({ 
-            datoPersonas: listado.rows,
+            datoAdicional: listado.rows,
             mensaje:"Lista de personas registradas en el SINNA",
             cod:200 
         });
