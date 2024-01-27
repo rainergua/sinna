@@ -20,7 +20,7 @@ const {
  * /api/persona/persona-parametricas:
  *  get:
  *      summary: Obtiene las parametricas para el registro de personas
- *      tags: [personas]
+ *      tags: [Persona]
  *      security:
  *          - bearerAuth: []
  *      responses:
@@ -36,8 +36,8 @@ router.get('/persona-parametricas',
 /**
  * @swagger
  * components:
- *  schemas:    
- *      com_personas:
+ *  schemas:     
+ *      Persona:
  *          type: object
  *          properties:
  *              id_persona:
@@ -118,13 +118,9 @@ router.get('/persona-parametricas',
  *              estado:
  *                  type: string
  *                  description: ACTIVO o INACTIVO
- *              login:
- *                  type: string
- *                  description: el login del usuario
  *          required:
  *              - transaccion
  *              - estado
- *              - login
  *          example:
  *              id_persona: 4
  *              convencional: false
@@ -154,42 +150,43 @@ router.get('/persona-parametricas',
  *              fecha_creado: "2024-01-11 20:14:41.994237"
  *              id_modificado_por: null
  *              fecha_modificado: null
- *              estado: CREADO
+ *              estado: INICIAL
  *              transaccion: CREAR_PERSONA
- *              login: 1
  */
 /**
  * @swagger
  * /api/persona/persona:
  *  post:
  *      summary: Envía los datos para la gestión de personas (ABM). El objeto en el request debe llamarse <v_json>
- *      tags: [personas]
+ *      tags: [Persona]
  *      requestBody:
  *          required: true
  *          content:
  *              application/json:
- *                  schema:
- *                      type: object
- *                      $ref: '#/components/schemas/personas'
  *      responses:
  *          200:
  *              description: Peticion Exitosa
  * 
  */
-router.post('/persona', gestionPersona);
+router.post('/persona', 
+    passport.authenticate('jwt', {session:false}), 
+    gestionPersona
+);
 
 /**
  * @swagger
  * /api/persona/mostrar-persona:
  *  post:
  *      summary: lista de personas registradas en el SINNA
- *      tags: [personas]
+ *      tags: [Persona]
  *      responses:
  *          200:
  *              description: Peticion Exitosa
  * 
  */
-router.post('/mostrar-persona', mostrarPersona);
-
+router.post('/mostrar-persona', 
+    passport.authenticate('jwt', {session:false}), 
+    mostrarPersona
+);
 
 module.exports = router;
