@@ -1,6 +1,9 @@
 const express = require('express');
 const dotenv = require('dotenv');
 //const verifyToken = require('./middlewares/verifyToken')
+const path = require('path');
+
+
 
 const testRoutes = require ('./app/routes/test.routes')
 const mid_defensorias= require ("./app/routes/mid_defensorias.routes")
@@ -18,18 +21,24 @@ const cors = require("cors")
 
 // Create a new Express app
 const app = express();
+
 dotenv.config(); 
 const port = process.env.PORT || 3000;
 const uri = process.env.URI || 'http://localhost';
+
+
 // Configure middleware
 // middleware to parse request bodies as JSON
+
+app.use('/public', express.static(path.join(__dirname, 'app', 'public')));
 app.use(express.json());
 
 app.use(cors({
-    origin: `*`, // Specify the allowed origin
-    methods: 'GET,POST', // Specify the allowed HTTP methods
-    allowedHeaders: 'Content-Type,Authorization', // Specify the allowed headers
-  }));
+  origin: `*`, // Specify the allowed origin
+  methods: 'GET,POST', // Specify the allowed HTTP methods
+  allowedHeaders: 'Content-Type,Authorization', // Specify the allowed headers
+}));
+
 
 require('./utils/auth');
 

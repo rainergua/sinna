@@ -45,8 +45,8 @@ const getListarAcogidosNna = async (req, res) => {
 
 const getParametricasIngreso = async (req, res) => {
     try {
-        ///arreglar aqui mandar el municipio
-        const juzgado = await con.query(`select * from sinna_modefa.f_buscar_juzgado(58)`);
+        let id_centro = req.params.id;
+        const juzgado = await con.query(`select * from sinna_modefa.f_buscar_juzgado(${id_centro})`);
         const montivo_ingreso = await con.query(`select * from sinna_modefa.f_combos_parametricas(199)`);
         const modalidad_egreso = await con.query(`select * from sinna_modefa.f_combos_parametricas(222)`);
         res.status(200).json({
@@ -66,6 +66,8 @@ const getParametricasIngreso = async (req, res) => {
 const gestionAcogidaNaa = async (req, res) => {
     try {
         req.body.ci_usuario = req.user.ci;
+        //Obtener el nombre de la foto
+        req.body.url_foto = req.file.filename;
         const v_json = req.body
         const query = {
             text: `call sinna_modefa.p_acogida_nna($1) `,

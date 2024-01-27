@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
     }
     const destFolder = path.join(__dirname, '..', 'public', folder);
     //const destFolder = path.join('D:\\archivos', folder);
-    console.log(destFolder)
+    //console.log(destFolder)
     fs.ensureDirSync(destFolder);
 
     // Set the destination folder for the uploaded file
@@ -30,8 +30,8 @@ const upload = multer({
     fileSize: 1024 * 1024 * 5 // 5 MB
   },
   fileFilter: (req, file, cb) => {
-    console.log(req.body)
-    console.log(file)
+    //console.log(req.body)
+    //console.log(file)
     if (file.mimetype.startsWith('image/')) {
       cb(null, true);
     } else {

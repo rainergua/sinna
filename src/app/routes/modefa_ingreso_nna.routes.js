@@ -9,7 +9,8 @@ const {
     gestionAcogidaNaa,
     getParametricasTransferencia,
     getCentrosMunicipio
-} = require ('../controllers/modefa_ingreso_nna.controller')
+} = require ('../controllers/modefa_ingreso_nna.controller');
+const upload = require('../middlewares/imageUploadMiddleware');
 
 /**
  * @swagger
@@ -60,9 +61,12 @@ router.get('/buscar-mid/:buscar', passport.authenticate('jwt', {session:false}),
 
 router.post('/acogidos-nna', passport.authenticate('jwt', {session:false}), getListarAcogidosNna);
 
-router.get('/ingreso-parametrica', passport.authenticate('jwt', {session:false}), getParametricasIngreso);
+router.get('/ingreso-parametrica/:id', passport.authenticate('jwt', {session:false}), getParametricasIngreso);
 
-router.post('/gestion-acogida', passport.authenticate('jwt', {session:false}), gestionAcogidaNaa);
+router.post('/gestion-acogida', 
+    passport.authenticate('jwt', {session:false}), 
+    upload.single('url_foto'),
+    gestionAcogidaNaa);
 
 router.get('/transferencia-parametrica', passport.authenticate('jwt', {session:false}), getParametricasTransferencia);
 
