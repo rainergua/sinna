@@ -54,7 +54,8 @@ const obtieneMun = async (req, res) => {
 }
 
 const obtieneParam = async (req, res) => {
-    const id_parametro_padre = req.params.id
+    const id_parametro_padre = req.params.id;
+
     const query = {
         text: `select * from parametricas.f_listar_parametricas($1) `,
         values:[id_parametro_padre]
@@ -64,7 +65,7 @@ const obtieneParam = async (req, res) => {
         .then((result) =>{
             //formateamos el resultado para que retorne solo Rows y Fields
             const resultado =  result.rows;
-            console.log(resultado)
+
             res.status(200).json({
                 datoAdicional: resultado,
                 mensaje:"Parametros obtenidos correctamente",

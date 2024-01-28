@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+
 
 const con = require('../../infraestructure/config/config');
 

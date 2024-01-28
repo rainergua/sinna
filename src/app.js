@@ -17,6 +17,7 @@ const comunRoutes = require("./app/routes/comun.routes")
 const authRoutes= require ("./app/routes/auth.routes")
 const personaRoutes = require("./app/routes/comun_personas.routes")
 const familiaRoutes = require("./app/routes/comun_familiar.routes")
+const movimientosRoutes=require("./app/routes/mospa_movimientos.routes")
 
 const cors = require("cors")
 
@@ -51,6 +52,7 @@ app.use('/api/comun',comunRoutes);
 app.use('/api/modefa',modefa_centros_acogimiento);
 app.use('/api/modefa',modefa_ingreso_nna);
 app.use('/api/mospa',mospaRoutes);
+app.use('/api/mospa',movimientosRoutes);
 app.use('/api/workflow',workflowRoutes);
 app.use('/api/parametricas',parametricasRoutes);
 app.use('/api/auth',authRoutes);
