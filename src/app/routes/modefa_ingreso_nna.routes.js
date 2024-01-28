@@ -59,16 +59,22 @@ router.get('/centro-usuario',
  */
 router.get('/buscar-mid/:buscar', passport.authenticate('jwt', {session:false}), getBuscarPersonaMid);
 
-router.post('/acogidos-nna', passport.authenticate('jwt', {session:false}), getListarAcogidosNna);
+router.post('/acogidos-nna', 
+    passport.authenticate('jwt', {session:false}), 
+    getListarAcogidosNna);
 
-router.get('/ingreso-parametrica/:id', passport.authenticate('jwt', {session:false}), getParametricasIngreso);
+router.get('/ingreso-parametrica/:id', 
+    passport.authenticate('jwt', {session:false}), 
+    getParametricasIngreso);
 
 router.post('/gestion-acogida', 
     passport.authenticate('jwt', {session:false}), 
     upload.single('url_foto'),
     gestionAcogidaNaa);
 
-router.get('/transferencia-parametrica', passport.authenticate('jwt', {session:false}), getParametricasTransferencia);
+router.get('/transferencia-parametrica/:id', 
+    passport.authenticate('jwt', {session:false}), 
+    getParametricasTransferencia);
 
 router.get('/centros-municipio/:id', passport.authenticate('jwt', {session:false}), getCentrosMunicipio);
 
