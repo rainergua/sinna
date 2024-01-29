@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 const verificaToken = require('../middlewares/verificaToken')
 const router = express.Router();
 
@@ -8,10 +9,10 @@ const {
     updFileDef,
     //obtieneDepto,
     //obtieneProv,
-    getToken,
     //obtieneMun,
     obtieneDefensorias,
     obtieneDef,
+    obtieneUsuarioDefensoria
 } = require ('../controllers/mid_defensorias.controller')
 /**
  * @swagger
@@ -95,7 +96,7 @@ const {
  * 
  */
 
-router.post('/gestiondefensoria', gestionDefensoria);
+router.post('/gestiondefensoria', passport.authenticate('jwt', {session:false}), gestionDefensoria);
 
 router.post('/updfiledef', upload.single('file'), updFileDef);
 
@@ -132,7 +133,9 @@ router.get('/obtienedefensorias', obtieneDefensorias);
  */
 router.get('/obtienedef/:id', obtieneDef);
 
-/*router.get('/gettoken', getToken);*/
+
+
+router.get('/obtieneusudef', passport.authenticate('jwt', {session:false}), obtieneUsuarioDefensoria);
 
 //router.post('/gettoken', getToken);
 

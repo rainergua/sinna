@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 const router = express.Router();
 
 const  upload = require ('../middlewares/imageUploadMiddleware')
@@ -133,10 +134,10 @@ router.get('/obtieneden/:id', obtieneDen);
  */
 router.get('/obtienedatosprint/:cod_denuncia', obtienedatosPrint);
 
-router.post('/gestiondenuncias', gestionDenuncias);
+router.post('/gestiondenuncias', passport.authenticate('jwt', {session:false}), gestionDenuncias);
 
 router.post('/guardafamiliar', guardaFam)
 //guardadenper
-router.post('/guardadenper', guardaDenPer)
+router.post('/guardadenper', passport.authenticate('jwt', {session:false}), guardaDenPer)
 
 module.exports = router;
