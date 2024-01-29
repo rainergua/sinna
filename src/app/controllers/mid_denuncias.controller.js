@@ -1,5 +1,3 @@
-const jwt = require('jsonwebtoken');
-
 const con = require('../../infraestructure/config/config');
 
 /**
@@ -44,8 +42,9 @@ const getParametrosDenuncia = async (req, res) => {
  * @param {res_json} res response en formato json
  */
 const gestionDenuncias = async (req, res) => {
+    req.body.ci_usuario = req.user.ci;
     const v_json = req.body
-    //console.log(v_json)
+    console.log(v_json)
     const query = {
         text: `call sinna_mid.p_denuncias($1) `,
         values:[v_json]
@@ -68,7 +67,7 @@ const gestionDenuncias = async (req, res) => {
 */
 const obtieneDenuncias = async (req, res) => {
     const query = {
-        text: `select * from sinna_mid.listar_denuncias() order by id_denuncia`
+        text: `select * from sinna_mid.listar_denuncias() order by id_denuncia desc`
             };
     await con
         .query(query)
@@ -263,18 +262,13 @@ const guardaFam= async (req, res) => {
  * @param {*} res 
  */
 const guardaDenPer= async (req, res) => {
-    const { id_denuncia,tipo_denunciante,tipo_denunciado,id_persona,relacion_denuncia,observaciones,
-            id_creado_por,estado,transaccion
-    } = req.body
-    
+    req.body.ci_usuario = req.user.ci;
+    const v_json = req.body;
+    console.log(v_json);
     const query = {
-        text: `insert into sinna_mid.mid_denuncias_personas
-        (id_denuncia,tipo_denunciante,tipo_denunciado,id_persona,relacion_denuncia,observaciones,
-            id_creado_por,estado,transaccion)
-        values($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
-        values:[id_denuncia,tipo_denunciante,tipo_denunciado,id_persona,relacion_denuncia,observaciones,
-                id_creado_por,estado,transaccion]
-            };
+        text: `call sinna_mid.p_denuncias_personas($1) `,
+        values:[v_json]        
+    };
     await con
         .query(query)
         .then((result) =>{
@@ -284,21 +278,6 @@ const guardaDenPer= async (req, res) => {
             })}
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
-}
-
-const getToken = async(req, res) =>{
-    try {
-    const token = jwt.sign({
-      }, process.env.JWT_SECRET);
-      res.status(200).json({
-        accessToken: token
-      })}
-      catch (err){
-        console.log(err)
-        res.status(500).json({
-            message: "Internal server error"
-          });
-      }
 }
 
 module.exports = {
