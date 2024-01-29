@@ -13,7 +13,7 @@ router.get('/movimientos-parametrica',
     getParametricasIngresos
 );
 
-router.post('/listarCentros',
+router.post('/obtenerPersona',
     passport.authenticate('jwt',{session:false}),
     obtenerPersona
 );
