@@ -42,21 +42,53 @@ const getParametricasIngresos = async (req, res) => {
 
 
 const obtenerPersona = async (req, res) => {
+    try {
+        const buscar = req.params.buscar;
+        const datos = await con.query(`select * from sinna_mospa.f_obtener_persona($1)`, [buscar]);
+        res.status(200).json({
+            datoAdicional: datos.rows,
+            mensaje:"Listar centro de acogida asignada a usuario",
+            cod:200
+        });
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
+const gestionMovimientos = async (req, res) => {
+    req.body.ci_usuario = req.user.ci;
+    const v_json = req.body
     const query = {
-        text: `select * from comun.f_obtener_persona('{ "ci":${req.body.ci},"ci_complemento":${req.body.ci_complemento},"nombre":"${req.body.nombre}","paterno":"${req.user.paterno}","materno":"${req.user.materno}" }') `,
-
+        text: `call sinna_mospa.p_gestion_movimientos($1) `,
+        values:[v_json]
     };
-
     await con
         .query(query)
         .then((result) =>{
-            //formateamos el resultado para que retorne solo Rows y Fields
-            const resultado =  result.rows;
-            console.log(resultado)
+            const resultado =  result.rows[0];
             res.status(200).json({
-                datoAdicional: resultado,
-                mensaje:"Se identifico a la persona",
-                cod:200
+                result: resultado,
+
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
+const gestionPersonasDetalle = async (req, res) => {
+    req.body.ci_usuario = req.user.ci;
+    const v_json = req.body
+    const query = {
+        text: `call comun.p_personas_ajustado($1) `,
+        values:[v_json]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            const resultado =  result.rows[0];
+            console.log(resultado);
+            res.status(200).json({
+                result: resultado,
+
             })}
         )
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
@@ -64,5 +96,7 @@ const obtenerPersona = async (req, res) => {
 
 module.exports = {
     getParametricasIngresos,
-    obtenerPersona
+    obtenerPersona,
+    gestionMovimientos,
+    gestionPersonasDetalle
 }
