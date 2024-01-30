@@ -99,7 +99,7 @@ const obtieneUsuarioDefensoria = async (req, res) =>{
     ci_usuario = req.user.ci;
     const query = {
         text: `select wu.ci_usuario, wu.id_usuario, md.id_defensorias, md.departamento as id_depto, md.municipio as id_muni, 
-        md.descripcion, md.responsable, md.telefono, pt.nombre as departamento, pt2.nombre as municipio--,* 
+        md.descripcion, md.responsable, md.telefono, pt.nombre as departamento, pt2.nombre as municipio, md.latitud, md.longitud 
         from workflow.wf_usuario wu 
         inner join workflow.wf_usuarios_centros wuc 
         on wu.id_usuario = wuc.id_usuario 
