@@ -94,9 +94,32 @@ const gestionPersonasDetalle = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const listarMovimientos = async (req, res) => {
+
+    const query = {
+        text: `select * from sinna_mospa.f_listar_movimientos('${req.body.estado}',${req.body.id_centro} ) `,
+
+    };
+
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows;
+            console.log(resultado)
+            res.status(200).json({
+                datoAdicional: resultado,
+                mensaje:"Se obtuvo el listado de movimientos del centro",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
 module.exports = {
     getParametricasIngresos,
     obtenerPersona,
     gestionMovimientos,
-    gestionPersonasDetalle
+    gestionPersonasDetalle,
+    listarMovimientos
 }

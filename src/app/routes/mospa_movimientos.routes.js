@@ -1,7 +1,8 @@
 const express = require('express');
 
 const passport =require('passport')
-const {getParametricasIngresos, obtenerPersona, gestionMovimientos, gestionPersonasDetalle} = require("../controllers/mospa_movimientos.controller");
+const {getParametricasIngresos, obtenerPersona, gestionMovimientos, gestionPersonasDetalle, listarMovimientos} = require("../controllers/mospa_movimientos.controller");
+
 
 
 const router = express.Router();
@@ -30,6 +31,10 @@ router.post('/gestionPersonasDetalle',
     gestionPersonasDetalle
 );
 
+router.post('/listarMovimientos',
+    passport.authenticate('jwt',{session:false}),
+    listarMovimientos
+);
 
 
 
