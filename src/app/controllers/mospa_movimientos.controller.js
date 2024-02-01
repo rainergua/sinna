@@ -33,6 +33,7 @@ const getParametricasIngresos = async (req, res) => {
                 gradoInstruccion:gradoInstruccion.rows,
                 ocupacion:ocupacion.rows,
                 modalidadEgreso:modalidadEgreso.rows,
+
             },
             mensaje:"Paramétricas obtenidas para el ingreso",
             cod:200}
