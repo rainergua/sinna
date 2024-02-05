@@ -1,5 +1,8 @@
 const con = require("../../infraestructure/config/config");
 const getParametricasIngresos = async (req, res) => {
+
+    const id=req.body.id;
+
     try {
         const sexo = await con.query(`select * from sinna_mospa.f_combos_parametricas(15)`);
         const poblacionVulnerable = await con.query(`select * from sinna_mospa.f_combos_parametricas(31)`);
@@ -9,13 +12,15 @@ const getParametricasIngresos = async (req, res) => {
         const aCargoDe = await con.query(`select * from sinna_mospa.f_combos_parametricas(299)`);
         const cursoEstudio= await con.query(`select * from sinna_mospa.f_combos_parametricas(328)`);
         const juzgados= await con.query(`select * from sinna_mospa.f_listar_juzgados()`);
-        const tiposDelito= await con.query(`select * from sinna_mospa.f_combos_parametricas(61)`);
+        const tiposDelito= await con.query(`select * from sinna_mospa.f_delitos_mospa()`);
         const situacionProcesal= await con.query(`select * from sinna_mospa.f_combos_parametricas(321)`);
         const tipoMedida= await con.query(`select * from sinna_mospa.f_combos_parametricas(324)`);
         const parentesco= await con.query(`select * from sinna_mospa.f_combos_parametricas(39)`);
         const gradoInstruccion= await con.query(`select * from sinna_mospa.f_combos_parametricas(231)`);
         const ocupacion= await con.query(`select * from sinna_mospa.f_combos_parametricas(249)`);
         const modalidadEgreso= await con.query(`select * from sinna_mospa.f_combos_parametricas(222)`);
+        const departamentos = await con.query(`select * from sinna_mospa.f_listar_departamentos()`);
+        const municipiosDpto = await con.query(`select * from sinna_mospa.f_obtener_municipios_de_dpto(id)`);
         res.status(200).json({
             resCombos: {
                 sexo: sexo.rows,
@@ -33,6 +38,8 @@ const getParametricasIngresos = async (req, res) => {
                 gradoInstruccion:gradoInstruccion.rows,
                 ocupacion:ocupacion.rows,
                 modalidadEgreso:modalidadEgreso.rows,
+                departamentos:departamentos.rows,
+                municipiosDpto:municipiosDpto.rows
 
             },
             mensaje:"Paramétricas obtenidas para el ingreso",

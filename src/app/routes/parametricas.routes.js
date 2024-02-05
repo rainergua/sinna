@@ -10,7 +10,7 @@ const {
     listarMunicipios,*/
     obtieneDepto,
     obtieneProv,
-    obtieneMun, obtieneParam,
+    obtieneMun, obtieneParam, obtieneMunDpto, obtenerPoblacionAtiende,
 } = require ('../controllers/parametricas.controller')
 
 /**
@@ -80,4 +80,15 @@ router.get('/obtieneprov/:id', passport.authenticate('jwt',{session:false}), obt
  * 
  */
 router.get('/obtienemun/:id', passport.authenticate('jwt',{session:false}), obtieneMun);
+
+router.get('/obtieneMunDpto/:id',
+    passport.authenticate('jwt',{session:false}),
+    obtieneMunDpto
+);
+
+
+router.get('/obtenerPoblacionAtiende',
+    passport.authenticate('jwt',{session:false}),
+    obtenerPoblacionAtiende
+);
 module.exports = router;
