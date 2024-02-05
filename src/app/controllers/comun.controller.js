@@ -42,7 +42,35 @@ const listarPersonas = async (req, res) => {
         )
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
+
+
+// Gestión de las personas
+const gestionPersona = async (req, res) => {
+    req.body.ci_usuario = req.user.ci;
+    const v_json = req.body;
+    //console.log(v_json);
+    const query = {
+        //text: `call comun.p_personas($1) `,
+        text: `call comun.p_personas_ajustado_array($1) `,
+        values:[v_json]        
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            const resultado =  result.rows;
+            res.status(200).json({
+                datoAdicional: resultado,
+                mensaje:"Gestión de personas establecida con éxito",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+
+
+
 module.exports = {
     getPersonaCi,
-    listarPersonas
+    listarPersonas,
+    gestionPersona
 }

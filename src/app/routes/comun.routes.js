@@ -1,10 +1,11 @@
 const express = require('express');
-const verificaToken = require('../middlewares/verificaToken')
+const passport = require('passport');
 const router = express.Router();
 
 const { 
     getPersonaCi,
-    listarPersonas
+    listarPersonas,
+    gestionPersona,
 } = require ('../controllers/comun.controller')
 
 /**
@@ -27,6 +28,26 @@ const {
  * 
  */
 router.get('/getpersonaci/:ci', getPersonaCi);
+/**
+ * @swagger
+ * /api/persona/persona:
+ *  post:
+ *      summary: Envía los datos para la gestión de personas (ABM). El objeto en el request debe llamarse <v_json>
+ *      tags: [Persona]
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *      responses:
+ *          200:
+ *              description: Peticion Exitosa
+ * 
+ */
+router.post('/persona', 
+    passport.authenticate('jwt', {session:false}), 
+    gestionPersona
+);
+
 
 router.get('/listarPersonas', listarPersonas);
 

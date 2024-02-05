@@ -6,15 +6,16 @@ const con = require('../../infraestructure/config/config');
  */
 const getParametrosDenuncia = async (req, res) => {
     try {
-        const tipo_denuncia = await con.query(`select id_parametro as id, descripcion as value from parametricas.f_listar_parametricas(61) order by descripcion`);
-        const poblacion_vulnerable = await con.query(`select id_parametro as id, nombre as value from parametricas.f_listar_parametricas(31)`);
+        const tipo_denuncia = await con.query(`select id_parametro as value, descripcion as label from parametricas.f_listar_parametricas(61) order by descripcion`);
+        const poblacion_vulnerable = await con.query(`select id_parametro as value, nombre as label from parametricas.f_listar_parametricas(31)`);
         const sexo = await con.query(`select id_parametro as id, descripcion as value from parametricas.f_listar_parametricas(15)`);
-        const vive_con = await con.query(`select id_parametro as id, nombre as value from parametricas.f_listar_parametricas(299)`);
+        const vive_con = await con.query(`select id_parametro as value, nombre as label from parametricas.f_listar_parametricas(299)`);
         const relacion_denuncia = await con.query(`select id_parametro as id, nombre as value from parametricas.f_listar_parametricas(159)`);
         const relacion_familiar = await con.query(`select id_parametro as id, nombre as value from parametricas.f_listar_parametricas(39)`);
         const tipo_fec_nac = await con.query(`select id_parametro as id, nombre as value from parametricas.f_listar_parametricas(18)`);
         const tipo_denunciante = await con.query(`select id_parametro as id, nombre as value from parametricas.f_listar_parametricas(152)`);
         const tipo_denunciado = await con.query(`select id_parametro as id, nombre as value from parametricas.f_listar_parametricas(156)`);
+        const tipo_ci_exp = await con.query(`select id_parametro as id, nombre as value from parametricas.f_listar_parametricas(21)`);
         res.status(200).json({
             parametros: {
                 tipo_denuncia: tipo_denuncia.rows,
@@ -26,6 +27,7 @@ const getParametrosDenuncia = async (req, res) => {
                 tipo_fec_nac: tipo_fec_nac.rows,
                 tipo_denunciante: tipo_denunciante.rows,
                 tipo_denunciado: tipo_denunciado.rows,
+                tipo_ci_exp: tipo_ci_exp.rows
 
             },
             mensaje:"Se obtuvo los parámetros solicitados",
@@ -204,17 +206,17 @@ const obtienedatosPrint = async(req, res) =>{
     console.log("El codigo de denuncia es:", cod_denuncia)
     const query = {
         text: `select md.id_denuncia, md.cod_caso, md.id_defensoria, md.id_persona, md.fecha_denuncia, md.caso,
-            cp.convencional, cp.primer_apellido, cp.segundo_apellido, cp.nombres, cp.vulnerabilidad, 
-            cp.vive_con, cp.fecha_nac, cp.direccion, cp.telefono, cp.sexo, md2.descripcion as defensoria,
-            pc.nombre as pobvul, pc2.nombre as vivecon, pc3.nombre as genero, pt.nombre as municipio
-            from sinna_mid.mid_denuncias md 
-            inner join comun.com_personas cp on md.id_persona = cp.id_persona 
-            inner join sinna_mid.mid_defensorias md2 on md.id_defensoria = md2.id_defensorias 
-            inner join parametricas.par_territorial pt on md2.municipio  = pt.id_parametro 
-            inner join parametricas.par_clasificador pc on pc.id_parametro=cp.vulnerabilidad 
-            inner join parametricas.par_clasificador pc2 on pc2.id_parametro=cp.vive_con 
-            inner join parametricas.par_clasificador pc3 on pc3.id_parametro=cp.sexo
-            where md.id_denuncia =  $1`,
+		md.tipologia_denuncia, md.tipologia_denuncia_sec, cpd.direccion, cpd.telefono, 
+        cp.convencional, cp.primer_apellido, cp.segundo_apellido, cp.nombres, cpd.tipo_vulnerabilidad, 
+        cpd.tipo_vive_con, cp.fecha_nac, cpd.edad_estimada, cp.sexo, md2.descripcion as defensoria,
+        pc3.nombre as genero, pt.nombre as municipio
+        from sinna_mid.mid_denuncias md 
+        inner join comun.com_personas cp on md.id_persona = cp.id_persona 
+        inner join comun.com_personas_detalle cpd on cp.id_persona = cpd.id_persona 
+        inner join sinna_mid.mid_defensorias md2 on md.id_defensoria = md2.id_defensorias 
+        inner join parametricas.par_territorial pt on md2.municipio  = pt.id_parametro 
+        inner join parametricas.par_clasificador pc3 on pc3.id_parametro=cp.sexo
+        where md.id_denuncia =  $1`,
         values:[cod_denuncia]
             };
     await con
