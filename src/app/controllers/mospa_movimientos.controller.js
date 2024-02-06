@@ -50,7 +50,7 @@ const getParametricasIngresos = async (req, res) => {
     }
 }
 
-const obtieneMunDpto = async (req, res) => {
+const obtieneMunicipioDpto = async (req, res) => {
     const dpto = req.params.id
     const query = {
         text: `select * from sinna_mospa.f_obtener_municipios_de_dpto($1) `,
@@ -67,6 +67,8 @@ const obtieneMunDpto = async (req, res) => {
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
+
+
 
 
 
@@ -145,11 +147,33 @@ const listarMovimientos = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const obtieneCentrosDestino = async (req, res) => {
+    const query = {
+        text: `select * from sinna_mospa.f_combo_centros_destino(${req.body.id} ) `,
+    };
+
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows;
+            console.log(resultado)
+            res.status(200).json({
+                datoAdicional: resultado,
+                mensaje:"Se obtuvo el listado de movimientos del centro",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+
+}
+
 module.exports = {
     getParametricasIngresos,
     obtenerPersona,
     gestionMovimientos,
     gestionPersonasDetalle,
     listarMovimientos,
-    obtieneMunDpto
+    obtieneMunicipioDpto,
+    obtieneCentrosDestino
 }
