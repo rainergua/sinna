@@ -16,6 +16,7 @@ const getParametricasIngresos = async (req, res) => {
         const gradoInstruccion= await con.query(`select * from sinna_mospa.f_combos_parametricas(231)`);
         const ocupacion= await con.query(`select * from sinna_mospa.f_combos_parametricas(249)`);
         const modalidadEgreso= await con.query(`select * from sinna_mospa.f_combos_parametricas(222)`);
+        
         res.status(200).json({
             resCombos: {
                 sexo: sexo.rows,
