@@ -53,6 +53,41 @@ const obtieneMun = async (req, res) => {
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
 
+const obtieneMunDpto = async (req, res) => {
+    const dpto = req.params.id
+    const query = {
+        text: `select * from sinna_mospa.f_obtener_municipios_de_dpto($1) `,
+        values:[dpto]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows
+            const resultado =  result.rows
+            res.status(200).json({
+                datos: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+
+const obtenerPoblacionAtiende = async (req, res) => {
+    const query = {
+        text: `select * from sinna_mospa.f_combos_parametricas(404) `,
+
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows
+            const resultado =  result.rows
+            res.status(200).json({
+                datos: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+
 const obtieneParam = async (req, res) => {
     const id_parametro_padre = req.params.id;
 
@@ -143,4 +178,6 @@ module.exports = {
     obtieneDepto,
     obtieneMun,
     obtieneProv,
+    obtieneMunDpto,
+    obtenerPoblacionAtiende
 }
