@@ -18,6 +18,7 @@ const authRoutes= require ("./app/routes/auth.routes")
 const personaRoutes = require("./app/routes/comun_personas.routes")
 const familiaRoutes = require("./app/routes/comun_familiar.routes")
 const movimientosRoutes=require("./app/routes/mospa_movimientos.routes")
+const juzgadoRoutes = require("./app/routes/comun_juzgados.routes")
 
 const cors = require("cors")
 
@@ -58,5 +59,6 @@ app.use('/api/parametricas',parametricasRoutes);
 app.use('/api/auth',authRoutes);
 app.use('/api/persona',personaRoutes);
 app.use('/api/familia',familiaRoutes);
+app.use('/api/juzgados',juzgadoRoutes);
 
 module.exports = app;

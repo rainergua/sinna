@@ -9,7 +9,7 @@ const con = require('../../infraestructure/config/config');
 const listarCentros = async (req, res) => {
 
     const query = {
-        text: `select * from sinna_mospa.f_listar_centros('{ "tipo_centro":${req.body.tipo_centro},"alcance":${req.body.alcance},"estado":"${req.body.estado}","ci_usuario":"${req.user.ci}" }') `,
+        text: `select * from sinna_mospa.f_listar_centros('{ "tipo_centro":${req.body.tipo_centro},"estado":"${req.body.estado}","ci_usuario":"${req.user.ci}" }') `,
 
     };
 
@@ -47,8 +47,27 @@ const gestionCentros = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const obtenerTerritorioUsr = async (req, res) => {
+    const ci = req.user.ci;
+    const query = {
+        text: `select * from sinna_mospa.f_obtener_territorio_usr($1) `,
+        values:[ci]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            const resultado =  result.rows[0];
+            res.status(200).json({
+                result: resultado,
+
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
 module.exports = {
     listarCentros,
-    gestionCentros
+    gestionCentros,
+    obtenerTerritorioUsr
 
 }

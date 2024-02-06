@@ -43,17 +43,34 @@ const getListarAcogidosNna = async (req, res) => {
     }
 }
 
+const getListarTransferencia = async (req, res) => {
+    try {
+        let id_centro = req.body.id_centro;
+        let estado = req.body.estado;
+        const datos = await con.query(`select * from sinna_modefa.f_listar_transferencia($1,$2)`, [id_centro,estado]);
+        res.status(200).json({ 
+            datoAdicional: datos.rows,
+            mensaje:"Lista de transferidos",
+            cod:200
+        });
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
 const getParametricasIngreso = async (req, res) => {
     try {
         let id_centro = req.params.id;
         const juzgado = await con.query(`select * from sinna_modefa.f_buscar_juzgado(${id_centro})`);
         const montivo_ingreso = await con.query(`select * from sinna_modefa.f_combos_parametricas(199)`);
         const modalidad_egreso = await con.query(`select * from sinna_modefa.f_combos_parametricas(222)`);
+        const tipo_acogida = await con.query(`select * from sinna_modefa.f_combos_parametricas(431)`);
         res.status(200).json({
             datoAdicional: {
                 juzgado: juzgado.rows,
                 montivo_ingreso: montivo_ingreso.rows,
                 modalidad_egreso: modalidad_egreso.rows,
+                tipo_acogida: tipo_acogida.rows
             },
             mensaje:"Paramétricas de ingreso de NNA a CDA",
             cod:200}
@@ -117,6 +134,7 @@ module.exports = {
     getCentroAcogidaUsuario,
     getBuscarPersonaMid,
     getListarAcogidosNna,
+    getListarTransferencia,
     getParametricasIngreso,
     gestionAcogidaNaa,
     getParametricasTransferencia,
