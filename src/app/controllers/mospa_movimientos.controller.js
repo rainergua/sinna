@@ -6,7 +6,7 @@ const getParametricasIngresos = async (req, res) => {
         const tipoFechaNacimiento = await con.query(`select * from sinna_mospa.f_combos_parametricas(18)`);
         const lugarNacimiento = await con.query(`select * from sinna_mospa.f_listar_departamentos()`);
         const estadoCivil = await con.query(`select * from sinna_mospa.f_combos_parametricas(244)`);
-        const aCargoDe = await con.query(`select * from sinna_mospa.f_combos_parametricas(299)`);
+        const aCargoDe = await con.query(`select * from sinna_mospa.f_combos_parametricas(39)`);
         const cursoEstudio= await con.query(`select * from sinna_mospa.f_combos_parametricas(328)`);
         const juzgados= await con.query(`select * from sinna_mospa.f_listar_juzgados()`);
         const tiposDelito= await con.query(`select * from sinna_mospa.f_combos_parametricas(61)`);
@@ -16,7 +16,8 @@ const getParametricasIngresos = async (req, res) => {
         const gradoInstruccion= await con.query(`select * from sinna_mospa.f_combos_parametricas(231)`);
         const ocupacion= await con.query(`select * from sinna_mospa.f_combos_parametricas(249)`);
         const modalidadEgreso= await con.query(`select * from sinna_mospa.f_combos_parametricas(222)`);
-        
+        const departamentos = await con.query(`select * from sinna_mospa.f_listar_departamentos()`);
+
         res.status(200).json({
             resCombos: {
                 sexo: sexo.rows,
@@ -34,6 +35,8 @@ const getParametricasIngresos = async (req, res) => {
                 gradoInstruccion:gradoInstruccion.rows,
                 ocupacion:ocupacion.rows,
                 modalidadEgreso:modalidadEgreso.rows,
+                departamentos:departamentos.rows,
+
 
             },
             mensaje:"Paramétricas obtenidas para el ingreso",
@@ -43,6 +46,25 @@ const getParametricasIngresos = async (req, res) => {
         res.status(500).json({ msg: 'Error: ' + e });
     }
 }
+
+const obtieneMunDpto = async (req, res) => {
+    const dpto = req.params.id
+    const query = {
+        text: `select * from sinna_mospa.f_obtener_municipios_de_dpto($1) `,
+        values:[dpto]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows
+            const resultado =  result.rows
+            res.status(200).json({
+                datos: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+
 
 
 const obtenerPersona = async (req, res) => {
@@ -125,5 +147,6 @@ module.exports = {
     obtenerPersona,
     gestionMovimientos,
     gestionPersonasDetalle,
-    listarMovimientos
+    listarMovimientos,
+    obtieneMunDpto
 }
