@@ -17,6 +17,7 @@ const getParametricasIngresos = async (req, res) => {
         const ocupacion= await con.query(`select * from sinna_mospa.f_combos_parametricas(249)`);
         const modalidadEgreso= await con.query(`select * from sinna_mospa.f_combos_parametricas(222)`);
         const departamentos = await con.query(`select * from sinna_mospa.f_listar_departamentos()`);
+        const tipoDefensor= await con.query(`select * from sinna_mospa.f_combos_parametricas(435)`);
 
         res.status(200).json({
             resCombos: {
@@ -36,7 +37,7 @@ const getParametricasIngresos = async (req, res) => {
                 ocupacion:ocupacion.rows,
                 modalidadEgreso:modalidadEgreso.rows,
                 departamentos:departamentos.rows,
-
+                tipoDefensor:tipoDefensor.rows,
 
             },
             mensaje:"Paramétricas obtenidas para el ingreso",
