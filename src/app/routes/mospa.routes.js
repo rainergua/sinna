@@ -3,7 +3,7 @@ const express = require('express');
 const passport =require('passport')
 const router = express.Router();
 const {
-    listarCentros, gestionCentros, obtenerTerritorioUsr,
+    listarCentros, gestionCentros, obtenerTerritorioUsr, obtenerCentro, datosCentro,
 } = require ('../controllers/mospa.controller')
 /**
  * @swagger
@@ -91,6 +91,12 @@ router.get(
     '/obtenerTerritorioUsr',
     passport.authenticate('jwt',{session:false}),
     obtenerTerritorioUsr
+);
+
+router.get(
+    '/datosCentro/:id',
+    passport.authenticate('jwt',{session:false}),
+    datosCentro
 );
 
 
