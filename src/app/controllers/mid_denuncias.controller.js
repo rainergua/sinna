@@ -31,7 +31,8 @@ const getParametrosDenuncia = async (req, res) => {
 
             },
             mensaje:"Se obtuvo los parámetros solicitados",
-            cod:200}
+            cod:200
+        }
         );
     } catch (e) {
         res.status(500).json({ msg: 'Error: ' + e });
@@ -117,9 +118,10 @@ const obtieneFamiliares= async (req, res) => {
     const query = {
         text: `select md.cod_caso, md.id_denuncia, cfh.id_familiar, cfh.nna, cfh.relacion_familiar, 
         cp.primer_apellido, cp.segundo_apellido, cp.nombres,
-        cp.direccion, pc.nombre  
+        cpd.direccion, pc.nombre  
         from comun.com_familiares_hermanos cfh 
         inner join comun.com_personas cp on cfh.id_persona = cp.id_persona 
+        inner join comun.com_personas_detalle cpd  on cpd.id_persona = cp.id_persona
         inner join sinna_mid.mid_denuncias md on cfh.nna = md.id_persona 
         inner join parametricas.par_clasificador pc on cfh.relacion_familiar = pc.id_parametro 
         where md.id_denuncia = $1`,
@@ -145,9 +147,10 @@ const obtieneFamiliares= async (req, res) => {
 const obtienedendo = async(req, res) =>{const cod_denuncia = req.params.cod_denuncia
     const query = {
         text: `select md.cod_caso, mdp.id_denuncia , mdp.tipo_denunciado, cp.primer_apellido, cp.segundo_apellido, cp.nombres,
-        cp.direccion, pc.nombre, md.cod_caso 
+        cpd.direccion, pc.nombre, md.cod_caso 
         from sinna_mid.mid_denuncias_personas mdp
         inner join comun.com_personas cp on mdp.id_persona = cp.id_persona 
+        inner join comun.com_personas_detalle cpd  on cpd.id_persona = cp.id_persona
         inner join sinna_mid.mid_denuncias md on mdp.id_denuncia  = md.id_denuncia  
         inner join parametricas.par_clasificador pc on mdp.tipo_denunciado  = pc.id_parametro 
         where md.id_denuncia = $1 and tipo_denunciante is null`,
@@ -175,9 +178,10 @@ const obtienedente = async(req, res) =>{
     const cod_denuncia = req.params.cod_denuncia
     const query = {
         text: `select md.cod_caso, mdp.id_denuncia , mdp.tipo_denunciante, cp.primer_apellido, cp.segundo_apellido, cp.nombres,
-        cp.direccion, pc.nombre, md.cod_caso 
+        cpd.direccion, pc.nombre, md.cod_caso 
         from sinna_mid.mid_denuncias_personas mdp
         inner join comun.com_personas cp on mdp.id_persona = cp.id_persona 
+        inner join comun.com_personas_detalle cpd  on cpd.id_persona = cp.id_persona
         inner join sinna_mid.mid_denuncias md on mdp.id_denuncia  = md.id_denuncia  
         inner join parametricas.par_clasificador pc on mdp.tipo_denunciante  = pc.id_parametro 
         where md.id_denuncia = $1 and tipo_denunciado is null`,
@@ -259,7 +263,6 @@ const guardaFam= async (req, res) => {
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
 /**
- * TODO: Implementar procedimiento para Guardar (Gestionar los familiares) familiares en función a las denucias
  * @param {*} req 
  * @param {*} res 
  */
