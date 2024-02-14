@@ -5,6 +5,7 @@ const {
     getCentroAcogidaUsuario,
     getBuscarPersonaMid,
     getListarAcogidosNna,
+    getListarTransferencia,
     getParametricasIngreso,
     gestionAcogidaNaa,
     getParametricasTransferencia,
@@ -62,6 +63,10 @@ router.get('/buscar-mid/:buscar', passport.authenticate('jwt', {session:false}),
 router.post('/acogidos-nna', 
     passport.authenticate('jwt', {session:false}), 
     getListarAcogidosNna);
+
+router.post('/transferencia', 
+    passport.authenticate('jwt', {session:false}), 
+    getListarTransferencia);
 
 router.get('/ingreso-parametrica/:id', 
     passport.authenticate('jwt', {session:false}), 

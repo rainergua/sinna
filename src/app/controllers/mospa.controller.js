@@ -28,6 +28,22 @@ const listarCentros = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+
+
+const datosCentro = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const datos = await con.query(`select * from sinna_mospa.f_obtener_centro($1)`, [id]);
+        res.status(200).json({
+            datoAdicional: datos.rows,
+            mensaje:"Se obtuvo los datos del centro al que ingreso.",
+            cod:200
+        });
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
 const gestionCentros = async (req, res) => {
     req.body.ci_usuario = req.user.ci;
     const v_json = req.body
@@ -68,6 +84,6 @@ const obtenerTerritorioUsr = async (req, res) => {
 module.exports = {
     listarCentros,
     gestionCentros,
-    obtenerTerritorioUsr
-
+    obtenerTerritorioUsr,
+    datosCentro
 }
