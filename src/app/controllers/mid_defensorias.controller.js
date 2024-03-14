@@ -98,18 +98,7 @@ const obtieneDef= async (req, res) => {
 const obtieneUsuarioDefensoria = async (req, res) =>{
     ci_usuario = req.user.ci;
     const query = {
-        text: `select wu.ci_usuario, wu.id_usuario, md.id_defensorias, md.departamento as id_depto, md.municipio as id_muni, pt3.id_parametro as id_prov,
-        pt3.nombre as provincia, 
-        md.descripcion, md.responsable, md.telefono, pt.nombre as departamento, pt2.nombre as municipio, md.latitud, md.longitud 
-        from workflow.wf_usuario wu 
-        inner join workflow.wf_usuarios_centros wuc 
-        on wu.id_usuario = wuc.id_usuario 
-        inner join sinna_mid.mid_defensorias md 
-        on wuc.id_centro = md.id_defensorias and wuc.modulo ilike 'mid'
-        inner join parametricas.par_territorial pt on md.departamento = pt.id_parametro 
-        inner join parametricas.par_territorial pt2 on md.municipio = pt2.id_parametro
-        INNER JOIN parametricas.par_territorial pt3 ON pt2.id_parametro_padre = pt3.id_parametro
-        where wu.ci_usuario = $1`,
+        text: `select * from sinna_mid.obtieneUsuarioDefensoria($1)`,
         values:[ci_usuario]
             };
     //console.log(query)
