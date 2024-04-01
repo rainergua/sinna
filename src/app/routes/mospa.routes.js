@@ -44,7 +44,11 @@ const {
  *
  */
 
-router.post('/listarCentros', passport.authenticate('jwt',{session:false}),listarCentros);
+router.post(
+    '/listarCentros',
+    passport.authenticate('jwt',{session:false}),
+    listarCentros
+);
 
 /**
  * @swagger
@@ -85,7 +89,11 @@ router.post('/listarCentros', passport.authenticate('jwt',{session:false}),lista
  *
  */
 
-router.post('/gestionCentros', passport.authenticate('jwt',{session:false}),gestionCentros);
+router.post(
+    '/gestionCentros',
+    passport.authenticate('jwt',{session:false}),
+    gestionCentros
+);
 
 router.get(
     '/obtenerTerritorioUsr',
