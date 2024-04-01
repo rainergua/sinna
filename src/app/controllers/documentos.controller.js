@@ -8,9 +8,7 @@ const con = require('../../infraestructure/config/config');
  */
 const listarDocumentos = async (req, res) => {
     //console.log(req.body);
-    const m=req.body.modulo;
-    const e=req.body.estado;
-    console.log(m);
+
 
     const query = {
         text: `select * from documentos.f_listar_plantillas('{ "modulo":"${req.body.modulo}","estado":"${req.body.estado}"}') `,
