@@ -17,7 +17,7 @@ const listarTransacciones = async (req, res) => {
         .then((result) =>{
             //formateamos el resultado para que retorne solo Rows y Fields
             const resultado =  result.rows;
-            console.log(resultado)
+            //console.log(resultado)
             res.status(200).json({
                 datoAdicional: resultado,
                 mensaje:"Listado de transacciones obtenidas correctamente. Si no salen resultados, es porque el perfil no tiene asignada las transacciones, revisar el Workflow.",
@@ -38,7 +38,7 @@ const listarMenus = async (req, res) => {
         .then((result) =>{
             //formateamos el resultado para que retorne solo Rows y Fields
             const resultado =  result.rows;
-            console.log(resultado)
+            //console.log(resultado)
             res.status(200).json({
                 datoAdicional: resultado,
                 mensaje:"Menus obtenidos",
@@ -59,7 +59,7 @@ const obtenerModulos = async (req, res) => {
         .then((result) =>{
             //formateamos el resultado para que retorne solo Rows y Fields
             const resultado =  result.rows;
-            console.log(resultado)
+            //console.log(resultado)
             res.status(200).json({
                 datoAdicional: resultado,
                 mensaje:"Modulos obtenidos",
