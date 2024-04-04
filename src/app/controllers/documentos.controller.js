@@ -78,9 +78,24 @@ const gestionDocumentos = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const obtenerCamposDocumentos = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const datos = await con.query(`select * from documentos.f_campos_planillas($1)`, [id]);
+        res.status(200).json({
+            datoAdicional: datos.rows,
+            mensaje:"Se obtuvo los campos de las plantillas.",
+            cod:200
+        });
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
 module.exports = {
     listarDocumentos,
     listarTablasTransaccionales,
     listarTransaccionesTabla,
     gestionDocumentos,
+    obtenerCamposDocumentos
 }

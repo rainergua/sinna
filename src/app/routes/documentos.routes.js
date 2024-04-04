@@ -31,14 +31,14 @@ router.post(
     gestionDocumentos
 );
 
-/*
+
 router.get(
     '/obtenerCamposDocumentos/:id',
     passport.authenticate('jwt',{session:false}),
     obtenerCamposDocumentos
 );
 
-router.get(
+/*router.get(
     '/gestionCamposDocumentos',
     passport.authenticate('jwt',{session:false}),
     gestionCamposDocumentos
