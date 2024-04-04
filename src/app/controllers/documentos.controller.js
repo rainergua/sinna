@@ -92,10 +92,25 @@ const obtenerCamposDocumentos = async (req, res) => {
     }
 }
 
+const obtenerCamposTabla = async (req, res) => {
+    try {
+        const t = req.params.tabla;
+        const datos = await con.query(`SELECT c.ordinal_position as id, c.column_name as value FROM information_schema.columns c WHERE table_name = ($1)`, [t]);
+        res.status(200).json({
+            datoAdicional: datos.rows,
+            mensaje:"Se obtuvo los campos de las plantillas.",
+            cod:200
+        });
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
 module.exports = {
     listarDocumentos,
     listarTablasTransaccionales,
     listarTransaccionesTabla,
     gestionDocumentos,
-    obtenerCamposDocumentos
+    obtenerCamposDocumentos,
+    obtenerCamposTabla
 }

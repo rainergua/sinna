@@ -4,7 +4,7 @@ const passport =require('passport')
 const router = express.Router();
 const {
     listarDocumentos, gestionDocumentos, obtenerCamposDocumentos, gestionCamposDocumentos, listarTablasTransaccionales,
-    listarTransaccionesTabla
+    listarTransaccionesTabla, obtenerCamposTabla
 } = require ('../controllers/documentos.controller')
 
 router.post(
@@ -36,6 +36,12 @@ router.get(
     '/obtenerCamposDocumentos/:id',
     passport.authenticate('jwt',{session:false}),
     obtenerCamposDocumentos
+);
+
+router.get(
+    '/obtenerCamposTabla/:tabla',
+    passport.authenticate('jwt',{session:false}),
+    obtenerCamposTabla
 );
 
 /*router.get(
