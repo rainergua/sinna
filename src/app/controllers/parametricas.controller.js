@@ -92,7 +92,7 @@ const obtieneParam = async (req, res) => {
     const id_parametro_padre = req.params.id;
 
     const query = {
-        text: `select * from parametricas.f_listar_parametricas($1) `,
+        text: `select *, id_parametro as id, nombre as value from parametricas.f_listar_parametricas($1) `,
         values:[id_parametro_padre]
     };
     await con
@@ -109,69 +109,6 @@ const obtieneParam = async (req, res) => {
         )
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
-
-/*const listarDepartamentos = async (req, res) => {
-
-    const query = {
-        text: `select * from parametricas.f_listar_departamentos() `,
-    };
-
-    await con
-        .query(query)
-        .then((result) =>{
-            //formateamos el resultado para que retorne solo Rows y Fields
-            const resultado =  result.rows;
-            console.log(resultado)
-            res.status(200).json({
-                datoAdicional: resultado,
-                mensaje:"Departamentos obtenidos",
-                cod:200
-            })}
-        )
-        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
-}
-
-const listarProvincias = async (req, res) => {
-
-    const query = {
-        text: `select * from parametricas.f_listar_provincias('${req.body.id_departamento}') `,
-    };
-
-    await con
-        .query(query)
-        .then((result) =>{
-            //formateamos el resultado para que retorne solo Rows y Fields
-            const resultado =  result.rows;
-            console.log(resultado)
-            res.status(200).json({
-                datoAdicional: resultado,
-                mensaje:"Provincias obtenidos",
-                cod:200
-            })}
-        )
-        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
-}
-
-const listarMunicipios = async (req, res) => {
-
-    const query = {
-        text: `select * from parametricas.f_listar_municipios('${req.body.id_provincia}') `,
-    };
-
-    await con
-        .query(query)
-        .then((result) =>{
-            //formateamos el resultado para que retorne solo Rows y Fields
-            const resultado =  result.rows;
-            console.log(resultado)
-            res.status(200).json({
-                datoAdicional: resultado,
-                mensaje:"Municipios obtenidos",
-                cod:200
-            })}
-        )
-        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
-}*/
 
 module.exports = {
     obtieneParam,
