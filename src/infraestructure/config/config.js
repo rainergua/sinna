@@ -31,5 +31,13 @@ const con = new Pool({
 	database: "sinna",
 	port: "5444",
 });
+/*
+const con = new Pool({
+	user: "postgres",
+	host: "localhost",
+	password: "12345678",
+	database: "sinna",
+	port: "5435",
+});*/
 
 module.exports = con;

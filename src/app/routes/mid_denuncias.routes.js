@@ -13,7 +13,9 @@ const {
     obtienedendo,
     obtienedatosPrint,
     obtienedente,
-    guardaDenPer
+    guardaDenPer,
+    obtieneProfesionalDNA,
+    derivarCaso,
 } = require ('../controllers/mid_denuncias.controller')
 
 /**
@@ -134,10 +136,14 @@ router.get('/obtieneden/:id', obtieneDen);
  */
 router.get('/obtienedatosprint/:cod_denuncia', obtienedatosPrint);
 
+router.get('/obtieneprofdna/:cod_defensoria', passport.authenticate('jwt', {session:false}),obtieneProfesionalDNA)
+
 router.post('/gestiondenuncias', passport.authenticate('jwt', {session:false}), gestionDenuncias);
 
 router.post('/guardafamiliar', guardaFam)
 //guardadenper
 router.post('/guardadenper', passport.authenticate('jwt', {session:false}), guardaDenPer)
+
+router.post('/derivarcaso', passport.authenticate('jwt', {session:false}), derivarCaso)
 
 module.exports = router;

@@ -47,7 +47,6 @@ const getParametrosDenuncia = async (req, res) => {
 const gestionDenuncias = async (req, res) => {
     req.body.ci_usuario = req.user.ci;
     const v_json = req.body
-    console.log(v_json)
     const query = {
         text: `call sinna_mid.p_denuncias($1) `,
         values:[v_json]
@@ -95,13 +94,11 @@ const obtieneDen= async (req, res) => {
         text: `select * from sinna_mid.listar_denuncias($1)`,
         values:[id_den]
             };
-    //console.log(query)
     await con
         .query(query)
         .then((result) =>{
             //formateamos el resultado para que retorne solo Rows y Fields
             const resultado =  result.rows
-            ////console.log(resultado)
             res.status(200).json({
                 datos: resultado,
             })}
@@ -109,17 +106,15 @@ const obtieneDen= async (req, res) => {
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
 /**
- * TODO: Implementar la funcion en la base de datos para obtener familiares
  * @param {*} req 
  * @param {*} res 
  */
 const obtieneFamiliares= async (req, res) => {
     const cod_denuncia = req.params.cod_denuncia
     const query = {
-        text: `select * from sinna_mid.obtieneFamiliares($1)`,
+        text: `select distinct * from sinna_mid.obtieneFamiliares($1)`,
         values:[cod_denuncia]
             };
-    //console.log(query)
     await con
         .query(query)
         .then((result) =>{
@@ -132,13 +127,13 @@ const obtieneFamiliares= async (req, res) => {
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
 /**
- * TODO: Implementar la funcion en la base de datos para obtener denunciados
  * @param {*} req 
  * @param {*} res 
  */
-const obtienedendo = async(req, res) =>{const cod_denuncia = req.params.cod_denuncia
+const obtienedendo = async(req, res) =>{
+    const cod_denuncia = req.params.cod_denuncia
     const query = {
-        text: `select * from sinna_mid.obtienedendo($1)`,
+        text: `select distinct * from sinna_mid.obtienedendo($1)`,
         values:[cod_denuncia]
             };
     //console.log(query)
@@ -155,14 +150,13 @@ const obtienedendo = async(req, res) =>{const cod_denuncia = req.params.cod_denu
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
     }
 /**
- * TODO: Implementar la funcion en la base de datos para obtener denunciantes
  * @param {*} req 
  * @param {*} res 
  */    
 const obtienedente = async(req, res) =>{
     const cod_denuncia = req.params.cod_denuncia
     const query = {
-        text: `select * from sinna_mid.obtienedente($1)`,
+        text: `select distinct * from sinna_mid.obtienedente($1)`,
         values:[cod_denuncia]
             };
     await con
@@ -185,7 +179,6 @@ const obtienedente = async(req, res) =>{
  */    
 const obtienedatosPrint = async(req, res) =>{
     const cod_denuncia = req.params.cod_denuncia
-    console.log("El codigo de denuncia es:", cod_denuncia)
     const query = {
         text: `select * from sinna_mid.obtienedatosPrint($1)`,
         values:[cod_denuncia]
@@ -212,7 +205,6 @@ const guardaFam= async (req, res) => {
     const {
         nna,id_persona,relacion_familiar,id_centro,direccion,latitud,longitud,telefono,observaciones
     } = req.body
-    
     const query = {
         text: `insert into comun.com_familiares_hermanos
         (nna,id_persona,relacion_familiar,id_centro,direccion,latitud,longitud,telefono,observaciones)
@@ -236,7 +228,6 @@ const guardaFam= async (req, res) => {
 const guardaDenPer= async (req, res) => {
     req.body.ci_usuario = req.user.ci;
     const v_json = req.body;
-    console.log(v_json);
     const query = {
         text: `call sinna_mid.p_denuncias_personas($1) `,
         values:[v_json]        
@@ -252,6 +243,71 @@ const guardaDenPer= async (req, res) => {
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
 
+//TODO: Llevar esta consulta a una función que devuelva los campos presentes en la misma 
+const obtieneProfesionalDNA = async (req, res) =>{
+    ci_usuario = req.user.ci;
+    const id_def = req.params.cod_defensoria
+    try{
+        const querysoc = {
+            text: `select wuc.id_usuario as id, wfu.nombre as value from workflow.wf_usuarios_centros wuc
+                    inner join workflow.wf_usuario wfu on wuc.id_usuario = wfu.id_usuario 
+                    where wfu.modulo ilike 'mid' and wfu.cargo ilike '%social%' and wuc.id_centro = $1`,
+            values:[id_def]
+                };
+        const querypsi = {
+            text: `select wuc.id_usuario as id, wfu.nombre as value from workflow.wf_usuarios_centros wuc
+                    inner join workflow.wf_usuario wfu on wuc.id_usuario = wfu.id_usuario 
+                    where wfu.modulo ilike 'mid' and wfu.cargo ilike '%psico%' and wuc.id_centro = $1`,
+            values:[id_def]
+                };
+        const queryleg = {
+            text: `select wuc.id_usuario as id, wfu.nombre as value from workflow.wf_usuarios_centros wuc
+                    inner join workflow.wf_usuario wfu on wuc.id_usuario = wfu.id_usuario 
+                    where wfu.modulo ilike 'mid' and wfu.cargo ilike '%legal%' and wuc.id_centro = $1`,
+            values:[id_def]
+                };
+        const social = await con.query(querysoc)
+        const psico = await con.query(querypsi)
+        const legal = await con.query(queryleg)
+        res.status(200).json({
+            parametros: {
+                social: social.rows,
+                psico: psico.rows,
+                legal: legal.rows,
+            },
+            mensaje:"Se obtuvo los parámetros solicitados",
+            cod:200
+        }
+        );
+    }catch (e){
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
+/**
+ * @param {*} req 
+ * @param {*} res 
+ */
+const derivarCaso = async (req, res) => {
+    req.body.ci_usuario = req.user.ci;
+    const v_json = req.body;
+    const query = {
+        text: `call sinna_mid.p_derivaciones($1) `,
+        values:[v_json]        
+    };
+    try {
+        const respuesta = await con.query(query)
+        res.status(200).json({
+            respuesta: respuesta.rows,
+            mensaje:"Se obtuvo los parámetros solicitados",
+            cod:200
+        })
+    } catch (error) {
+        console.log('error: ', error)
+        res.status(500).json({ msg: 'Error: ' + error });
+    }
+}
+
 module.exports = {
     getParametrosDenuncia, 
     gestionDenuncias, 
@@ -262,5 +318,7 @@ module.exports = {
     obtienedendo,
     obtienedente,
     obtienedatosPrint,
-    guardaDenPer
+    guardaDenPer,
+    obtieneProfesionalDNA,
+    derivarCaso
 }

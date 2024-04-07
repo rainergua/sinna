@@ -7,12 +7,13 @@ const path = require('path');
 
 const testRoutes = require ('./app/routes/test.routes')
 const mid_defensorias= require ("./app/routes/mid_defensorias.routes")
+const mid_denuncias = require("./app/routes/mid_denuncias.routes")
+const mid_flujos = require("./app/routes/mid_flujos.routes")
 const modefa_centros_acogimiento= require ("./app/routes/modefa_centros_acogimiento.routes")
 const modefa_ingreso_nna= require ("./app/routes/modefa_ingreso_nna.routes")
 const mospaRoutes= require ("./app/routes/mospa.routes")
 const workflowRoutes= require ("./app/routes/workflow.routes")
 const parametricasRoutes= require ("./app/routes/parametricas.routes")
-const mid_denuncias = require("./app/routes/mid_denuncias.routes")
 const comunRoutes = require("./app/routes/comun.routes")
 const authRoutes= require ("./app/routes/auth.routes")
 const personaRoutes = require("./app/routes/comun_personas.routes")
@@ -51,6 +52,7 @@ require('./utils/auth');
 app.use('/api',testRoutes);
 app.use('/api/mid',mid_defensorias);
 app.use('/api/mid',mid_denuncias);
+app.use('/api/mid',mid_flujos);
 app.use('/api/comun',comunRoutes);
 app.use('/api/modefa',modefa_centros_acogimiento);
 app.use('/api/modefa',modefa_ingreso_nna);
