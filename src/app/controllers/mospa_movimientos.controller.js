@@ -1,8 +1,5 @@
 const con = require("../../infraestructure/config/config");
 const getParametricasIngresos = async (req, res) => {
-
-    const id=req.body.id;
-
     try {
         const sexo = await con.query(`select * from sinna_mospa.f_combos_parametricas(15)`);
         const poblacionVulnerable = await con.query(`select * from sinna_mospa.f_combos_parametricas(31)`);
@@ -12,7 +9,7 @@ const getParametricasIngresos = async (req, res) => {
         const aCargoDe = await con.query(`select * from sinna_mospa.f_combos_parametricas(39)`);
         const cursoEstudio= await con.query(`select * from sinna_mospa.f_combos_parametricas(328)`);
         const juzgados= await con.query(`select * from sinna_mospa.f_listar_juzgados()`);
-        const tiposDelito= await con.query(`select * from sinna_mospa.f_delitos_mospa()`);
+        const tiposDelito= await con.query(`select * from sinna_mospa.f_combos_parametricas(61)`);
         const situacionProcesal= await con.query(`select * from sinna_mospa.f_combos_parametricas(321)`);
         const tipoMedida= await con.query(`select * from sinna_mospa.f_combos_parametricas(324)`);
         const parentesco= await con.query(`select * from sinna_mospa.f_combos_parametricas(39)`);

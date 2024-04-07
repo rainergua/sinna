@@ -45,6 +45,9 @@ const {
  * 
  */
 router.post('/login', (req, res, next) => {
+    console.log(req);
+    console.log(res);
+    console.log(next);
     passport.authenticate('local', { session: false }, (err, user, info) => {
         if (err) {
             return next(err);
@@ -71,6 +74,42 @@ router.post('/login', (req, res, next) => {
         });
     })(req, res, next);
 });
+
+
+router.post('/loginPublic', (req, res, next) => {
+    req.sub=37;
+    req.ci='44307';
+
+
+    passport.authenticate('local', { session: false }, (err, user, info) => {
+        if (err) {
+            return next(err);
+        }
+        /*if (!user) {
+            return res.status(401).json({
+                mensaje: "Credenciales incorrectas",
+                cod: 401
+            });
+        }*/
+        const payload = {
+            sub: 37,
+            ci: '44307'
+        };
+        //aca configurar el tiempo del token
+        const token = jwt.sign(payload, process.env.JWT_SECRET);
+
+        res.status(200).json({
+            datoAdicional: {
+                user,
+                token
+            },
+            mensaje: "Bienvenido al sistema SINNA, Pre registro de autorizaciones de viaje.",
+            cod: 200
+        });
+    })(req, res, next);
+});
+
+
 
 /**
  * @swagger
