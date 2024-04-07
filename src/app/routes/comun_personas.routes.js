@@ -4,7 +4,8 @@ const router = express.Router();
 const { 
     parametricasPersona,
     gestionPersona,
-    mostrarPersona
+    mostrarPersona,
+    mostrarPersonaCI
 } = require ('../controllers/comun_personas.controller')
 
 /**
@@ -187,6 +188,22 @@ router.post('/persona',
 router.post('/mostrar-persona', 
     passport.authenticate('jwt', {session:false}), 
     mostrarPersona
+);
+
+/**
+ * @swagger
+ * /api/persona/mostrar-persona-ci:
+ *  post:
+ *      summary: Detalles de la persona registrada en el SINNA por CI
+ *      tags: [Persona]
+ *      responses:
+ *          200:
+ *              description: Peticion Exitosa
+ * 
+ */
+router.post('/mostrar-persona-ci', 
+    passport.authenticate('jwt', {session:false}), 
+    mostrarPersonaCI
 );
 
 module.exports = router;

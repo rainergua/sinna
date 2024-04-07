@@ -69,8 +69,24 @@ const mostrarPersona = async (req, res) => {
     }
 }
 
+// Listar a las personas registradas en el SINNA
+const mostrarPersonaCI = async (req, res) => {
+    try {
+        let cip = req.body.ci;
+        const listado = await con.query(`select * from comun.f_mostrar_persona_ci($1)`,[cip]);
+        res.status(200).json({ 
+            datoAdicional: listado.rows,
+            mensaje:"Datos de la persona obtenidos por el CI",
+            cod:200 
+        });
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
 module.exports = {
     parametricasPersona, 
     gestionPersona,
-    mostrarPersona
+    mostrarPersona,
+    mostrarPersonaCI
 }
