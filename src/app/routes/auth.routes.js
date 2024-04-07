@@ -79,8 +79,6 @@ router.post('/login', (req, res, next) => {
 router.post('/loginPublic', (req, res, next) => {
     req.sub=37;
     req.ci='44307';
-
-
     passport.authenticate('local', { session: false }, (err, user, info) => {
         if (err) {
             return next(err);
@@ -156,7 +154,6 @@ router.post('/login-anonimo', (req, res, next) => {
         });
     })(req, res, next);
 });
-
 
 module.exports = router;
 
