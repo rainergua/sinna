@@ -10,7 +10,10 @@ const {
     listarMunicipios,*/
     obtieneDepto,
     obtieneProv,
-    obtieneMun, obtieneParam, obtieneMunDpto, obtenerPoblacionAtiende,
+    obtieneMun,
+    obtieneParam,
+    obtieneMunDpto,
+    obtenerPoblacionAtiende, obtieneDnasMunicipio,
 } = require ('../controllers/parametricas.controller')
 
 /**
@@ -80,6 +83,30 @@ router.get('/obtieneprov/:id', passport.authenticate('jwt',{session:false}), obt
  * 
  */
 router.get('/obtienemun/:id', passport.authenticate('jwt',{session:false}), obtieneMun);
+/**
+ * @swagger
+ * /api/parametricas/obtieneDnasMunicipio/{id}:
+ *  get:
+ *      summary: Obtiene las DNA's de un municipio
+ *      tags: [Municipio, DNA]
+ *      responses:
+ *          200:
+ *              description: Peticion Exitosa
+ *      parameters:
+ *           - name: id
+ *             in: path
+ *             description: Id del Municipio
+ *             required: true
+ *             schema:
+ *                  type: string
+ *                  style: simple
+ *
+ */
+
+router.get('/obtieneDnasMunicipio/:id',
+    passport.authenticate('jwt',{session:false}),
+    obtieneDnasMunicipio
+);
 
 router.get('/obtieneMunDpto/:id',
     passport.authenticate('jwt',{session:false}),

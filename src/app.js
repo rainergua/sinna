@@ -22,6 +22,7 @@ const movimientosRoutes=require("./app/routes/mospa_movimientos.routes")
 const juzgadoRoutes = require("./app/routes/comun_juzgados.routes")
 const formularioRoutes = require("./app/routes/comun_formulario.routes")
 const documentosRoutes=require("./app/routes/documentos.routes")
+const autorizacionesViajeRoutes=require("./app/routes/mid_autorizaciones_viaje.routes")
 
 const cors = require("cors")
 
@@ -53,6 +54,7 @@ app.use('/api',testRoutes);
 app.use('/api/mid',mid_defensorias);
 app.use('/api/mid',mid_denuncias);
 app.use('/api/mid',mid_flujos);
+app.use('/api/mid',autorizacionesViajeRoutes);
 app.use('/api/comun',comunRoutes);
 app.use('/api/modefa',modefa_centros_acogimiento);
 app.use('/api/modefa',modefa_ingreso_nna);

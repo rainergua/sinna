@@ -35,6 +35,24 @@ const obtieneProv = async (req, res) => {
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
+
+const obtieneDnasMunicipio = async (req, res) => {
+    const id_municipio = req.params.id
+    const query = {
+        text: `select * from sinna_mid.listar_dnas_municipios($1) `,
+        values:[id_municipio]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows
+            const resultado =  result.rows
+            res.status(200).json({
+                datos: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
 const obtieneMun = async (req, res) => {
     const cod_prov = req.params.id
     const query = {
@@ -116,5 +134,6 @@ module.exports = {
     obtieneMun,
     obtieneProv,
     obtieneMunDpto,
-    obtenerPoblacionAtiende
+    obtenerPoblacionAtiende,
+    obtieneDnasMunicipio
 }
