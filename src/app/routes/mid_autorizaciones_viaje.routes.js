@@ -3,7 +3,7 @@ const express = require('express');
 const passport =require('passport')
 const router = express.Router();
 const {
-   gestionAutorizacionesViaje
+   gestionAutorizacionesViaje, obtenerAutorizacionViaje
 } = require ('../controllers/mid_autorizaciones_viaje.controller')
 
 
@@ -12,6 +12,13 @@ router.post(
     passport.authenticate('jwt',{session:false}),
     gestionAutorizacionesViaje
 );
+
+router.get(
+    '/obtenerAutorizacionViaje/:id',
+    passport.authenticate('jwt',{session:false}),
+    obtenerAutorizacionViaje
+);
+
 /*
 router.post(
     '/listarDocumentos',

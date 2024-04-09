@@ -27,6 +27,21 @@ const gestionAutorizacionesViaje = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+
+const obtenerAutorizacionViaje = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const datos = await con.query(`select * from sinna_mid.f_obtener_autorizacion_viaje($1)`, [id]);
+        res.status(200).json({
+            datoAdicional: datos.rows,
+            mensaje:"Se obtuvo el registro de la solicitud correctamente.",
+            cod:200
+        });
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
 /*const listarDocumentos = async (req, res) => {
     //console.log(req.body);
 
@@ -128,5 +143,6 @@ const obtenerCamposTabla = async (req, res) => {
 }*/
 
 module.exports = {
-    gestionAutorizacionesViaje
+    gestionAutorizacionesViaje,
+    obtenerAutorizacionViaje
 }
