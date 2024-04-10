@@ -35,7 +35,7 @@ const obtenerAutorizacionViaje = async (req, res) => {
         res.status(200).json({
             datoAdicional: datos.rows,
             mensaje:"Se obtuvo el registro de la solicitud correctamente.",
-            cod:200
+            cod:200,
         });
     } catch (e) {
         res.status(500).json({ msg: 'Error: ' + e });
