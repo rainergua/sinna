@@ -3,7 +3,7 @@ const express = require('express');
 const passport =require('passport')
 const router = express.Router();
 const {
-   gestionAutorizacionesViaje, obtenerAutorizacionViaje
+   gestionAutorizacionesViaje, obtenerAutorizacionViaje, obtenerPersonasAutViaje
 } = require ('../controllers/mid_autorizaciones_viaje.controller')
 
 
@@ -19,44 +19,9 @@ router.get(
     obtenerAutorizacionViaje
 );
 
-/*
-router.post(
-    '/listarDocumentos',
-    passport.authenticate('jwt',{session:false}),
-    listarDocumentos
-);
-
 router.get(
-    '/listarTablasTransaccionales/:modulo',
+    '/obtenerPersonasAutViaje/:tipo/:id',
     passport.authenticate('jwt',{session:false}),
-    listarTablasTransaccionales
+    obtenerPersonasAutViaje
 );
-
-router.get(
-    '/listarTransaccionesTabla/:id',
-    passport.authenticate('jwt',{session:false}),
-    listarTransaccionesTabla
-);
-
-router.post(
-    '/gestionDocumentos',
-    passport.authenticate('jwt',{session:false}),
-    gestionDocumentos
-);
-
-
-router.get(
-    '/obtenerCamposDocumentos/:id',
-    passport.authenticate('jwt',{session:false}),
-    obtenerCamposDocumentos
-);
-
-router.get(
-    '/obtenerCamposTabla/:tabla',
-    passport.authenticate('jwt',{session:false}),
-    obtenerCamposTabla
-);
-*/
-
-
 module.exports = router;

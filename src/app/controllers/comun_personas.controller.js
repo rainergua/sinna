@@ -55,6 +55,26 @@ const gestionPersona = async (req, res) => {
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
 
+const gestionPersonasDetalle = async (req, res) => {
+    req.body.ci_usuario = req.user.ci;
+    const v_json = req.body
+    const query = {
+        text: `call comun.p_personas_ajustado($1) `,
+        values:[v_json]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            const resultado =  result.rows[0];
+            //console.log(resultado);
+            res.status(200).json({
+                result: resultado,
+
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
 // Listar a las personas registradas en el SINNA
 const mostrarPersona = async (req, res) => {
     try {
@@ -88,5 +108,6 @@ module.exports = {
     parametricasPersona, 
     gestionPersona,
     mostrarPersona,
-    mostrarPersonaCI
+    mostrarPersonaCI,
+    gestionPersonasDetalle
 }

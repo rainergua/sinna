@@ -5,8 +5,10 @@ const {
     parametricasPersona,
     gestionPersona,
     mostrarPersona,
-    mostrarPersonaCI
+    mostrarPersonaCI,
+    gestionPersonasDetalle
 } = require ('../controllers/comun_personas.controller')
+
 
 /**
  * @swagger
@@ -172,6 +174,11 @@ router.get('/persona-parametricas',
 router.post('/persona', 
     passport.authenticate('jwt', {session:false}), 
     gestionPersona
+);
+
+router.post('/personaDetalle',
+    passport.authenticate('jwt', {session:false}),
+    gestionPersonasDetalle
 );
 
 /**
