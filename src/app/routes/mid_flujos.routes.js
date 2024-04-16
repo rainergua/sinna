@@ -4,6 +4,7 @@ const router = express.Router();
 const { 
     obtieneDerivacionesAsign,
     obtieneDerivacionesAcept,
+    obtieneHistoriaDeriva,
     obtieneParams,
     grabaExpediente,
     grabaDocumento,
@@ -18,6 +19,7 @@ router.get('/obtienederivacionesasign', passport.authenticate('jwt', {session:fa
 //obtienederivacionesasign
 router.get('/obtienederivacionesacept', passport.authenticate('jwt', {session:false}), obtieneDerivacionesAcept);
 
+router.get('/obtienehistoriaderiva/:id_denuncia', passport.authenticate('jwt', {session:false}), obtieneHistoriaDeriva)
 
 router.get('/obtieneparams', passport.authenticate('jwt', {session:false}), obtieneParams);
 
