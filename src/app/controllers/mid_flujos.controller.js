@@ -11,15 +11,7 @@ const obtieneDerivacionesAsign = async (req, res) =>
     id_usuario = req.user.sub;
     try {
         const query = {
-            text: `select md.id_derivacion, md.id_denuncia, md.estado, md.cod_caso, md.fecha_creado as fecha_derivacion, 
-                md2.tipologia_denuncia, pc.descripcion as tipologia,  md2.caso, md2.fecha_denuncia,  md.id_usuario_a, md.id_creado_por
-                from sinna_mid.mid_derivaciones md
-                inner join workflow.wf_usuario wu on md.id_usuario_a = wu.id_usuario 
-                inner join sinna_mid.mid_denuncias md2 on md.id_denuncia=md2.id_denuncia 
-                inner join parametricas.par_clasificador pc on md2.tipologia_denuncia = pc.id_parametro 
-                inner join workflow.wf_usuario wu2 on md.id_creado_por = wu2.id_usuario 
-                where md.estado = 'CASO_DERIVADO' and id_usuario_a = $1
-                order by md.id_derivacion desc`,
+            text: `select distinct * from sinna_mid.obtieneDerivacionesAsign($1)`,
         values: [id_usuario]
         }
         const derivados = await con.query(query)
@@ -43,15 +35,7 @@ const obtieneDerivacionesAcept = async (req, res) =>
     id_usuario = req.user.sub;
     try {
         const query = {
-            text: `select md.id_derivacion, md.id_denuncia, md.estado, md.cod_caso, md.fecha_creado as fecha_derivacion, 
-            md2.tipologia_denuncia, pc.descripcion as tipologia,  md2.caso, md2.fecha_denuncia,  md.id_usuario_a, md.id_creado_por
-            from sinna_mid.mid_derivaciones md
-            inner join workflow.wf_usuario wu on md.id_usuario_a = wu.id_usuario 
-            inner join sinna_mid.mid_denuncias md2 on md.id_denuncia=md2.id_denuncia 
-            inner join parametricas.par_clasificador pc on md2.tipologia_denuncia = pc.id_parametro 
-            inner join workflow.wf_usuario wu2 on md.id_creado_por = wu2.id_usuario 
-            where md.estado = 'CASO_ACEPTADO' and id_usuario_a = $1
-            order by md.id_derivacion desc`,
+            text: `select distinct * from sinna_mid.obtieneDerivacionesAcept($1)`,
             values: [id_usuario]
         }
         const aceptados = await con.query(query)
@@ -67,7 +51,39 @@ const obtieneDerivacionesAcept = async (req, res) =>
         res.status(500).json({ msg: 'Error: ' + error });
     }
 }
-
+//Historial de derivaciones
+//TODO: ELABORAR LA FUNCIÓN QUE OBTIENE EL HISTORIAL DE LAS DERIVAVIONES DE UN CASO
+const obtieneHistoriaDeriva = async (req, res) => {
+    const id_denuncia = req.params.id_denuncia; 
+    //console.log('----------------------')
+    //console.log(req.params)
+    try {
+        const query = {
+            text: `select md.id_denuncia , md.cod_caso, wu.nombre as registrado, TO_CHAR(smd.fecha_denuncia , 'dd/mm/yyyy') as fecha_denuncia,
+            wu3.nombre derivado_por, TO_CHAR(md.fecha_creado, 'dd/mm/yyyy hh:mm:ss') as fecha_derivado, wu2.nombre as derivado_a, 
+            case when md.fecha_modificado = md.fecha_creado then 'PENDIENTE' else TO_CHAR(md.fecha_modificado, 'dd/mm/yyyy hh:mm:ss') end as fecha_aceptado 
+            from sinna_mid.mid_denuncias smd
+            inner join sinna_mid.mid_derivaciones md on smd.id_denuncia = md.id_denuncia 
+            inner join workflow.wf_usuario wu  on smd.id_creado_por = wu.id_usuario 
+            inner join workflow.wf_usuario wu2  on md.id_usuario_a = wu2.id_usuario 
+            inner join workflow.wf_usuario wu3  on md.id_creado_por = wu3.id_usuario 
+            where smd.id_denuncia = $1
+            order by md.cod_caso, md.id_usuario_a, md.id_denuncia , wu.nombre, wu2.nombre , wu3.nombre`,
+            values: [id_denuncia]
+        }
+        const respuesta = await con.query(query)
+        res.status(200).json({
+            parametros: {
+                datos: respuesta.rows,
+            },
+            mensaje:"Se obtuvo los datos solicitados",
+            cod:200
+        }
+        );
+    } catch (error) {
+        res.status(500).json({ msg: 'Error: ' + error });
+    }
+}
 //Obtiene las parametricas selecciondas en el caso
 const obtieneParams = async (req, res) => {
     const ids = req.query.id_par; // Obtener el array de IDs de la consulta
@@ -113,13 +129,7 @@ const obtieneEstado = async (req, res) => {
 const obtieneExpedienteCaso = async (req, res) =>{
     const cod_caso = req.params.cod_caso
     const query ={
-        text: `select me.*, dd.json_datos, we.descripcion_estado, wu.nombre, wu.cargo, wu.telefono 
-        from sinna_mid.mid_expedientes me 
-        inner join comun.datos_documentos dd on dd.id_documento = me.id_expediente 
-        inner join workflow.wf_estados we on me.estado = we.estado 
-        inner join workflow.wf_usuario wu on me.id_creado_por = wu.id_usuario 
-        where me.cod_caso ilike $1
-        order by fecha_creado desc `,
+        text: `select distinct * from sinna_mid.obtieneExpedienteCaso($1)`,
         values: [cod_caso]
     };
     try {
@@ -190,6 +200,7 @@ const grabaDocumento = async(req, res)=>{
 module.exports = {
     obtieneDerivacionesAsign,
     obtieneDerivacionesAcept,
+    obtieneHistoriaDeriva,
     obtieneParams,
     grabaDocumento,
     grabaExpediente,
