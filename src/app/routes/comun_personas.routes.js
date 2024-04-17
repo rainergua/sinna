@@ -6,11 +6,8 @@ const {
     gestionPersona,
     mostrarPersona,
     mostrarPersonaCI,
-<<<<<<< HEAD
-    getBuscarPersona
-=======
+    getBuscarPersona,
     gestionPersonasDetalle
->>>>>>> ce66b869d8a0ca1538b70bfeb3d48d677954ee54
 } = require ('../controllers/comun_personas.controller')
 
 
