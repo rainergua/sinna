@@ -84,9 +84,24 @@ const mostrarPersonaCI = async (req, res) => {
     }
 }
 
+const getBuscarPersona = async (req, res) => {
+    try {
+        let buscar = req.params.buscar;
+        const datos = await con.query(`select * from comun.f_buscar_persona($1)`, [buscar]);
+        res.status(200).json({ 
+            datoAdicional: datos.rows,
+            mensaje:"Buscar personas",
+            cod:200
+        });
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
 module.exports = {
     parametricasPersona, 
     gestionPersona,
     mostrarPersona,
-    mostrarPersonaCI
+    mostrarPersonaCI,
+    getBuscarPersona
 }

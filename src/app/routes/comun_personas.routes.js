@@ -5,7 +5,8 @@ const {
     parametricasPersona,
     gestionPersona,
     mostrarPersona,
-    mostrarPersonaCI
+    mostrarPersonaCI,
+    getBuscarPersona
 } = require ('../controllers/comun_personas.controller')
 
 /**
@@ -205,5 +206,7 @@ router.post('/mostrar-persona-ci',
     passport.authenticate('jwt', {session:false}), 
     mostrarPersonaCI
 );
+
+router.get('/buscar-persona/:buscar', passport.authenticate('jwt', {session:false}), getBuscarPersona);
 
 module.exports = router;
