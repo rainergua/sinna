@@ -5,6 +5,7 @@ const router = express.Router();
 const  upload = require ('../middlewares/imageUploadMiddleware')
 const { 
     getParametrosDenuncia,
+    getMunicipioProvDep,
     gestionDenuncias,
     obtieneDenuncias,
     obtieneDen,
@@ -29,8 +30,9 @@ const {
  *              description: Peticion Exitosa
  * 
  */
-router.get('/obtieneparametros', getParametrosDenuncia);
+router.get('/obtieneparametros', passport.authenticate('jwt', {session:false}), getParametrosDenuncia);
 
+router.get('/getmunicipioprovdep', passport.authenticate('jwt', {session:false}), getMunicipioProvDep)
 /**
  * @swagger
  * /api/mid/obtienefamiliares:
@@ -41,7 +43,7 @@ router.get('/obtieneparametros', getParametrosDenuncia);
  *          200:
  *              description: Peticion Exitosa
  */
-router.get('/obtienefamiliares/:cod_denuncia', obtieneFamiliares);
+router.get('/obtienefamiliares/:cod_denuncia', passport.authenticate('jwt', {session:false}), obtieneFamiliares);
 
 /**
  * @swagger 
@@ -62,7 +64,7 @@ router.get('/obtienefamiliares/:cod_denuncia', obtieneFamiliares);
  *              style: simple
  */
 
-router.get('/obtienedendo/:cod_denuncia', obtienedendo);
+router.get('/obtienedendo/:cod_denuncia', passport.authenticate('jwt', {session:false}), obtienedendo);
 /**
  * @swagger 
  * /api/mid/obtienedente/{cod_denuncia}:
@@ -81,7 +83,7 @@ router.get('/obtienedendo/:cod_denuncia', obtienedendo);
  *              type: integer  
  *              style: simple
  */
-router.get('/obtienedente/:cod_denuncia', obtienedente);
+router.get('/obtienedente/:cod_denuncia', passport.authenticate('jwt', {session:false}), obtienedente);
 
 /**
  * @swagger
@@ -94,7 +96,7 @@ router.get('/obtienedente/:cod_denuncia', obtienedente);
  *              description: Peticion Exitosa
  
  */
-router.get('/obtienedenuncias', obtieneDenuncias);
+router.get('/obtienedenuncias', passport.authenticate('jwt', {session:false}), obtieneDenuncias);
 
 /**
  * @swagger
@@ -114,7 +116,7 @@ router.get('/obtienedenuncias', obtieneDenuncias);
  *              type: integer  
  *              style: simple
  */
-router.get('/obtieneden/:id', obtieneDen);
+router.get('/obtieneden/:id', passport.authenticate('jwt', {session:false}), obtieneDen);
 
 /**
  * @swagger
@@ -134,13 +136,13 @@ router.get('/obtieneden/:id', obtieneDen);
  *              type: integer  
  *              style: simple
  */
-router.get('/obtienedatosprint/:cod_denuncia', obtienedatosPrint);
+router.get('/obtienedatosprint/:cod_denuncia', passport.authenticate('jwt', {session:false}), obtienedatosPrint);
 
 router.get('/obtieneprofdna/:cod_defensoria', passport.authenticate('jwt', {session:false}),obtieneProfesionalDNA)
 
 router.post('/gestiondenuncias', passport.authenticate('jwt', {session:false}), gestionDenuncias);
 
-router.post('/guardafamiliar', guardaFam)
+router.post('/guardafamiliar', passport.authenticate('jwt', {session:false}), guardaFam)
 //guardadenper
 router.post('/guardadenper', passport.authenticate('jwt', {session:false}), guardaDenPer)
 

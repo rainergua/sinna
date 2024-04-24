@@ -6,13 +6,16 @@ const router = express.Router();
 const  upload = require ('../middlewares/imageUploadMiddleware')
 const { 
     gestionDefensoria,
+    gestionRedesReg,
     updFileDef,
     //obtieneDepto,
     //obtieneProv,
     //obtieneMun,
     obtieneDefensorias,
     obtieneDef,
-    obtieneUsuarioDefensoria
+    obtieneUsuarioDefensoria,
+    obtieneSelMunis,
+    obtieneRedes
 } = require ('../controllers/mid_defensorias.controller')
 /**
  * @swagger
@@ -98,6 +101,9 @@ const {
 
 router.post('/gestiondefensoria', passport.authenticate('jwt', {session:false}), gestionDefensoria);
 
+//
+router.post('/gestionregredes', passport.authenticate('jwt', {session:false}), gestionRedesReg);
+
 router.post('/updfiledef', upload.single('file'), updFileDef);
 
 /**
@@ -112,6 +118,8 @@ router.post('/updfiledef', upload.single('file'), updFileDef);
  * 
  */
 router.get('/obtienedefensorias', obtieneDefensorias);
+router.get ('/obtieneselmunis', passport.authenticate('jwt', {session:false}), obtieneSelMunis)
+router.get('/obtieneredes', passport.authenticate('jwt', {session:false}), obtieneRedes);
 /**
  * @swagger
  * /api/mid/obtienedef/{id}:

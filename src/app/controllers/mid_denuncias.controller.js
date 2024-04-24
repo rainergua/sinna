@@ -39,6 +39,30 @@ const getParametrosDenuncia = async (req, res) => {
     }
 }
 
+/**
+ * TODO: REALIZAR LA FUNCION CORRESPONDIENTE PARA LA OBTENCIÓN DE LOS PARÁMETROS
+ */
+const getMunicipioProvDep = async (req, res) =>{
+    try {
+        const query ={
+            text: `select pt.id_parametro as value, pt3.nombre ||' - '|| pt2.nombre || ' - ' || pt.descripcion as label 
+            from parametricas.par_territorial pt
+            inner join parametricas.par_territorial pt2 on pt.id_parametro_padre=pt2.id_parametro
+            inner join parametricas.par_territorial pt3 on pt2.id_parametro_padre = pt3.id_parametro
+            where pt.id_parametro >122
+            order by pt.id_parametro`
+        }
+        const respuesta = await con.query(query)
+        res.status(200).json({
+            respuesta: respuesta.rows,
+            mensaje:"Se obtuvo los parámetros solicitados",
+            cod:200
+        })        
+    } catch (error) {
+        console.log('error: ', error)
+        res.status(500).json({ msg: 'Error: ' + error });
+    }
+}
 
 /**
  * @param {v_json} req json que envia los datos al SP
@@ -173,7 +197,6 @@ const obtienedente = async(req, res) =>{
     }
 
 /**
- * TODO: Implementar la funcion en la base de datos para obtener los datos para impresión de denuncia
  * @param {*} req 
  * @param {*} res 
  */    
@@ -310,6 +333,7 @@ const derivarCaso = async (req, res) => {
 
 module.exports = {
     getParametrosDenuncia, 
+    getMunicipioProvDep,
     gestionDenuncias, 
     obtieneDenuncias,
     obtieneDen,

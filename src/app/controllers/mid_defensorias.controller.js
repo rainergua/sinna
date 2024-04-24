@@ -25,7 +25,30 @@ const gestionDefensoria = async (req, res) => {
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
 /**
- * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+const gestionRedesReg = async (req, res) => {
+    req.body.ci_usuario = req.user.ci;
+    const v_json = req.body
+    console.log(v_json)
+    const query = {
+        text: `call sinna_mid.p_reg_redes($1) `,
+        values:[v_json]
+            };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  {rows: result.rows, fields: result.fields}
+            //console.log(resultado)
+            res.status(200).json({
+                datos: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+/**
  * @param {*} req 
  * @param {*} res 
  */
@@ -47,6 +70,7 @@ const updFileDef = async (req, res) => {
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
+
 /**
  * 
  * @param {*} req 
@@ -94,7 +118,7 @@ const obtieneDef= async (req, res) => {
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
-//TODO: Llevar esta consulta a una función que devuelva los campos presentes en la misma 
+
 const obtieneUsuarioDefensoria = async (req, res) =>{
     ci_usuario = req.user.ci;
     const query = {
@@ -115,11 +139,66 @@ const obtieneUsuarioDefensoria = async (req, res) =>{
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 
 }
+const obtieneRedes = async (req, res) => {
+    //const id_expediente = req.params.id_expediente
+    const query = {
+        text: `select * from sinna_mid.mid_reg_redes`
+    };
+    try {
+        const result = await con.query(query);
+        res.status(200).json({datos: result.rows,
+        mensaje: "esta sacando los datos"})
+    } catch (error) {
+        res.status(500).json({msg: 'Error: ', error})
+    }
+}
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+//TODO: ESTAMOS EN ESTE PUNTO LA DEVOLUCIÓN Y RECUPERACION DE PARAMETROS DE MUNICIPIO PARA REDESSS................
+const obtieneSelMunis = async(req, res)=>{
+    /**
+     const ids = req.query.id_par; // Obtener el array de IDs de la consulta
+    const ids_int = ids.map(function(item) {
+        return parseInt(item, 10);
+    });
+    //Convierte el array de cadenas a enteros
+    const placeholders = ids.map((_, index) => `$${index + 1}`).join(',');
+    const query = {
+        text: `SELECT * FROM parametricas.par_clasificador WHERE id_parametro IN (${placeholders})`,
+        values: ids
+    };
+     */
+    const munis = req.query.munis;
+    console.log('_________``````', munis)
+    const munis_int = munis.map(function(item) {
+        return parseInt(item, 10);
+    });
+    console.log('_________``````', munis_int)
+    const placeholders = munis.map((_, index) => `$${index + 1}`).join(',');
+    const query = {
+        text: `select distinct * from parametricas.par_territorial where id_parametro in (${placeholders})`,
+        values: munis
+    }
+    try {
+        const result = await con.query(query);
+        const resultado = result.rows;
+        res.status(200).json({ datos: resultado });
+    } catch (error) {
+        res.status(500).json({ msg: 'Error: ' + error });
+    }
+}
 
 module.exports = {
     gestionDefensoria, 
+    gestionRedesReg,
     obtieneDefensorias,
     obtieneDef,
     updFileDef,
+    obtieneRedes,
+    obtieneSelMunis,
     obtieneUsuarioDefensoria
 }
