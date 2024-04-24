@@ -54,8 +54,31 @@ const obtenerPersonasAutViaje = async (req, res) => {
         res.status(500).json({ msg: 'Error: ' + e });
     }
 }
+
+const listarAutorizacionesViajeDna = async (req, res) => {
+
+    const query = {
+        text: `select * from sinna_mid.f_listar_autorizaciones_viaje('{ "estado":"${req.body.estado}","ci_usuario":"${req.user.ci}" }') `,
+    };
+
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows;
+            console.log(resultado)
+            res.status(200).json({
+                datoAdicional: resultado,
+                mensaje:"Se obtuvo el listado de centros correctamente",
+                cod:200,
+                correcto:true
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
 module.exports = {
     gestionAutorizacionesViaje,
     obtenerAutorizacionViaje,
-    obtenerPersonasAutViaje
+    obtenerPersonasAutViaje,
+    listarAutorizacionesViajeDna
 }
