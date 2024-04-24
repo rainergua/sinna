@@ -45,12 +45,7 @@ const getParametrosDenuncia = async (req, res) => {
 const getMunicipioProvDep = async (req, res) =>{
     try {
         const query ={
-            text: `select pt.id_parametro as value, pt3.nombre ||' - '|| pt2.nombre || ' - ' || pt.descripcion as label 
-            from parametricas.par_territorial pt
-            inner join parametricas.par_territorial pt2 on pt.id_parametro_padre=pt2.id_parametro
-            inner join parametricas.par_territorial pt3 on pt2.id_parametro_padre = pt3.id_parametro
-            where pt.id_parametro >122
-            order by pt.id_parametro`
+            text: `select * from parametricas.getmunicipioprovdep()`
         }
         const respuesta = await con.query(query)
         res.status(200).json({
@@ -226,13 +221,12 @@ const obtienedatosPrint = async(req, res) =>{
  */
 const guardaFam= async (req, res) => {
     const {
-        nna,id_persona,relacion_familiar,id_centro,direccion,latitud,longitud,telefono,observaciones
+        nna,id_persona,relacion_familiar,id_centro,direccion,latitud,longitud,telefono,observaciones, id_creado_por
     } = req.body
     const query = {
-        text: `insert into comun.com_familiares_hermanos
-        (nna,id_persona,relacion_familiar,id_centro,direccion,latitud,longitud,telefono,observaciones)
-        values($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
-        values:[nna,id_persona,relacion_familiar,id_centro,direccion,latitud,longitud,telefono,observaciones]
+        //* $10 lleva el id del que crea el registro = id_creado_por */
+        text: `SELECT sinna_mid.guardafam($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
+        values:[nna,id_persona,relacion_familiar,id_centro,direccion,latitud,longitud,telefono,observaciones, id_creado_por]
             };
     await con
         .query(query)
@@ -272,21 +266,15 @@ const obtieneProfesionalDNA = async (req, res) =>{
     const id_def = req.params.cod_defensoria
     try{
         const querysoc = {
-            text: `select wuc.id_usuario as id, wfu.nombre as value from workflow.wf_usuarios_centros wuc
-                    inner join workflow.wf_usuario wfu on wuc.id_usuario = wfu.id_usuario 
-                    where wfu.modulo ilike 'mid' and wfu.cargo ilike '%social%' and wuc.id_centro = $1`,
+            text: `select * from workflow.obtieneprofesionaldnaa($1)`,
             values:[id_def]
                 };
         const querypsi = {
-            text: `select wuc.id_usuario as id, wfu.nombre as value from workflow.wf_usuarios_centros wuc
-                    inner join workflow.wf_usuario wfu on wuc.id_usuario = wfu.id_usuario 
-                    where wfu.modulo ilike 'mid' and wfu.cargo ilike '%psico%' and wuc.id_centro = $1`,
+            text: `select * from workflow.obtieneprofesionaldnab($1)`,
             values:[id_def]
                 };
         const queryleg = {
-            text: `select wuc.id_usuario as id, wfu.nombre as value from workflow.wf_usuarios_centros wuc
-                    inner join workflow.wf_usuario wfu on wuc.id_usuario = wfu.id_usuario 
-                    where wfu.modulo ilike 'mid' and wfu.cargo ilike '%legal%' and wuc.id_centro = $1`,
+            text: `select * from workflow.obtieneprofesionaldnac($1)`,
             values:[id_def]
                 };
         const social = await con.query(querysoc)

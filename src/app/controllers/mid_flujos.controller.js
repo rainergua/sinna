@@ -59,16 +59,7 @@ const obtieneHistoriaDeriva = async (req, res) => {
     //console.log(req.params)
     try {
         const query = {
-            text: `select md.id_denuncia , md.cod_caso, wu.nombre as registrado, TO_CHAR(smd.fecha_denuncia , 'dd/mm/yyyy') as fecha_denuncia,
-            wu3.nombre derivado_por, TO_CHAR(md.fecha_creado, 'dd/mm/yyyy hh:mm:ss') as fecha_derivado, wu2.nombre as derivado_a, 
-            case when md.fecha_modificado = md.fecha_creado then 'PENDIENTE' else TO_CHAR(md.fecha_modificado, 'dd/mm/yyyy hh:mm:ss') end as fecha_aceptado 
-            from sinna_mid.mid_denuncias smd
-            inner join sinna_mid.mid_derivaciones md on smd.id_denuncia = md.id_denuncia 
-            inner join workflow.wf_usuario wu  on smd.id_creado_por = wu.id_usuario 
-            inner join workflow.wf_usuario wu2  on md.id_usuario_a = wu2.id_usuario 
-            inner join workflow.wf_usuario wu3  on md.id_creado_por = wu3.id_usuario 
-            where smd.id_denuncia = $1
-            order by md.cod_caso, md.id_usuario_a, md.id_denuncia , wu.nombre, wu2.nombre , wu3.nombre`,
+            text: `select * from sinna_mid.obtienehistoriaderiva($1)`,
             values: [id_denuncia]
         }
         const respuesta = await con.query(query)
@@ -111,9 +102,7 @@ const obtieneEstado = async (req, res) => {
     const cargo = params.cargo
     const id_usuario = req.user.sub;
     const query = { 
-        text: `select * from sinna_mid.mid_expedientes me 
-        where cod_caso ilike $1 and estado ilike '%'|| $2 ||'%' and  id_creado_por = $3
-        order by id_expediente desc limit 1`,
+        text: `select * FROM sinna_mid.obtieneestado($1, $2, $3)`,
         values:[cod_caso, cargo, id_usuario] 
     };
     try {
@@ -181,9 +170,14 @@ const grabaDocumento = async(req, res)=>{
     } = req.body
     const ci_usuario = req.user.ci;
     const query = {
+
+        /*
+        REVISAR en el BACK
         text: `insert into comun.datos_documentos
         (id_documento, json_datos, estado, transaccion, id_creado_por, fecha_creado)
         values($1,$2,$3,$4,$5,now())`,
+        */
+        text: `SELECT sinna_mid.grabadocumento($1,$2,$3,$4,$5,now())`,
         values:[id_documento,json_datos,estado,transaccion,id_creado_por]
             };
     await con
