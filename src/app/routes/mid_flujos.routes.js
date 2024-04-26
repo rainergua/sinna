@@ -32,4 +32,5 @@ router.get('/obtienedoc/:id_expediente', passport.authenticate('jwt', {session:f
 router.post('/grabaexpediente', passport.authenticate('jwt', {session:false}), grabaExpediente);
 
 router.post('/grabadocumento', passport.authenticate('jwt', {session:false}), grabaDocumento);
+
 module.exports = router;
