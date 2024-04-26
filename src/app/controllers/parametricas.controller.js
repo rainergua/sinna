@@ -74,7 +74,7 @@ const obtieneMun = async (req, res) => {
 const obtieneMunDpto = async (req, res) => {
     const dpto = req.params.id
     const query = {
-        text: `select * from sinna_mospa.f_obtener_municipios_de_dpto($1) `,
+        text: `select * from parametricas.f_listar_depto_municipio($1) `,
         values:[dpto]
     };
     await con
