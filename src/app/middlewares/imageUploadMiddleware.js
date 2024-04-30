@@ -5,11 +5,19 @@ const path = require('path');
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     let folder = '';
+
     if (req.body.folder) {
       folder = req.body.folder;
+
     } else {
       folder = 'uploads';
     }
+
+    if(file.fieldname==='url_ci_padre'){
+      folder='mid_aut_viajes';
+    }
+
+
     const destFolder = path.join(__dirname, '..', 'public', folder);
     //const destFolder = path.join('D:\\archivos', folder);
     //console.log(destFolder)
