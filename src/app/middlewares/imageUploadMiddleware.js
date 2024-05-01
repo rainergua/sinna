@@ -14,7 +14,15 @@ const storage = multer.diskStorage({
     }
 
     if(file.fieldname==='url_ci_padre'){
-      folder='mid_aut_viajes';
+      folder='mid_aut_viajes/padres';
+    }
+
+    if(file.fieldname==='url_ci_madre'){
+      folder='mid_aut_viajes/madres';
+    }
+
+    if(file.fieldname==='url_ci_tutor'){
+      folder='mid_aut_viajes/tutores';
     }
 
 

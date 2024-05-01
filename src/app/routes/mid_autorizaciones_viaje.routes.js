@@ -4,7 +4,7 @@ const passport =require('passport')
 const router = express.Router();
 const {
    gestionAutorizacionesViaje, obtenerAutorizacionViaje, obtenerPersonasAutViaje, listarAutorizacionesViajeDna,
-   subirFotoPadre
+   subirFotoPadre, subirFotoMadre, subirFotoTutor
 } = require ('../controllers/mid_autorizaciones_viaje.controller')
 const upload = require("../middlewares/imageUploadMiddleware");
 
@@ -20,6 +20,21 @@ router.post(
     passport.authenticate('jwt',{session:false}),
     upload.single('url_ci_padre'),
     subirFotoPadre
+);
+
+router.post(
+    '/subirFotoMadre',
+    passport.authenticate('jwt',{session:false}),
+    upload.single('url_ci_madre'),
+    subirFotoMadre
+);
+
+router.post(
+    '/subirFotoTutor',
+    passport.authenticate('jwt',{session:false}),
+    upload.single('url_ci_tutor'),
+    subirFotoTutor
+
 );
 
 router.post(

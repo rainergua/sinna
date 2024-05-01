@@ -47,6 +47,48 @@ const subirFotoPadre = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const subirFotoMadre = async (req, res) => {
+    req.body.ci_usuario = req.user.ci;
+    if (typeof req.file !== 'undefined')
+        req.body.url_ci_madre = req.file.filename;
+    //console.log(req.body);
+    const v_json = req.body;
+    const query = {
+        text: `call sinna_mid.p_gestion_autorizaciones_viaje($1) `,
+        values:[v_json]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            const resultado =  result.rows[0];
+            res.status(200).json({
+                result: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
+const subirFotoTutor = async (req, res) => {
+    req.body.ci_usuario = req.user.ci;
+    if (typeof req.file !== 'undefined')
+        req.body.url_ci_tutor = req.file.filename;
+    //console.log(req.body);
+    const v_json = req.body;
+    const query = {
+        text: `call sinna_mid.p_gestion_autorizaciones_viaje($1) `,
+        values:[v_json]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            const resultado =  result.rows[0];
+            res.status(200).json({
+                result: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
 
 const obtenerAutorizacionViaje = async (req, res) => {
     try {
@@ -101,5 +143,7 @@ module.exports = {
     obtenerAutorizacionViaje,
     obtenerPersonasAutViaje,
     listarAutorizacionesViajeDna,
-    subirFotoPadre
+    subirFotoPadre,
+    subirFotoMadre,
+    subirFotoTutor
 }
