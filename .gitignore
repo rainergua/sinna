@@ -1,5 +1,9 @@
 node_modules/
 uploads/
+uploads/mid_aut_viajes/madres
+uploads/mid_aut_viajes/padres
+uploads/mid_aut_viajes/personas
+uploads/mid_aut_viajes/tutores
 src/infraestructure/config/config.js
 
 package-lock.json
