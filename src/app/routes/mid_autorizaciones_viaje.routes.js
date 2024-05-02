@@ -38,6 +38,14 @@ router.post(
 );
 
 router.post(
+    '/guardarPersonaViaje',
+    passport.authenticate('jwt',{session:false}),
+    upload.single('url_ci_persona'),
+    gestionAutorizacionesViaje
+
+);
+
+router.post(
     '/listarAutorizacionesViajeDna',
     passport.authenticate('jwt',{session:false}),
     listarAutorizacionesViajeDna

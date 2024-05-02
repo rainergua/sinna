@@ -9,6 +9,9 @@ const con = require('../../infraestructure/config/config');
 
 const gestionAutorizacionesViaje = async (req, res) => {
     req.body.ci_usuario = req.user.ci;
+    if (typeof req.file !== 'undefined')
+        req.body.url_ci_persona = req.file.filename;
+
     const v_json = req.body;
     const query = {
         text: `call sinna_mid.p_gestion_autorizaciones_viaje($1) `,
@@ -128,7 +131,7 @@ const listarAutorizacionesViajeDna = async (req, res) => {
         .then((result) =>{
             //formateamos el resultado para que retorne solo Rows y Fields
             const resultado =  result.rows;
-            console.log(resultado)
+           // console.log(resultado)
             res.status(200).json({
                 datoAdicional: resultado,
                 mensaje:"Se obtuvo el listado de centros correctamente",

@@ -25,6 +25,10 @@ const storage = multer.diskStorage({
       folder='mid_aut_viajes/tutores';
     }
 
+    if(file.fieldname==='url_ci_persona'){
+      folder='mid_aut_viajes/personas';
+    }
+
 
     const destFolder = path.join(__dirname, '..', 'public', folder);
     //const destFolder = path.join('D:\\archivos', folder);
