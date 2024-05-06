@@ -7,7 +7,7 @@ const con = require('../../infraestructure/config/config');
 const gestionDefensoria = async (req, res) => {
     req.body.ci_usuario = req.user.ci;
     const v_json = req.body
-    console.log(v_json)
+    //console.log(v_json)
     const query = {
         text: `call sinna_mid.p_centro_dna($1) `,
         values:[v_json]
@@ -31,7 +31,7 @@ const gestionDefensoria = async (req, res) => {
 const gestionRedesReg = async (req, res) => {
     req.body.ci_usuario = req.user.ci;
     const v_json = req.body
-    console.log(v_json)
+    //console.log(v_json)
     const query = {
         text: `call sinna_mid.p_reg_redes($1) `,
         values:[v_json]
@@ -54,7 +54,7 @@ const gestionRedesReg = async (req, res) => {
  */
 const updFileDef = async (req, res) => {
     const v_json = req.body
-    console.log(v_json)
+    //console.log(v_json)
     const query = {
         text: `select * from  sinna_mid.mid_defensorias`,
             };
@@ -173,11 +173,11 @@ const obtieneSelMunis = async(req, res)=>{
     };
      */
     const munis = req.query.munis;
-    console.log('_________``````', munis)
+    //console.log('_________``````', munis)
     const munis_int = munis.map(function(item) {
         return parseInt(item, 10);
     });
-    console.log('_________``````', munis_int)
+    //console.log('_________``````', munis_int)
     const placeholders = munis.map((_, index) => `$${index + 1}`).join(',');
     const query = {
         text: `select distinct * from parametricas.par_territorial where id_parametro in (${placeholders})`,

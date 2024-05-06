@@ -33,7 +33,7 @@ const listarPersonas = async (req, res) => {
         .then((result) =>{
             //formateamos el resultado para que retorne solo Rows y Fields
             const resultado =  result.rows;
-            console.log(resultado)
+            //console.log(resultado)
             res.status(200).json({
                 datoAdicional: resultado,
                 mensaje:"Personas obtenidos",

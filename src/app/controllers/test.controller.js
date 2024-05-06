@@ -54,7 +54,7 @@ const getToken = async(req, res) =>{
         accessToken: token
       })}
       catch (err){
-        console.log(err)
+        //console.log(err)
         res.status(500).json({
             message: "Internal server error"
           });

@@ -14,13 +14,13 @@ const buscarEmail = async (req, res) => {
             return { id_usuario, ci_usuario, nombre, cargo, correo, telefono, estado_wf, ciudadania, password }
         }
     } catch (e) {
-        console.log(e);
+        //console.log(e);
     }
 }
 
 const getMe = async (req, res) => {
     try {
-        console.log(req.user);
+        //console.log(req.user);
         const usuario = await con.query(`select * from workflow.f_obtener_usuario('${req.user.ci}')`);
         const resp = usuario.rows[0];
         delete resp.password;

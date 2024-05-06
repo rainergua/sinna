@@ -23,7 +23,7 @@ const parametricasFamilia = async (req, res) => {
 const gestionFamilia = async (req, res) => {
     req.body.ci_usuario = req.user.ci;
     const v_json = req.body;
-    console.log(v_json);
+    //console.log(v_json);
     const query = {
         text: `call comun.p_familiares_hermanos($1) `,
         values:[v_json]        
@@ -59,7 +59,7 @@ const mostrarFamilia = async (req, res) => {
 const mostrarFamiliaNNA = async (req, res) => {
     let nna = req.body.nna;
     //const v_json = req.body;
-    console.log(nna);
+    //console.log(nna);
     try {
         await con
             .query(`SELECT * from comun.f_mostrar_familiares_nna($1)`,[nna])
