@@ -6,6 +6,8 @@ const {
     obtieneDerivacionesAcept,
     obtieneHistoriaDeriva,
     obtieneParams,
+    mensajeFlujo,
+    mensajeSeguimiento,
     grabaExpediente,
     grabaDocumento,
     obtieneEstado,
@@ -28,6 +30,10 @@ router.get('/obtieneestado', passport.authenticate('jwt', {session:false}), obti
 router.get('/obtieneexpedientecaso/:cod_caso', passport.authenticate('jwt', {session:false}), obtieneExpedienteCaso);
 //obtieneDoc 
 router.get('/obtienedoc/:id_expediente', passport.authenticate('jwt', {session:false}), obtieneDoc);
+//
+router.get('/mensajeflujo/:cargo', passport.authenticate('jwt', {session:false}), mensajeFlujo);
+
+router.get('/mensajeseguimiento/:cargo', passport.authenticate('jwt', {session:false}), mensajeSeguimiento);
 
 router.post('/grabaexpediente', passport.authenticate('jwt', {session:false}), grabaExpediente);
 

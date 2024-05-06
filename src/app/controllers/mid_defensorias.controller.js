@@ -118,6 +118,22 @@ const obtieneDef= async (req, res) => {
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
+//TODO: GENERAR LA FUNCION PARA OBTENER LAS DEFENSORIAS QUE CORRESPONDEN A UN MUNICIPIO
+const getDefensoriaMuni = async(req, res) =>{
+    const id_muni = req.params.id_muni
+    const query = {
+        text: `select id_defensorias as id, descripcion as value, * from sinna_mid.mid_defensorias md where municipio = $1`,
+        values:[id_muni]
+    };
+    try {
+        const result = await con.query(query);
+        res.status(200).json({datos: result.rows,
+        mensaje: "Defensorias obtenidas correctamente"})
+    } catch (error) {
+        res.status(500).json({msg: 'Error: ', error})
+    }
+    
+}
 
 const obtieneUsuarioDefensoria = async (req, res) =>{
     ci_usuario = req.user.ci;
@@ -160,18 +176,6 @@ const obtieneRedes = async (req, res) => {
  */
 //TODO: ESTAMOS EN ESTE PUNTO LA DEVOLUCIÓN Y RECUPERACION DE PARAMETROS DE MUNICIPIO PARA REDESSS................
 const obtieneSelMunis = async(req, res)=>{
-    /**
-     const ids = req.query.id_par; // Obtener el array de IDs de la consulta
-    const ids_int = ids.map(function(item) {
-        return parseInt(item, 10);
-    });
-    //Convierte el array de cadenas a enteros
-    const placeholders = ids.map((_, index) => `$${index + 1}`).join(',');
-    const query = {
-        text: `SELECT * FROM parametricas.par_clasificador WHERE id_parametro IN (${placeholders})`,
-        values: ids
-    };
-     */
     const munis = req.query.munis;
     console.log('_________``````', munis)
     const munis_int = munis.map(function(item) {
@@ -196,6 +200,7 @@ module.exports = {
     gestionDefensoria, 
     gestionRedesReg,
     obtieneDefensorias,
+    getDefensoriaMuni,
     obtieneDef,
     updFileDef,
     obtieneRedes,

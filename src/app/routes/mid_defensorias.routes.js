@@ -1,6 +1,5 @@
 const express = require('express');
 const passport = require('passport');
-const verificaToken = require('../middlewares/verificaToken')
 const router = express.Router();
 
 const  upload = require ('../middlewares/imageUploadMiddleware')
@@ -8,6 +7,7 @@ const {
     gestionDefensoria,
     gestionRedesReg,
     updFileDef,
+    getDefensoriaMuni,
     //obtieneDepto,
     //obtieneProv,
     //obtieneMun,
@@ -117,7 +117,7 @@ router.post('/updfiledef', upload.single('file'), updFileDef);
  *              description: Peticion Exitosa
  * 
  */
-router.get('/obtienedefensorias', obtieneDefensorias);
+router.get('/obtienedefensorias', passport.authenticate('jwt', {session:false}), obtieneDefensorias);
 router.get ('/obtieneselmunis', passport.authenticate('jwt', {session:false}), obtieneSelMunis)
 router.get('/obtieneredes', passport.authenticate('jwt', {session:false}), obtieneRedes);
 /**
@@ -139,9 +139,10 @@ router.get('/obtieneredes', passport.authenticate('jwt', {session:false}), obtie
  *                  style: simple
  * 
  */
-router.get('/obtienedef/:id', obtieneDef);
+router.get('/obtienedef/:id', passport.authenticate('jwt', {session:false}), obtieneDef);
 
-
+//getdefensoriamuni
+router.get('/getdefensoriamuni/:id_muni', passport.authenticate('jwt', {session:false}), getDefensoriaMuni);
 
 router.get('/obtieneusudef', passport.authenticate('jwt', {session:false}), obtieneUsuarioDefensoria);
 
