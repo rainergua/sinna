@@ -128,6 +128,73 @@ const obtieneExpedienteCaso = async (req, res) =>{
         res.status(500).json({msg: 'Error: ', error})
     }
 }
+//mensajeSeguimiento
+const mensajeSeguimiento = async(req, res) => {
+    const cargo = req.params.cargo
+    const id_usuario = req.user.sub;
+    let query = ''
+    switch (cargo) {
+        case 'SOCIAL':
+            query ={
+                text: `select * from sinna_mid.f_define_seguimiento_social($1)`,
+                values: [id_usuario]
+            };
+            break;
+        case 'PSICO':
+            query ={
+                text: `select * from sinna_mid.f_define_seguimiento_psico($1)`,
+                values: [id_usuario]
+            };
+            break;
+        case 'LEGAL':
+            query ={
+                text: `select * from sinna_mid.f_define_seguimiento_legal($1)`,
+                values: [id_usuario]
+            };
+            break;
+        default:
+            break;
+    }
+    try {
+        const result = await con.query(query);
+        res.status(200).json({datos: result.rows})
+    } catch (error) {
+        res.status(500).json({msg: 'Error: ', error})
+    }
+}
+const mensajeFlujo = async(req, res) => {
+    const cargo = req.params.cargo
+    const id_usuario = req.user.sub;
+    let query = ''
+    switch (cargo) {
+        case 'SOCIAL':
+            query ={
+                text: `select * from sinna_mid.f_define_flujo_social($1)`,
+                values: [id_usuario]
+            };
+            break;
+        case 'PSICO':
+            query ={
+                text: `select * from sinna_mid.f_define_flujo_psico($1)`,
+                values: [id_usuario]
+            };
+            break;
+        case 'LEGAL':
+            query ={
+                text: `select * from sinna_mid.f_define_flujo_legal($1)`,
+                values: [id_usuario]
+            };
+            break;
+        default:
+            break;
+    }
+    try {
+        const result = await con.query(query);
+        res.status(200).json({datos: result.rows})
+    } catch (error) {
+        res.status(500).json({msg: 'Error: ', error})
+    }
+}
 const obtieneDoc = async (req, res) =>{
     const id_expediente = req.params.id_expediente
     const query = {
@@ -165,20 +232,16 @@ const grabaExpediente = async(req, res)=>{
 //grabadocumento
 //TODO: ELABORAR EL PROCEDIMIENTO PARA EL ABM DE LOS DOCUMENTOS
 const grabaDocumento = async(req, res)=>{
-    const {
-        id_documento, json_datos, estado, transaccion, id_creado_por
-    } = req.body
-    const ci_usuario = req.user.ci;
+    req.body.ci_usuario = req.user.ci;
+    const v_json = req.body;
     const query = {
-
-        /*
-        REVISAR en el BACK
-        text: `insert into comun.datos_documentos
+        //REVISAR en el BACK
+        /*text: `insert into comun.datos_documentos
         (id_documento, json_datos, estado, transaccion, id_creado_por, fecha_creado)
         values($1,$2,$3,$4,$5,now())`,
-        */
-        text: `SELECT sinna_mid.grabadocumento($1,$2,$3,$4,$5,now())`,
-        values:[id_documento,json_datos,estado,transaccion,id_creado_por]
+        values:[id_documento,json_datos,estado,transaccion,id_creado_por]*/
+        text: `call comun.p_datos_documentos($1) `,
+        values:[v_json]
             };
     await con
         .query(query)
@@ -196,6 +259,8 @@ module.exports = {
     obtieneDerivacionesAcept,
     obtieneHistoriaDeriva,
     obtieneParams,
+    mensajeFlujo,
+    mensajeSeguimiento,
     grabaDocumento,
     grabaExpediente,
     obtieneEstado,

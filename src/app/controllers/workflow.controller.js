@@ -10,7 +10,6 @@ const listarTransacciones = async (req, res) => {
 
     const query = {
         text: `select * from workflow.f_obtener_lista_transacciones('${req.user.ci}', '${req.body.tabla}', '${req.body.estado}') `,
-
     };
     await con
         .query(query)
