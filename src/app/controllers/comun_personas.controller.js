@@ -59,7 +59,7 @@ const gestionPersonasDetalle = async (req, res) => {
     req.body.ci_usuario = req.user.ci;
     const v_json = req.body
     const query = {
-        text: `call comun.p_personas_ajustado($1) `,
+        text: `call comun.p_personas($1) `,
         values:[v_json]
     };
     await con
@@ -93,7 +93,7 @@ const mostrarPersona = async (req, res) => {
 const mostrarPersonaCI = async (req, res) => {
     try {
         let cip = req.body.ci;
-        const listado = await con.query(`select * from comun.f_mostrar_persona_ci($1)`,[cip]);
+        const listado = await con.query(`select * from comun.f_mostrar_personas_ci($1)`,[cip]);
         res.status(200).json({ 
             datoAdicional: listado.rows,
             mensaje:"Datos de la persona obtenidos por el CI",
