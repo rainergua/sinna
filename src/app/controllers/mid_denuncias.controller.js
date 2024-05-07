@@ -54,7 +54,7 @@ const getMunicipioProvDep = async (req, res) =>{
             cod:200
         })        
     } catch (error) {
-        console.log('error: ', error)
+        //console.log('error: ', error)
         res.status(500).json({ msg: 'Error: ' + error });
     }
 }
@@ -314,7 +314,7 @@ const derivarCaso = async (req, res) => {
             cod:200
         })
     } catch (error) {
-        console.log('error: ', error)
+        //console.log('error: ', error)
         res.status(500).json({ msg: 'Error: ' + error });
     }
 }

@@ -61,7 +61,7 @@ const listarTransaccionesTabla = async (req, res) => {
 const gestionDocumentos = async (req, res) => {
     req.body.ci_usuario = req.user.ci;
     const v_json = req.body;
-    console.log(req.body);
+    //console.log(req.body);
     const query = {
         text: `call documentos.p_gestion_plantillas($1) `,
         values:[v_json]

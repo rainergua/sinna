@@ -114,7 +114,7 @@ const gestionPersonasDetalle = async (req, res) => {
         .query(query)
         .then((result) =>{
             const resultado =  result.rows[0];
-            console.log(resultado);
+            //console.log(resultado);
             res.status(200).json({
                 result: resultado,
 
@@ -135,7 +135,7 @@ const listarMovimientos = async (req, res) => {
         .then((result) =>{
             //formateamos el resultado para que retorne solo Rows y Fields
             const resultado =  result.rows;
-            console.log(resultado)
+            //console.log(resultado)
             res.status(200).json({
                 datoAdicional: resultado,
                 mensaje:"Se obtuvo el listado de movimientos del centro",
@@ -155,7 +155,7 @@ const obtieneCentrosDestino = async (req, res) => {
         .then((result) =>{
             //formateamos el resultado para que retorne solo Rows y Fields
             const resultado =  result.rows;
-            console.log(resultado)
+            //console.log(resultado)
             res.status(200).json({
                 datoAdicional: resultado,
                 mensaje:"Se obtuvo el listado de movimientos del centro",

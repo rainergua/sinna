@@ -107,6 +107,20 @@ const obtenerAutorizacionViaje = async (req, res) => {
     }
 }
 
+const obtenerMunUsuario = async (req, res) => {
+    try {
+        const u = req.user.ci;
+        const datos = await con.query(`select * from sinna_mid.f_municipios_usr_aut_viaje($1)`, [u]);
+        res.status(200).json({
+            datoAdicional: datos.rows,
+            mensaje:"Se obtuvo los municipios del usuario.",
+            cod:200,
+        });
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
 const obtenerPersonasAutViaje = async (req, res) => {
     try {
         const datos = await con.query(`select * from sinna_mid.f_obtener_personas_autorizacion_viaje('${req.params.tipo}',${req.params.id})`);
@@ -148,5 +162,6 @@ module.exports = {
     listarAutorizacionesViajeDna,
     subirFotoPadre,
     subirFotoMadre,
-    subirFotoTutor
+    subirFotoTutor,
+    obtenerMunUsuario
 }
