@@ -59,7 +59,7 @@ const gestionPersonasDetalle = async (req, res) => {
     req.body.ci_usuario = req.user.ci;
     const v_json = req.body
     const query = {
-        text: `call comun.p_personas_ajustado($1) `,
+        text: `call comun.p_personas($1) `,
         values:[v_json]
     };
     await con

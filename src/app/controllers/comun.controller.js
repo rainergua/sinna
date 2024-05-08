@@ -51,7 +51,7 @@ const gestionPersona = async (req, res) => {
     //console.log(v_json);
     const query = {
         //text: `call comun.p_personas($1) `,
-        text: `call comun.p_personas_ajustado_array($1) `,
+        text: `call comun.p_personas($1) `,
         values:[v_json]        
     };
     await con
