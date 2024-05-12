@@ -5,7 +5,7 @@ const con = require('../../infraestructure/config/config');
 const getPersonaCi= async (req, res) => {
     const ci = req.params.ci
     const query = {
-        text: `select * from comun.f_mostrar:personas_ci($1)`,
+        text: `select * from comun.f_mostrar_personas_ci($1)`,
         values:[ci]
             };
     await con

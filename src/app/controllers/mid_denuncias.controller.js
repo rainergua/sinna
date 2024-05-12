@@ -39,9 +39,6 @@ const getParametrosDenuncia = async (req, res) => {
     }
 }
 
-/**
- * TODO: REALIZAR LA FUNCION CORRESPONDIENTE PARA LA OBTENCIÓN DE LOS PARÁMETROS
- */
 const getMunicipioProvDep = async (req, res) =>{
     try {
         const query ={
@@ -260,22 +257,22 @@ const guardaDenPer= async (req, res) => {
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
 
-//TODO: Llevar esta consulta a una función que devuelva los campos presentes en la misma 
+
 const obtieneProfesionalDNA = async (req, res) =>{
     ci_usuario = req.user.ci;
     const id_def = req.params.cod_defensoria
     try{
         const querysoc = {
-            text: `select * from workflow.obtieneprofesionaldnaa($1)`,
-            values:[id_def]
+            text: `select * from sinna_mid.f_obtiene_profesional_dna($1, $2)`,
+            values:[id_def, 'social']
                 };
         const querypsi = {
-            text: `select * from workflow.obtieneprofesionaldnab($1)`,
-            values:[id_def]
+            text: `select * from sinna_mid.f_obtiene_profesional_dna($1, $2)`,
+            values:[id_def, 'psico']
                 };
         const queryleg = {
-            text: `select * from workflow.obtieneprofesionaldnac($1)`,
-            values:[id_def]
+            text: `select * from sinna_mid.f_obtiene_profesional_dna($1, $2)`,
+            values:[id_def, 'legal']
                 };
         const social = await con.query(querysoc)
         const psico = await con.query(querypsi)
