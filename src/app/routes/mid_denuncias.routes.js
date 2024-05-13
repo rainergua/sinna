@@ -96,7 +96,7 @@ router.get('/obtienedente/:cod_denuncia', passport.authenticate('jwt', {session:
  *              description: Peticion Exitosa
  
  */
-router.get('/obtienedenuncias', passport.authenticate('jwt', {session:false}), obtieneDenuncias);
+router.get('/obtienedenuncias/:id', passport.authenticate('jwt', {session:false}), obtieneDenuncias);
 
 /**
  * @swagger

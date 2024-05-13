@@ -84,8 +84,10 @@ const gestionDenuncias = async (req, res) => {
  * @param {*} res 
 */
 const obtieneDenuncias = async (req, res) => {
+    const id_denuncia = req.params.id
     const query = {
-        text: `select * from sinna_mid.listar_denuncias() order by id_denuncia desc`
+        text: `select * from sinna_mid.listar_denuncias($1) order by id_denuncia desc`,
+        values:[id_denuncia]
             };
     await con
         .query(query)
