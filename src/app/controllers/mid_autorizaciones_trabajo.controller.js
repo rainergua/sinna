@@ -24,6 +24,104 @@ const listarAutorizacionesTrabajo = async (req, res) => {
     .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const getBuscarEstablecimiento = async (req, res) => {
+  try {
+      let buscar = req.params.buscar;
+      const datos = await con.query(`select * from sinna_mid.f_buscar_establecimiento($1)`, [buscar]);
+      console.log(datos.rows);
+      res.status(200).json({ 
+          datoAdicional: datos.rows,
+          mensaje:"Buscar establecimientos laboral",
+          cod:200
+      });
+  } catch (e) {
+      res.status(500).json({ msg: 'Error: ' + e });
+  }
+}
+
+const gestionEstablecimiento = async (req, res) => {
+  try {
+    req.body.ci_usuario = req.user.ci;
+    const v_json = req.body
+    //console.log(v_json)
+    const query = {
+      text: `call sinna_mid.p_establecimiento_laboral($1) `,
+      values:[v_json]
+    };
+    const result = await con.query(query);
+      res.status(200).json({ 
+        datoAdicional: result.rows[0].datoadicional,
+        mensaje:result.rows[0].notificacion,
+        correcto:result.rows[0].correcto,
+        cod:200
+      });
+  } catch (error) {
+    res.status(500).json({ msg: 'Error: ' + error });
+  }    
+}
+
+const gestionAutorizacionTrabajo = async (req, res) => {
+  try {
+    req.body.ci_usuario = req.user.ci;
+    const v_json = req.body
+    console.log(v_json)
+    const query = {
+      text: `call sinna_mid.p_autorizacion_trabajo($1) `,
+      values:[v_json]
+    };
+    const result = await con.query(query);
+    res.status(200).json({ 
+      datoAdicional: result.rows[0].datoadicional,
+      mensaje:result.rows[0].notificacion,
+      correcto:result.rows[0].correcto,
+      cod:200
+    });
+  } catch (error) {
+    res.status(500).json({ msg: 'Error: ' + error });
+  }    
+}
+
+const gestionAutorizacionTrabajoPadres = async (req, res) => {
+  try {
+    //req.body.ci_usuario = req.user.ci;
+    const v_json = req.body
+    console.log(v_json)
+    const query = {
+      text: `call sinna_mid.p_autorizacion_trabajo_padres($1) `,
+      values:[v_json]
+    };
+    const result = await con.query(query);
+    console.log(result.rows[0]);
+    res.status(200).json({ 
+      datoAdicional: result.rows[0].datoadicional,
+      mensaje:result.rows[0].notificacion,
+      correcto:result.rows[0].correcto,
+      cod:200
+    });
+  } catch (error) {
+    res.status(500).json({ msg: 'Error: ' + error });
+  }    
+}
+
+const listarRequisitosTrabajo = async (req, res) => {
+  try {
+      let id = req.params.id;
+      const datos = await con.query(`select * from sinna_mid.listar_requisitos_trabajo($1)`, [id]);
+      res.status(200).json({ 
+          datoAdicional: datos.rows,
+          mensaje:"Lista de requerimientos",
+          cod:200
+      });
+  } catch (e) {
+      res.status(500).json({ msg: 'Error: ' + e });
+  }
+}
+
 module.exports = {
   listarAutorizacionesTrabajo,
+  getBuscarEstablecimiento,
+  gestionEstablecimiento,
+  gestionAutorizacionTrabajo,
+  gestionAutorizacionTrabajoPadres,
+  listarRequisitosTrabajo
 }
