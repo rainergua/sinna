@@ -8,7 +8,8 @@ const {
     gestionEstablecimiento,
     gestionAutorizacionTrabajo,
     gestionAutorizacionTrabajoPadres,
-    listarRequisitosTrabajo
+    listarRequisitosTrabajo,
+    cambiarRequerimiento
 } = require ('../controllers/mid_autorizaciones_trabajo.controller')
 
 
@@ -41,6 +42,11 @@ router.post('/gestionAutorizacionTrabajoPadres',
 router.get('/listarRequisitosTrabajo/:id', 
     passport.authenticate('jwt', {session:false}), 
     listarRequisitosTrabajo
+);
+
+router.get('/cambiarRequerimiento/:id/:requerimiento', 
+    passport.authenticate('jwt', {session:false}), 
+    cambiarRequerimiento
 );
 
 module.exports = router;

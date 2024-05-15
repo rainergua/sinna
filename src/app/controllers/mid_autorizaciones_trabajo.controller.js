@@ -117,11 +117,27 @@ const listarRequisitosTrabajo = async (req, res) => {
   }
 }
 
+const cambiarRequerimiento = async (req, res) => {
+  try {
+      let id = req.params.id;
+      let requerimiento = req.params.requerimiento;
+      await con.query(`update sinna_mid.mid_requisitos_autorizacion_viaje set requerimiento = ($1) where id_requisito_autorizacion_viaje = ($2)`, [requerimiento, id]);
+      res.status(200).json({ 
+          datoAdicional: id,
+          mensaje:"Modificado correctamente",
+          cod:200
+      });
+  } catch (e) {
+      res.status(500).json({ msg: 'Error: ' + e });
+  }
+}
+
 module.exports = {
   listarAutorizacionesTrabajo,
   getBuscarEstablecimiento,
   gestionEstablecimiento,
   gestionAutorizacionTrabajo,
   gestionAutorizacionTrabajoPadres,
-  listarRequisitosTrabajo
+  listarRequisitosTrabajo,
+  cambiarRequerimiento
 }
