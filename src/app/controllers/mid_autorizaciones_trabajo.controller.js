@@ -116,7 +116,7 @@ const cambiarRequerimiento = async (req, res) => {
   try {
       let id = req.params.id;
       let requerimiento = req.params.requerimiento;
-      await con.query(`update sinna_mid.mid_requisitos_autorizacion_viaje set requerimiento = ($1) where id_requisito_autorizacion_viaje = ($2)`, [requerimiento, id]);
+      await con.query(`update sinna_mid.mid_requisitos_autorizacion_trabajo set requerimiento = ($1) where id_requisito_autorizacion_trabajo = ($2)`, [requerimiento, id]);
       res.status(200).json({ 
           datoAdicional: id,
           mensaje:"Modificado correctamente",
@@ -131,12 +131,12 @@ const subirDocumento = async (req, res) => {
   try {
     req.body.documento = req.file.filename;
     const query = {
-        text: `update sinna_mid.mid_requisitos_autorizacion_viaje set documento = ($1) where id_requisito_autorizacion_viaje = ($2) `,
-        values:[req.body.documento, req.body.id_requisito_autorizacion_viaje]        
+        text: `update sinna_mid.mid_requisitos_autorizacion_trabajo set documento = ($1) where id_requisito_autorizacion_trabajo = ($2) `,
+        values:[req.body.documento, req.body.id_requisito_autorizacion_trabajo]        
     };
     const resultado = await con.query(query)
     res.status(200).json({ 
-      datoAdicional: req.body.id_requisito_autorizacion_viaje,
+      datoAdicional: req.body.id_requisito_autorizacion_trabajo,
       mensaje:"El archivo se almacenó correctamente",
       cod:200
   });
@@ -227,6 +227,30 @@ const listarSeguimientoLaboral = async (req, res) => {
     .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const gestionSeguimientoLaboral = async (req, res) => {
+  req.body.ci_usuario = req.user.ci;
+  if (typeof req.file !== 'undefined')
+    req.body.adjunto = req.file.filename;
+  const v_json = req.body
+
+  const query = {
+      text: `call sinna_mid.p_seguimiento_laboral($1) `,
+      values:[v_json]        
+  };
+  await con 
+      .query(query)
+      .then((result) =>{
+          const resultado =  result.rows;
+          res.status(200).json({
+              datoAdicional: resultado,
+              mensaje:"Resultado de la gestión de acogida",
+              cod:200
+          })}
+      )
+      .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+
+
 module.exports = {
   listarAutorizacionesTrabajo,
   getBuscarEstablecimiento,
@@ -238,5 +262,6 @@ module.exports = {
   subirDocumento,
   subirDocumentoAvaluar,
   listarAutorizacionesTrabajoPadres,
-  listarSeguimientoLaboral
+  listarSeguimientoLaboral,
+  gestionSeguimientoLaboral
 }
