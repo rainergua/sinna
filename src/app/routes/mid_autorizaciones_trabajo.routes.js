@@ -13,7 +13,8 @@ const {
     subirDocumento,
     subirDocumentoAvaluar,
     listarAutorizacionesTrabajoPadres,
-    listarSeguimientoLaboral
+    listarSeguimientoLaboral,
+    gestionSeguimientoLaboral
 } = require ('../controllers/mid_autorizaciones_trabajo.controller')
 const upload = require('../middlewares/fileUploadMiddleware');
 
@@ -81,6 +82,13 @@ router.post(
     '/listarSeguimientoLaboral',
     passport.authenticate('jwt',{session:false}),
     listarSeguimientoLaboral
+);
+
+router.post(
+    '/gestionSeguimientoLaboral', 
+    passport.authenticate('jwt', {session:false}), 
+    upload.single('adjunto'),
+    gestionSeguimientoLaboral
 );
 
 module.exports = router;
