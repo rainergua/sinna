@@ -102,7 +102,7 @@ router.get(
 );
 
 router.get(
-    '/datosCentro/:id',
+    '/datosCentro',
     passport.authenticate('jwt',{session:false}),
     datosCentro
 );

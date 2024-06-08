@@ -32,8 +32,9 @@ const listarCentros = async (req, res) => {
 
 const datosCentro = async (req, res) => {
     try {
-        const id = req.params.id;
-        const datos = await con.query(`select * from sinna_mospa.f_obtener_centro($1)`, [id]);
+        //const id = req.params.id;
+        const ci = req.user.ci;
+        const datos = await con.query(`select * from sinna_mospa.f_obtener_centro($1)`, [ci]);
         res.status(200).json({
             datoAdicional: datos.rows,
             mensaje:"Se obtuvo los datos del centro al que ingreso.",

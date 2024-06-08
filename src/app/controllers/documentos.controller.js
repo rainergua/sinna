@@ -95,7 +95,7 @@ const obtenerCamposDocumentos = async (req, res) => {
 const obtenerCamposTabla = async (req, res) => {
     try {
         const t = req.params.tabla;
-        const datos = await con.query(`SELECT c.ordinal_position as id, c.column_name as value FROM information_schema.columns c WHERE table_name = ($1)`, [t]);
+        const datos = await con.query(`select * from documentos.f_obtener_campos_tabla($1)`, [t]);
         res.status(200).json({
             datoAdicional: datos.rows,
             mensaje:"Se obtuvo los campos de las plantillas.",
