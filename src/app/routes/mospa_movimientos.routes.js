@@ -2,10 +2,9 @@ const express = require('express');
 
 const passport =require('passport')
 const {getParametricasIngresos, obtenerPersona, gestionMovimientos, gestionPersonasDetalle, listarMovimientos,
-    obtieneMunicipioDpto, obtieneCentrosDestino
+    obtieneMunicipioDpto, obtieneCentrosDestino, subirFotoAdolescente
 } = require("../controllers/mospa_movimientos.controller");
-
-
+const upload = require("../middlewares/imageUploadMiddleware");
 
 const router = express.Router();
 
@@ -47,6 +46,13 @@ router.post('/obtieneMunicipioDpto',
 router.post('/obtieneCentrosDestino',
     passport.authenticate('jwt',{session:false}),
     obtieneCentrosDestino
+);
+
+router.post(
+    '/subirFotoAdolescente',
+    passport.authenticate('jwt',{session:false}),
+    upload.single('url_foto_adolescente'),
+    subirFotoAdolescente
 );
 
 

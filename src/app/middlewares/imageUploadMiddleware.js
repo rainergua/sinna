@@ -28,6 +28,10 @@ const storage = multer.diskStorage({
     if(file.fieldname==='url_ci_persona'){
       folder='mid_aut_viajes/personas';
     }
+    if(file.fieldname==='url_foto_adolescente'){
+      folder='mospa/ingresos';
+    }
+
 
 
     const destFolder = path.join(__dirname, '..', 'public', folder);

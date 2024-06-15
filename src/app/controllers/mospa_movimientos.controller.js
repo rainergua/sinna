@@ -85,8 +85,9 @@ const obtenerPersona = async (req, res) => {
 }
 
 const gestionMovimientos = async (req, res) => {
+
     req.body.ci_usuario = req.user.ci;
-    const v_json = req.body
+    const v_json = req.body;
     const query = {
         text: `call sinna_mospa.p_gestion_movimientos($1) `,
         values:[v_json]
@@ -166,6 +167,28 @@ const obtieneCentrosDestino = async (req, res) => {
 
 }
 
+const subirFotoAdolescente = async (req, res) => {
+    req.body.ci_usuario = req.user.ci;
+    if (typeof req.file !== 'undefined')
+        req.body.url_foto_adolescente = req.file.filename;
+    //console.log(req.body);
+    const v_json = req.body;
+    const query = {
+        text: `call sinna_mospa.p_gestion_movimientos($1) `,
+        values:[v_json]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            const resultado =  result.rows[0];
+            res.status(200).json({
+                result: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
+
 module.exports = {
     getParametricasIngresos,
     obtenerPersona,
@@ -173,5 +196,6 @@ module.exports = {
     gestionPersonasDetalle,
     listarMovimientos,
     obtieneMunicipioDpto,
-    obtieneCentrosDestino
+    obtieneCentrosDestino,
+    subirFotoAdolescente
 }
