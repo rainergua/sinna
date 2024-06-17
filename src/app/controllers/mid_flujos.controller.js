@@ -51,6 +51,29 @@ const obtieneDerivacionesAcept = async (req, res) =>
         res.status(500).json({ msg: 'Error: ' + error });
     }
 }
+const obtienesituacionlegal = async(req, res)=>{
+    //
+    id_defensoria = req.params.id_defensoria;
+    console.log(id_defensoria)
+    try {
+        const query = {
+            text: `select * from sinna_mid.f_obtiene_situacion_legal($1)`,
+            values: [id_defensoria]
+        }
+        const situacionlegal = await con.query(query)
+        console.log(situacionlegal.rows)
+        res.status(200).json({
+            parametros: {
+                situacionlegal: situacionlegal.rows,
+            },
+            mensaje:"Se obtuvo los datos solicitados",
+            cod:200
+        }
+        );
+    } catch (error) {
+        res.status(500).json({ msg: 'Error: ' + error });
+    }
+}
 //Historial de derivaciones
 //TODO: ELABORAR LA FUNCIÓN QUE OBTIENE EL HISTORIAL DE LAS DERIVAVIONES DE UN CASO
 const obtieneHistoriaDeriva = async (req, res) => {
@@ -75,6 +98,7 @@ const obtieneHistoriaDeriva = async (req, res) => {
         res.status(500).json({ msg: 'Error: ' + error });
     }
 }
+
 //Obtiene las parametricas selecciondas en el caso
 const obtieneParams = async (req, res) => {
     const ids = req.query.id_par; // Obtener el array de IDs de la consulta
@@ -88,13 +112,14 @@ const obtieneParams = async (req, res) => {
         values: ids
     };
     try {
-      const result = await con.query(query);
-      const resultado = result.rows;
-      res.status(200).json({ datos: resultado });
+        const result = await con.query(query);
+        const resultado = result.rows;
+        res.status(200).json({ datos: resultado });
     } catch (error) {
-      res.status(500).json({ msg: 'Error: ' + error });
+        res.status(500).json({ msg: 'Error: ' + error });
     }
-  };
+};
+
 //TODO: ELABORAR LA FUNCIÓN PARA OBTENER EL ESTADO DEL EXPEDIENTE
 const obtieneEstado = async (req, res) => {
     const params = req.query; 
@@ -235,11 +260,6 @@ const grabaDocumento = async(req, res)=>{
     req.body.ci_usuario = req.user.ci;
     const v_json = req.body;
     const query = {
-        //REVISAR en el BACK
-        /*text: `insert into comun.datos_documentos
-        (id_documento, json_datos, estado, transaccion, id_creado_por, fecha_creado)
-        values($1,$2,$3,$4,$5,now())`,
-        values:[id_documento,json_datos,estado,transaccion,id_creado_por]*/
         text: `call comun.p_datos_documentos($1) `,
         values:[v_json]
             };
@@ -257,6 +277,7 @@ const grabaDocumento = async(req, res)=>{
 module.exports = {
     obtieneDerivacionesAsign,
     obtieneDerivacionesAcept,
+    obtienesituacionlegal,
     obtieneHistoriaDeriva,
     obtieneParams,
     mensajeFlujo,
