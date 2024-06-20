@@ -143,7 +143,7 @@ const obtieneEstado = async (req, res) => {
 const obtieneExpedienteCaso = async (req, res) =>{
     const cod_caso = req.params.cod_caso
     const query ={
-        text: `select distinct * from sinna_mid.obtieneExpedienteCaso($1)`,
+        text: `select distinct * from sinna_mid.obtieneExpedienteCaso($1) order by id_expediente desc`,
         values: [cod_caso]
     };
     try {
