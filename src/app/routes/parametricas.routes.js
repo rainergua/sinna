@@ -28,7 +28,11 @@ const {
  *
  */
 
-router.get('/obtieneparam/:id', passport.authenticate('jwt',{session:false}),obtieneParam);
+router.get(
+    '/obtieneparam/:id',
+    passport.authenticate('jwt',{session:false}),
+    obtieneParam
+);
 
 /**
  * @swagger
