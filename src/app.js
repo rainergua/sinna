@@ -25,7 +25,7 @@ const formularioRoutes = require("./app/routes/comun_formulario.routes")
 const documentosRoutes=require("./app/routes/documentos.routes")
 const autorizacionesViajeRoutes=require("./app/routes/mid_autorizaciones_viaje.routes")
 const autorizacionesTrabajoRoutes=require("./app/routes/mid_autorizaciones_trabajo.routes")
-
+const piemRoutes=require("./app/routes/mospa_piem_routes")
 const cors = require("cors")
 
 // Create a new Express app
@@ -64,6 +64,7 @@ app.use('/api/modefa',modefa_centros_acogimiento);
 app.use('/api/modefa',modefa_ingreso_nna);
 app.use('/api/mospa',mospaRoutes);
 app.use('/api/mospa',movimientosRoutes);
+app.use('/api/mospa',piemRoutes);
 app.use('/api/workflow',workflowRoutes);
 app.use('/api/parametricas',parametricasRoutes);
 app.use('/api/auth',authRoutes);

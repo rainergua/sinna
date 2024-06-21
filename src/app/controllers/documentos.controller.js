@@ -106,11 +106,46 @@ const obtenerCamposTabla = async (req, res) => {
     }
 }
 
+const gestionDatosDocumentos = async (req, res) => {
+    req.body.ci_usuario = req.user.ci;
+    const v_json = req.body;
+    //console.log(req.body);
+    const query = {
+        text: `call documentos.p_gestion_datos_documentos($1) `,
+        values:[v_json]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            const resultado =  result.rows[0];
+            res.status(200).json({
+                result: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
+const obtenerDatosPlantilla = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const datos = await con.query(`select * from documentos.f_obtener_datos_plantilla($1)`, [id]);
+        res.status(200).json({
+            datoAdicional: datos.rows,
+            mensaje:"Se obtuvo los datos de la plantilla.",
+            cod:200
+        });
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
 module.exports = {
     listarDocumentos,
     listarTablasTransaccionales,
     listarTransaccionesTabla,
     gestionDocumentos,
     obtenerCamposDocumentos,
-    obtenerCamposTabla
+    obtenerCamposTabla,
+    gestionDatosDocumentos,
+    obtenerDatosPlantilla
 }

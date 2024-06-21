@@ -15,7 +15,7 @@ const getParametricasIngresos = async (req, res) => {
         const parentesco= await con.query(`select * from sinna_mospa.f_combos_parametricas(39)`);
         const gradoInstruccion= await con.query(`select * from sinna_mospa.f_combos_parametricas(231)`);
         const ocupacion= await con.query(`select * from sinna_mospa.f_combos_parametricas(249)`);
-        const modalidadEgreso= await con.query(`select * from sinna_mospa.f_combos_parametricas(222)`);
+        const modalidadEgreso= await con.query(`select * from sinna_mospa.f_combos_parametricas(708)`);
         const departamentos = await con.query(`select * from sinna_mospa.f_listar_departamentos()`);
         const tipoDefensor= await con.query(`select * from sinna_mospa.f_combos_parametricas(435)`);
         const centrosPenitenciarios= await con.query(`select * from sinna_mospa.f_combos_parametricas(688)`);
