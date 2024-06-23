@@ -5,7 +5,7 @@ const {
     comboCasosSinPiem,
     gestionPiem, listaPiem, listaPiemJuzgado
 } = require("../controllers/mospa_piem_controller");
-const upload = require("../middlewares/imageUploadMiddleware");
+
 
 
 const router = express.Router();
