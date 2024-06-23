@@ -16,6 +16,7 @@ const {
     obtienedente,
     guardaDenPer,
     obtieneProfesionalDNA,
+    obtieneProfesionalredes,
     derivarCaso,
 } = require ('../controllers/mid_denuncias.controller')
 
@@ -139,6 +140,8 @@ router.get('/obtieneden/:id', passport.authenticate('jwt', {session:false}), obt
 router.get('/obtienedatosprint/:cod_denuncia', passport.authenticate('jwt', {session:false}), obtienedatosPrint);
 
 router.get('/obtieneprofdna/:cod_defensoria', passport.authenticate('jwt', {session:false}),obtieneProfesionalDNA)
+
+router.get('/obtieneprofredes/:cod_muni', passport.authenticate('jwt', {session:false}),obtieneProfesionalredes)
 
 router.post('/gestiondenuncias', passport.authenticate('jwt', {session:false}), gestionDenuncias);
 
