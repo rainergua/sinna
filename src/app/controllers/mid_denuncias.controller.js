@@ -30,7 +30,7 @@ const getParametrosDenuncia = async (req, res) => {
                 tipo_ci_exp: tipo_ci_exp.rows
 
             },
-            mensaje:"Se obtuvo los parámetros solicitados",
+            mensaje:"Se obtuvo con éxito los datos solicitados",
             cod:200
         }
         );
@@ -47,7 +47,7 @@ const getMunicipioProvDep = async (req, res) =>{
         const respuesta = await con.query(query)
         res.status(200).json({
             respuesta: respuesta.rows,
-            mensaje:"Se obtuvo los parámetros solicitados",
+            mensaje:"Se obtuvo con éxito los datos solicitados",
             cod:200
         })        
     } catch (error) {
@@ -74,6 +74,8 @@ const gestionDenuncias = async (req, res) => {
             const resultado =  {rows: result.rows, fields: result.fields}
             res.status(200).json({
                 datos: resultado,
+                mensaje:"Se realizó con éxito el proceso solicitado",
+            cod:200
             })}
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
@@ -96,6 +98,8 @@ const obtieneDenuncias = async (req, res) => {
             const resultado =  result.rows
             res.status(200).json({
                 datos: resultado,
+                mensaje:"Se obtuvo con éxito los datos solicitados",
+                cod:200
             })}
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
@@ -119,6 +123,8 @@ const obtieneDen= async (req, res) => {
             const resultado =  result.rows
             res.status(200).json({
                 datos: resultado,
+                mensaje:"Se obtuvo con éxito los datos solicitados",
+                cod:200
             })}
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
@@ -140,6 +146,8 @@ const obtieneFamiliares= async (req, res) => {
             const resultado =  result.rows
             res.status(200).json({
                 datos: resultado,
+                mensaje:"Se obtuvo con éxito los datos solicitados",
+                cod:200
             })}
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
@@ -163,6 +171,8 @@ const obtienedendo = async(req, res) =>{
             //console.log(resultado)
             res.status(200).json({
                 datos: resultado,
+                mensaje:"Se obtuvo con éxito los datos solicitados",
+                cod:200
             })}
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
@@ -185,6 +195,8 @@ const obtienedente = async(req, res) =>{
             //console.log(resultado)
             res.status(200).json({
                 datos: resultado,
+                mensaje:"Se obtuvo con éxito los datos solicitados",
+                cod:200
             })}
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
@@ -208,6 +220,8 @@ const obtienedatosPrint = async(req, res) =>{
             //console.log(resultado)
             res.status(200).json({
                 datos: resultado,
+                mensaje:"Se obtuvo con éxito los datos solicitados",
+                cod:200
             })}
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
@@ -233,6 +247,8 @@ const guardaFam= async (req, res) => {
             const resultado =  result
             res.status(200).json({
                 datos: resultado,
+                mensaje:"Se realizó con éxito el proceso",
+                cod:200
             })}
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
@@ -254,6 +270,8 @@ const guardaDenPer= async (req, res) => {
             const resultado =  result
             res.status(200).json({
                 datos: resultado,
+                mensaje:"Se realizó con éxito el proceso",
+                cod:200
             })}
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
@@ -285,7 +303,41 @@ const obtieneProfesionalDNA = async (req, res) =>{
                 psico: psico.rows,
                 legal: legal.rows,
             },
-            mensaje:"Se obtuvo los parámetros solicitados",
+            mensaje:"Se obtuvo con éxito los datos solicitados",
+            cod:200
+        }
+        );
+    }catch (e){
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
+const obtieneProfesionalredes = async (req, res) =>{
+    ci_usuario = req.user.ci;
+    const id_muni = req.params.cod_muni
+    try{
+        const querysoc = {
+            text: `select id_usuario as id, nombre || ' (' || municipio || ' - ' || defensoria || ' - ' || cantidad_casos || ' casos)' as value from sinna_mid.f_obtiene_profesionales_redes($1) where cargo ilike $2`,
+            values:[id_muni, 'social']
+                };
+        const querypsi = {
+            text: `select id_usuario as id, nombre || ' (' || municipio || ' - ' || defensoria || ' - ' || cantidad_casos || ' casos)' as value from sinna_mid.f_obtiene_profesionales_redes($1) where cargo ilike $2`,
+            values:[id_muni, 'psico']
+                };
+        const queryleg = {
+            text: `select id_usuario as id, nombre || ' (' || municipio || ' - ' || defensoria || ' - ' || cantidad_casos || ' casos)' as value from sinna_mid.f_obtiene_profesionales_redes($1) where cargo ilike $2`,
+            values:[id_muni, 'legal']
+                };
+        const social = await con.query(querysoc)
+        const psico = await con.query(querypsi)
+        const legal = await con.query(queryleg)
+        res.status(200).json({
+            parametros: {
+                social: social.rows,
+                psico: psico.rows,
+                legal: legal.rows,
+            },
+            mensaje:"Se obtuvo con éxito los datos solicitados",
             cod:200
         }
         );
@@ -309,7 +361,7 @@ const derivarCaso = async (req, res) => {
         const respuesta = await con.query(query)
         res.status(200).json({
             respuesta: respuesta.rows,
-            mensaje:"Se obtuvo los parámetros solicitados",
+            mensaje:"Proceso realizado con éxito",
             cod:200
         })
     } catch (error) {
@@ -331,5 +383,6 @@ module.exports = {
     obtienedatosPrint,
     guardaDenPer,
     obtieneProfesionalDNA,
+    obtieneProfesionalredes,
     derivarCaso
 }
