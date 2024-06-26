@@ -92,13 +92,27 @@ const obtenerCamposDocumentos = async (req, res) => {
     }
 }
 
-const obtenerCamposTabla = async (req, res) => {
+/*const obtenerCamposTabla = async (req, res) => {
     try {
         const t = req.params.tabla;
         const datos = await con.query(`select * from documentos.f_obtener_campos_tabla($1)`, [t]);
         res.status(200).json({
             datoAdicional: datos.rows,
             mensaje:"Se obtuvo los campos de las plantillas.",
+            cod:200
+        });
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}*/
+
+const obtenerCamposFuncion = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const datos = await con.query(`select * from documentos.f_obtener_campos_funcion($1)`, [id]);
+        res.status(200).json({
+            datoAdicional: datos.rows,
+            mensaje:"Se obtuvo los campos de la funcion para datos de solo lectura.",
             cod:200
         });
     } catch (e) {
@@ -139,13 +153,41 @@ const obtenerDatosPlantilla = async (req, res) => {
     }
 }
 
+const listEsquemas = async (req, res) => {
+    try {
+        const datos = await con.query(`select * from documentos.f_lista_esquemas()`);
+        res.status(200).json({
+            datoAdicional: datos.rows,
+            mensaje:"Se obtuvo la lista de esquemas.",
+            cod:200
+        });
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
+const listFunciones = async (req, res) => {
+    try {
+        const esquema = req.params.esquema;
+        const datos = await con.query(`select * from documentos.f_listar_funciones_esquema($1)`, [esquema]);
+        res.status(200).json({
+            datoAdicional: datos.rows,
+            mensaje:"Se obtuvo las funciones del esquema.",
+            cod:200
+        });
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
 module.exports = {
     listarDocumentos,
     listarTablasTransaccionales,
     listarTransaccionesTabla,
     gestionDocumentos,
     obtenerCamposDocumentos,
-    obtenerCamposTabla,
     gestionDatosDocumentos,
-    obtenerDatosPlantilla
+    obtenerDatosPlantilla,
+    listEsquemas,
+    listFunciones,
+    obtenerCamposFuncion
 }

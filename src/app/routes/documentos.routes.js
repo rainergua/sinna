@@ -3,8 +3,9 @@ const express = require('express');
 const passport =require('passport')
 const router = express.Router();
 const {
-    listarDocumentos, gestionDocumentos, obtenerCamposDocumentos, gestionCamposDocumentos, listarTablasTransaccionales,
-    listarTransaccionesTabla, obtenerCamposTabla, gestionDatosDocumentos, obtenerDatosPlantilla
+    listarDocumentos, gestionDocumentos, obtenerCamposDocumentos, listarTablasTransaccionales,
+    listarTransaccionesTabla, gestionDatosDocumentos, obtenerDatosPlantilla, listEsquemas,
+    listFunciones, obtenerCamposFuncion
 } = require ('../controllers/documentos.controller')
 
 router.post(
@@ -37,11 +38,17 @@ router.get(
     passport.authenticate('jwt',{session:false}),
     obtenerCamposDocumentos
 );
-
+/*
 router.get(
     '/obtenerCamposTabla/:tabla',
     passport.authenticate('jwt',{session:false}),
     obtenerCamposTabla
+);*/
+
+router.get(
+    '/obtenerCamposFuncion/:id',
+    passport.authenticate('jwt',{session:false}),
+    obtenerCamposFuncion
 );
 
 router.post(
@@ -54,5 +61,17 @@ router.get(
     '/obtenerDatosPlantilla/:id',
     passport.authenticate('jwt',{session:false}),
     obtenerDatosPlantilla
+);
+
+router.get(
+    '/listEsquemas',
+    passport.authenticate('jwt',{session:false}),
+    listEsquemas
+);
+
+router.get(
+    '/listFunciones/:esquema',
+    passport.authenticate('jwt',{session:false}),
+    listFunciones
 );
 module.exports = router;
