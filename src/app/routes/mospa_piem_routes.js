@@ -3,7 +3,7 @@ const express = require('express');
 const passport =require('passport')
 const {
     comboCasosSinPiem,
-    gestionPiem, listaPiem, listaPiemJuzgado
+    gestionPiem, listaPiem, listaPiemJuzgado, gestionSegPiem, listarSegPiem, comboExpediente
 } = require("../controllers/mospa_piem_controller");
 
 
@@ -29,6 +29,21 @@ router.get('/listaPiem/:id',
 router.get('/listaPiemJuzgado',
     passport.authenticate('jwt',{session:false}),
     listaPiemJuzgado
+);
+
+router.post('/gestionSegPiem',
+    passport.authenticate('jwt',{session:false}),
+    gestionSegPiem
+);
+
+router.get('/listarSegPiem/:id',
+    passport.authenticate('jwt',{session:false}),
+    listarSegPiem
+);
+
+router.get('/comboExpediente/:id',
+    passport.authenticate('jwt',{session:false}),
+    comboExpediente
 );
 
 module.exports = router;
