@@ -226,7 +226,49 @@ const obtienedatosPrint = async(req, res) =>{
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
     }
-
+/**
+ * 
+ */
+const historialDenunciaNNA = async(req, res) =>{
+    const cod_nna = req.params.cod_nna
+    const query = {
+        text: `select * from sinna_mid.f_histden_nna_mid($1)`,
+        values:[cod_nna]
+            };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows
+            //console.log(resultado)
+            res.status(200).json({
+                datos: resultado,
+                mensaje:"Se obtuvo con éxito los datos solicitados",
+                cod:200
+        })}
+    )
+    .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+const historialDenunciaDenunciado = async(req, res) =>{
+    const cod_per = req.params.cod_per
+    const query = {
+        text: `select * from sinna_mid.f_historial_denunciado($1)`,
+        values:[cod_per]
+            };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows
+            //console.log(resultado)
+            res.status(200).json({
+                datos: resultado,
+                mensaje:"Se obtuvo con éxito los datos solicitados",
+                cod:200
+        })}
+    )
+    .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
 /**
  * TODO: Implementar procedimiento para Guardar (Gestionar los familiares) familiares en función a las denucias
  * @param {*} req 
@@ -257,7 +299,7 @@ const guardaFam= async (req, res) => {
  * @param {*} req 
  * @param {*} res 
  */
-const guardaDenPer= async (req, res) => {
+const guardaDenPer = async (req, res) => {
     req.body.ci_usuario = req.user.ci;
     const v_json = req.body;
     const query = {
@@ -370,6 +412,7 @@ const derivarCaso = async (req, res) => {
     }
 }
 
+
 module.exports = {
     getParametrosDenuncia, 
     getMunicipioProvDep,
@@ -381,6 +424,8 @@ module.exports = {
     obtienedendo,
     obtienedente,
     obtienedatosPrint,
+    historialDenunciaNNA,
+    historialDenunciaDenunciado,
     guardaDenPer,
     obtieneProfesionalDNA,
     obtieneProfesionalredes,
