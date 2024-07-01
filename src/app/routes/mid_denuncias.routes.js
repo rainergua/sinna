@@ -13,6 +13,8 @@ const {
     obtieneFamiliares,
     obtienedendo,
     obtienedatosPrint,
+    historialDenunciaNNA,
+    historialDenunciaDenunciado,
     obtienedente,
     guardaDenPer,
     obtieneProfesionalDNA,
@@ -143,10 +145,14 @@ router.get('/obtieneprofdna/:cod_defensoria', passport.authenticate('jwt', {sess
 
 router.get('/obtieneprofredes/:cod_muni', passport.authenticate('jwt', {session:false}),obtieneProfesionalredes)
 
+router.get('/historialdenuncianna/:cod_nna', passport.authenticate('jwt', {session:false}),historialDenunciaNNA)
+
+router.get('/historialdenunciado/:cod_per', passport.authenticate('jwt', {session:false}),historialDenunciaDenunciado)
+
 router.post('/gestiondenuncias', passport.authenticate('jwt', {session:false}), gestionDenuncias);
 
 router.post('/guardafamiliar', passport.authenticate('jwt', {session:false}), guardaFam)
-//guardadenper
+
 router.post('/guardadenper', passport.authenticate('jwt', {session:false}), guardaDenPer)
 
 router.post('/derivarcaso', passport.authenticate('jwt', {session:false}), derivarCaso)
