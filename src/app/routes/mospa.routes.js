@@ -5,6 +5,7 @@ const router = express.Router();
 const {
     listarCentros, gestionCentros, obtenerTerritorioUsr, obtenerCentro, datosCentro,
 } = require ('../controllers/mospa.controller')
+const {getMe} = require("../controllers/auth.controller");
 /**
  * @swagger
  * components:
@@ -105,6 +106,12 @@ router.get(
     '/datosCentro',
     passport.authenticate('jwt',{session:false}),
     datosCentro
+);
+
+router.get(
+    '/datosUsuario',
+    passport.authenticate('jwt',{session:false}),
+    getMe
 );
 
 
