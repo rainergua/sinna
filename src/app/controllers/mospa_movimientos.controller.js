@@ -9,9 +9,11 @@ const getParametricasIngresos = async (req, res) => {
         const aCargoDe = await con.query(`select * from sinna_mospa.f_combos_parametricas(39)`);
         const cursoEstudio= await con.query(`select * from sinna_mospa.f_combos_parametricas(328)`);
         const juzgados= await con.query(`select * from sinna_mospa.f_listar_juzgados()`);
-        const tiposDelito= await con.query(`select * from sinna_mospa.f_combos_parametricas(61)`);
-        const situacionProcesal= await con.query(`select * from sinna_mospa.f_combos_parametricas(321)`);
-        const tipoMedida= await con.query(`select * from sinna_mospa.f_combos_parametricas(324)`);
+        const tiposDelito= await con.query(`select * from sinna_mospa.f_combos_parametricas(740)`);
+        const situacionProcesalCrs= await con.query(`select * from sinna_mospa.f_combos_parametricas(321)`);
+        const situacionProcesalCo= await con.query(`select * from sinna_mospa.f_combos_parametricas(733)`);
+        const tipoMedidaCrs= await con.query(`select * from sinna_mospa.f_combos_parametricas(324)`);
+        const tipoMedidaCo= await con.query(`select * from sinna_mospa.f_combos_parametricas(736)`);
         const parentesco= await con.query(`select * from sinna_mospa.f_combos_parametricas(39)`);
         const gradoInstruccion= await con.query(`select * from sinna_mospa.f_combos_parametricas(231)`);
         const ocupacion= await con.query(`select * from sinna_mospa.f_combos_parametricas(249)`);
@@ -31,8 +33,10 @@ const getParametricasIngresos = async (req, res) => {
                 cursoEstudio:cursoEstudio.rows,
                 juzgados:juzgados.rows,
                 tiposDelito:tiposDelito.rows,
-                situacionProcesal:situacionProcesal.rows,
-                tipoMedida:tipoMedida.rows,
+                situacionProcesalCrs:situacionProcesalCrs.rows,
+                situacionProcesalCo:situacionProcesalCo.rows,
+                tipoMedidaCrs:tipoMedidaCrs.rows,
+                tipoMedidaCo:tipoMedidaCo.rows,
                 parentesco:parentesco.rows,
                 gradoInstruccion:gradoInstruccion.rows,
                 ocupacion:ocupacion.rows,
@@ -189,6 +193,20 @@ const subirFotoAdolescente = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const obtenerFamiliaresMospa = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const datos = await con.query(`select * from sinna_mospa.f_listar_familiares_mospa($1)`, [id]);
+        res.status(200).json({
+            datoAdicional: datos.rows,
+            mensaje:"Se consulto la lista de familiares del adolescente.",
+            cod:200
+        });
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
 
 module.exports = {
     getParametricasIngresos,
@@ -198,5 +216,6 @@ module.exports = {
     listarMovimientos,
     obtieneMunicipioDpto,
     obtieneCentrosDestino,
-    subirFotoAdolescente
+    subirFotoAdolescente,
+    obtenerFamiliaresMospa
 }
