@@ -27,6 +27,7 @@ const autorizacionesViajeRoutes=require("./app/routes/mid_autorizaciones_viaje.r
 const autorizacionesTrabajoRoutes=require("./app/routes/mid_autorizaciones_trabajo.routes")
 const piemRoutes=require("./app/routes/mospa_piem_routes")
 const expedientesMospaRoutes=require("./app/routes/mospa_expedientes.routes")
+const mjrMospaRoutes=require("./app/routes/mospa_mjr.routes")
 const cors = require("cors")
 
 // Create a new Express app
@@ -75,6 +76,7 @@ app.use('/api/juzgados',juzgadoRoutes);
 app.use('/api/formulario',formularioRoutes);
 app.use('/api/documentos',documentosRoutes);
 app.use('/api/mospa',expedientesMospaRoutes);
+app.use('/api/mospa',mjrMospaRoutes)
 
 
 module.exports = app;
