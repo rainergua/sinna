@@ -11,7 +11,7 @@ const {
 
 const router = express.Router();
 
-router.get('/comboCasosSinPostEgreso',
+router.get('/comboCasosSinPostEgreso/:id',
     passport.authenticate('jwt',{session:false}),
     comboCasosSinPostEgreso
 );

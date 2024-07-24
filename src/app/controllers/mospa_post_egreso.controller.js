@@ -2,8 +2,10 @@ const con = require("../../infraestructure/config/config");
 
 
 const comboCasosSinPostEgreso = async (req, res) => {
+    const id = req.params.id
     const query = {
-        text: `select * from sinna_mospa.f_combo_casos_egresados_sin_post_egreso()`,
+        text: `select * from sinna_mospa.f_combo_casos_egresados_sin_post_egreso($1)`,
+        values:[id]
     };
     await con
         .query(query)
