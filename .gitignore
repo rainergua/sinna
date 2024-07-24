@@ -10,3 +10,4 @@ src/infraestructure/config/config.js
 package-lock.json
 *.env
 .env
+.vscode
