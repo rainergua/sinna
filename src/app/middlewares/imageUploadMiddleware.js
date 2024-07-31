@@ -32,6 +32,10 @@ const storage = multer.diskStorage({
       folder='mospa/ingresos';
     }
 
+    if(file.fieldname==='url_imagen_flujo'){
+      folder='comun/flujos';
+    }
+
 
 
     const destFolder = path.join(__dirname, '..', 'public', folder);
