@@ -19,7 +19,7 @@ const {
     guardaDenPer,
     obtieneProfesionalDNA,
     obtieneProfesionalredes,
-    derivarCaso,
+    derivarCaso, obtieneDatosDashboard,listarDenunciasEstado
 } = require ('../controllers/mid_denuncias.controller')
 
 /**
@@ -156,5 +156,17 @@ router.post('/guardafamiliar', passport.authenticate('jwt', {session:false}), gu
 router.post('/guardadenper', passport.authenticate('jwt', {session:false}), guardaDenPer)
 
 router.post('/derivarcaso', passport.authenticate('jwt', {session:false}), derivarCaso)
+
+router.get(
+    '/obtieneDatosDashboard/:id',
+    passport.authenticate('jwt', {session:false}),
+    obtieneDatosDashboard
+);
+
+router.get(
+    '/listarDenunciasEstado/:id_dna/:est',
+    passport.authenticate('jwt', {session:false}),
+    listarDenunciasEstado
+);
 
 module.exports = router;
