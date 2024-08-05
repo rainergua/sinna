@@ -10,12 +10,11 @@ router.get('/comboExpediente/:id',
     comboExpediente
 );
 
-/*
 router.get('/obtenerDatosBase/:id',
     passport.authenticate('jwt',{session:false}),
     obtenerDatosBase
 );
-*/
+
 
 router.post('/gestionExpediente',
     passport.authenticate('jwt',{session:false}),
