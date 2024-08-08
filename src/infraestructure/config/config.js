@@ -1,14 +1,15 @@
 const { Pool } = require('pg');
 
 // BD Ivan
-/*const con = new Pool({
+const con = new Pool({
 	user: "sinna_prod",
 	host: "172.16.100.201",
 	password: "s1nn42024#",
 	database: "sinna_prod",
 	port: "5555",
-});*/
+});
 
+/*
 const con = new Pool({
 	user: "postgres",
 	host: "localhost",
@@ -16,5 +17,6 @@ const con = new Pool({
 	database: "sinnaprd",
 	port: "5435",
 });
+*/
 
 module.exports = con;
