@@ -3,7 +3,7 @@ const passport = require('passport');
 const verificaToken = require('../middlewares/verificaToken')
 const router = express.Router();
 const {
-    listarTransacciones, listarMenus, obtenerModulos,
+    listarTransacciones, listarMenus, obtenerModulos, listarModulos,
 } = require ('../controllers/workflow.controller')
 /**
  * @swagger
@@ -132,6 +132,11 @@ router.post('/listarMenus',
 router.post('/obtenerModulos', 
     passport.authenticate('jwt', {session:false}),
     obtenerModulos
+);
+
+router.get('/listarModulos',
+    passport.authenticate('jwt', {session:false}),
+    listarModulos
 );
 
 

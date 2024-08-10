@@ -128,6 +128,72 @@ const obtieneParam = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const listaCdaTerritorio = async (req, res) => {
+    const id = req.params.id;
+    const t=req.params.tipo;
+
+    const query = {
+        text: `select * from sinna_modefa.f_listar_cda_dpto_mun($1,$2) `,
+        values:[id,t]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows;
+
+            res.status(200).json({
+                datoAdicional: resultado,
+                mensaje:"CDAs obtenidos correctamente",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
+const listaCentrosMospaDpto = async (req, res) => {
+    const id = req.params.id;
+    const t=req.params.tipo;
+
+    const query = {
+        text: `select * from sinna_mospa.f_listar_centros_dpto($1,$2) `,
+        values:[id,t]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows;
+
+            res.status(200).json({
+                datoAdicional: resultado,
+                mensaje:"Centros MOSPA obtenidos correctamente",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
+const listarJuzgados = async (req, res) => {
+    const query = {
+        text: `select * from sinna_mospa.f_listar_juzgados() `
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows;
+
+            res.status(200).json({
+                datoAdicional: resultado,
+                mensaje:"Juzgados obtenidos correctamente",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
+
 module.exports = {
     obtieneParam,
     obtieneDepto,
@@ -135,5 +201,8 @@ module.exports = {
     obtieneProv,
     obtieneMunDpto,
     obtenerPoblacionAtiende,
-    obtieneDnasMunicipio
+    obtieneDnasMunicipio,
+    listaCdaTerritorio,
+    listaCentrosMospaDpto,
+    listarJuzgados
 }
