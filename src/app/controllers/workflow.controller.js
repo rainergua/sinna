@@ -89,9 +89,34 @@ const listarModulos = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const gestionUsuarios = async (req, res) => {
+    const bcrypt=require('bcrypt');
+
+    req.body.ci_usuario = req.user.ci;
+    req.body.password=await bcrypt.hash(req.body.password,10);
+
+
+    const v_json = req.body;
+    const query = {
+        text: `call workflow.p_gestion_usuarios($1) `,
+        values:[v_json]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            const resultado =  result.rows[0];
+            res.status(200).json({
+                result: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
+
 module.exports = {
     listarTransacciones,
     listarMenus,
     obtenerModulos,
-    listarModulos
+    listarModulos,
+    gestionUsuarios
 }
