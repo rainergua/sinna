@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const con = require('../../infraestructure/config/config');
+const bcrypt = require("bcrypt");
 
 /**
  * @param {v_json} req json que envia los datos al SP
@@ -91,11 +92,10 @@ const listarModulos = async (req, res) => {
 
 const gestionUsuarios = async (req, res) => {
     const bcrypt=require('bcrypt');
-
     req.body.ci_usuario = req.user.ci;
-    req.body.password=await bcrypt.hash(req.body.password,10);
-
-
+    if(req.body.password) {
+        req.body.password=await bcrypt.hash(req.body.password,10);
+    }
     const v_json = req.body;
     const query = {
         text: `call workflow.p_gestion_usuarios($1) `,
@@ -112,11 +112,75 @@ const gestionUsuarios = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const listarUsuariosEstado = async (req, res) => {
+
+    const query = {
+        text: `select * from workflow.f_listar_usuarios_estado('{ "estado":"${req.body.estado}", "modulo":"${req.body.modulo}"}') `,
+
+    };
+
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows;
+            //console.log(resultado)
+            res.status(200).json({
+                datoAdicional: resultado,
+                mensaje:"Lista de usuarios obtenido.",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
+const subirDocumentosUsuario = async (req, res) => {
+    try {
+        if(typeof req.files['url_foto_memo']!== 'undefined')
+            req.body.url_foto_memo = req.files['url_foto_memo'][0].filename;
+        else
+            req.body.url_foto_memo = null;
+        if(typeof req.files['url_foto_ci']!== 'undefined')
+            req.body.url_foto_ci = req.files['url_foto_ci'][0].filename;
+        else
+            req.body.url_foto_ci = null;
+        if(typeof req.files['url_foto_ddjj']!== 'undefined')
+            req.body.url_foto_ddjj = req.files['url_foto_ddjj'][0].filename;
+        else
+            req.body.url_contrato = null;
+        if(typeof req.files['url_contrato']!== 'undefined')
+            req.body.url_contrato = req.files['url_contrato'][0].filename;
+        else
+            req.body.url_contrato = null;
+
+
+        const v_json = req.body;
+        const query = {
+            text: `call workflow.p_gestion_usuarios($1) `,
+            values:[v_json]
+        };
+        await con
+            .query(query)
+            .then((result) =>{
+                const resultado =  result.rows[0];
+                res.status(200).json({
+                    result: resultado,
+                })}
+            )
+            .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
+
 
 module.exports = {
     listarTransacciones,
     listarMenus,
     obtenerModulos,
     listarModulos,
-    gestionUsuarios
+    gestionUsuarios,
+    listarUsuariosEstado,
+    subirDocumentosUsuario
 }
