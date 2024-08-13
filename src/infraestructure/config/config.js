@@ -25,11 +25,11 @@ const con = new Pool({
 });*/
 // BD Ivan
 const con = new Pool({
-	user: "sinna",
-	host: "137.184.232.160",
-	password: "sinna2023",
-	database: "sinna",
-	port: "5444",
+	user: "sinna_prod",
+	host: "172.16.100.201",
+	password: "s1nn42024#",
+	database: "sinna_prod",
+	port: "5555",
 });
 /*
 const con = new Pool({
