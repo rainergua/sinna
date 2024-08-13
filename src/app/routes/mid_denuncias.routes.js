@@ -19,7 +19,11 @@ const {
     guardaDenPer,
     obtieneProfesionalDNA,
     obtieneProfesionalredes,
-    derivarCaso,
+    derivarCaso, 
+    obtieneDatosDashboard,
+    listarDenunciasEstado,
+    guardaOrientacionFamilia,
+    getOrientacion
 } = require ('../controllers/mid_denuncias.controller')
 
 /**
@@ -149,6 +153,20 @@ router.get('/historialdenuncianna/:cod_nna', passport.authenticate('jwt', {sessi
 
 router.get('/historialdenunciado/:cod_per', passport.authenticate('jwt', {session:false}),historialDenunciaDenunciado)
 
+router.get('/getorientacion/:cod_denuncia', passport.authenticate('jwt', {session:false}),getOrientacion)
+
+router.get(
+    '/obtieneDatosDashboard/:id',
+    passport.authenticate('jwt', {session:false}),
+    obtieneDatosDashboard
+);
+
+router.get(
+    '/listarDenunciasEstado/:id_dna/:est',
+    passport.authenticate('jwt', {session:false}),
+    listarDenunciasEstado
+);
+
 router.post('/gestiondenuncias', passport.authenticate('jwt', {session:false}), gestionDenuncias);
 
 router.post('/guardafamiliar', passport.authenticate('jwt', {session:false}), guardaFam)
@@ -156,5 +174,9 @@ router.post('/guardafamiliar', passport.authenticate('jwt', {session:false}), gu
 router.post('/guardadenper', passport.authenticate('jwt', {session:false}), guardaDenPer)
 
 router.post('/derivarcaso', passport.authenticate('jwt', {session:false}), derivarCaso)
+
+router.post('/guardaorienfam', passport.authenticate('jwt', {session:false}), guardaOrientacionFamilia)
+
+
 
 module.exports = router;

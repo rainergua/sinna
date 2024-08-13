@@ -196,6 +196,26 @@ const obtieneSelMunis = async(req, res)=>{
     }
 }
 
+const centroUsuario = async (req, res) =>{
+    const ci = req.user.ci;
+    const query = {
+        text: `select * from sinna_mid.f_obtener_centro_us($1)`,
+        values:[ci]
+    };
+    //console.log(query)
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows
+            ////console.log(resultado)
+            res.status(200).json({
+                datos: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+
 module.exports = {
     gestionDefensoria, 
     gestionRedesReg,
@@ -205,5 +225,6 @@ module.exports = {
     updFileDef,
     obtieneRedes,
     obtieneSelMunis,
-    obtieneUsuarioDefensoria
+    obtieneUsuarioDefensoria,
+    centroUsuario
 }

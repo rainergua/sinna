@@ -105,6 +105,39 @@ router.post('/loginPublic', (req, res, next) => {
 });
 
 
+router.post('/loginPublicUsr', (req, res, next) => {
+    req.sub=74;
+    req.ci='44300';
+    passport.authenticate('local', { session: false }, (err, user, info) => {
+        if (err) {
+            return next(err);
+        }
+        /*if (!user) {
+            return res.status(401).json({
+                mensaje: "Credenciales incorrectas",
+                cod: 401
+            });
+        }*/
+        const payload = {
+            sub: 74,
+            ci: '44300'
+        };
+        //aca configurar el tiempo del token
+        const token = jwt.sign(payload, process.env.JWT_SECRET);
+
+        res.status(200).json({
+            datoAdicional: {
+                user,
+                token
+            },
+            mensaje: "Bienvenido al sistema SINNA, Pre registro de usuarios.",
+            cod: 200
+        });
+    })(req, res, next);
+});
+
+
+
 
 /**
  * @swagger

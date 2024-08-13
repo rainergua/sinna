@@ -13,7 +13,11 @@ const {
     obtieneMun,
     obtieneParam,
     obtieneMunDpto,
-    obtenerPoblacionAtiende, obtieneDnasMunicipio,
+    obtenerPoblacionAtiende,
+    obtieneDnasMunicipio,
+    listaCdaTerritorio,
+    listaCentrosMospaDpto,
+    listarJuzgados
 } = require ('../controllers/parametricas.controller')
 
 /**
@@ -33,6 +37,25 @@ router.get(
     passport.authenticate('jwt',{session:false}),
     obtieneParam
 );
+
+router.get(
+    '/listaCdaTerritorio/:id/:tipo',
+    passport.authenticate('jwt',{session:false}),
+    listaCdaTerritorio
+);
+
+router.get(
+    '/listaCentrosMospaDpto/:id/:tipo',
+    passport.authenticate('jwt',{session:false}),
+    listaCentrosMospaDpto
+);
+
+router.get(
+    '/listarJuzgados',
+    passport.authenticate('jwt',{session:false}),
+    listarJuzgados
+);
+
 
 /**
  * @swagger

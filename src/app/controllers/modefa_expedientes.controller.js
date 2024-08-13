@@ -1,10 +1,10 @@
 const con = require("../../infraestructure/config/config");
 
-/*
+
 const obtenerDatosBase = async (req, res) => {
     const id = req.params.id
     const query = {
-        text: `select * from sinna_mospa.f_obtener_base_expediente($1) `,
+        text: `select * from sinna_modefa.f_datos_generales_expediente($1) `,
         values:[id]
     };
     await con
@@ -18,10 +18,8 @@ const obtenerDatosBase = async (req, res) => {
         )
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
-*/
 
 const gestionExpediente = async (req, res) => {
-
     req.body.ci_usuario = req.user.ci;
     const v_json = req.body;
     const query = {
@@ -77,7 +75,7 @@ const listaExpediente = async (req, res) => {
 }
 
 module.exports = {
-    //obtenerDatosBase,
+    obtenerDatosBase,
     gestionExpediente,
     comboExpediente,
     listaExpediente

@@ -15,7 +15,7 @@ const {
     obtieneDef,
     obtieneUsuarioDefensoria,
     obtieneSelMunis,
-    obtieneRedes
+    obtieneRedes, centroUsuario
 } = require ('../controllers/mid_defensorias.controller')
 /**
  * @swagger
@@ -144,7 +144,17 @@ router.get('/obtienedef/:id', passport.authenticate('jwt', {session:false}), obt
 //getdefensoriamuni
 router.get('/getdefensoriamuni/:id_muni', passport.authenticate('jwt', {session:false}), getDefensoriaMuni);
 
-router.get('/obtieneusudef', passport.authenticate('jwt', {session:false}), obtieneUsuarioDefensoria);
+router.get(
+    '/obtieneusudef',
+    passport.authenticate('jwt', {session:false}),
+    obtieneUsuarioDefensoria
+);
+
+router.get(
+    '/centroUsuario',
+    passport.authenticate('jwt', {session:false}),
+    centroUsuario
+);
 
 //router.post('/gettoken', getToken);
 

@@ -6,7 +6,8 @@ const con = require('../../infraestructure/config/config');
  */
 const getParametrosDenuncia = async (req, res) => {
     try {
-        const tipo_denuncia = await con.query(`select id_parametro as value, descripcion as label from parametricas.f_listar_parametricas(61) order by descripcion`);
+        const tipo_denuncia = await con.query(`select pt.id_parametro::integer as value, tipo_flujo :: varchar,
+		descripcion::varchar as label from parametricas.par_clasificador pt where pt.id_parametro_padre = 61;`);
         const poblacion_vulnerable = await con.query(`select id_parametro as value, nombre as label from parametricas.f_listar_parametricas(31)`);
         const sexo = await con.query(`select id_parametro as id, descripcion as value from parametricas.f_listar_parametricas(15)`);
         const vive_con = await con.query(`select id_parametro as value, nombre as label from parametricas.f_listar_parametricas(299)`);
@@ -411,6 +412,94 @@ const derivarCaso = async (req, res) => {
         res.status(500).json({ msg: 'Error: ' + error });
     }
 }
+    
+const getOrientacion = async(req, res) => {
+    req.body.ci_usuario = req.user.ci;
+    const id_denuncia = req.params.cod_denuncia;
+    const query = {
+        text: `select * from sinna_mid.mid_orientacion_familia where  id_denuncia = $1 `,
+        values:[id_denuncia]        
+    };
+    try {
+        const respuesta = await con.query(query)
+        res.status(200).json({
+            respuesta: respuesta.rows,
+            mensaje:"Proceso realizadoDatos obtenidos con éxito con éxito",
+            cod:200
+        })
+    } catch (error) {
+        //console.log('error: ', error)
+        res.status(500).json({ msg: 'Error: ' + error });
+    }
+}
+
+const obtieneDatosDashboard = async (req, res) => {
+    const id_dna = req.params.id;
+    const ci=req.user.ci;
+    const query = {
+        text: `select * from sinna_mid.f_obtener_nros_dashboard_mid($1,$2)`,
+        values:[ci,id_dna]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows
+            res.status(200).json({
+                datos: resultado,
+                mensaje:"Se obtuvo con éxito los datos solicitados",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+
+const listarDenunciasEstado = async (req, res) => {
+    const dna = req.params.id_dna;
+    const estado = req.params.est;
+    const ci=req.user.ci;
+    const query = {
+        text: `select * from sinna_mid.f_listar_denuncias_estado($1,$2,$3)`,
+        values:[dna,estado,ci]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows
+            res.status(200).json({
+                datos: resultado,
+                mensaje:"Se obtuvo con éxito los datos solicitados",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+
+
+const guardaOrientacionFamilia = async (req, res) => {
+    req.body.ci_creado = req.user.ci;
+    req.body.ci_modificado = req.user.ci;
+    req.body.id_creado = req.user.sub;
+    console.log('req.user---***--', req.user)
+    const v_json = req.body;
+    console.log('v_jsonv_jsonv_jsonv_json', v_json)
+    const query = {
+        text: `call sinna_mid.p_orientacion_familia($1) `,
+        values:[v_json]        
+    };
+    try {
+        const respuesta = await con.query(query)
+        res.status(200).json({
+            respuesta: respuesta.rows,
+            mensaje:"Proceso realizado con éxito",
+            cod:200
+        })
+    } catch (error) {
+        //console.log('error: ', error)
+        res.status(500).json({ msg: 'Error: ' + error });
+    }
+}
 
 
 module.exports = {
@@ -429,5 +518,9 @@ module.exports = {
     guardaDenPer,
     obtieneProfesionalDNA,
     obtieneProfesionalredes,
-    derivarCaso
+    derivarCaso,
+    obtieneDatosDashboard,
+    listarDenunciasEstado,
+    guardaOrientacionFamilia,
+    getOrientacion,
 }

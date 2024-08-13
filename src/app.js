@@ -30,6 +30,8 @@ const piemRoutes=require("./app/routes/mospa_piem_routes")
 const expedientesMospaRoutes=require("./app/routes/mospa_expedientes.routes")
 const mjrMospaRoutes=require("./app/routes/mospa_mjr.routes")
 const postEgr=require("./app/routes/mospa_post_egreso.routes")
+const flujoRoutes=require("./app/routes/comun_flujo.routes")
+const casosRoutes=require("./app/routes/mid_casos.routes")
 const cors = require("cors")
 
 // Create a new Express app
@@ -81,6 +83,8 @@ app.use('/api/documentos',documentosRoutes);
 app.use('/api/mospa',expedientesMospaRoutes);
 app.use('/api/mospa',mjrMospaRoutes);
 app.use('/api/mospa',postEgr);
+app.use('/api/flujos',flujoRoutes);
+app.use('/api/mid',casosRoutes);
 
 module.exports = app;
 
