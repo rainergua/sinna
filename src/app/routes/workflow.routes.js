@@ -5,7 +5,7 @@ const router = express.Router();
 const {
     listarTransacciones, listarMenus, obtenerModulos, listarModulos,
     gestionUsuarios,listarUsuariosEstado, subirDocumentosUsuario,
-    combrobarCiUsuario
+    combrobarCiUsuario, subirContrato, obtenerDocsUsr
 } = require ('../controllers/workflow.controller')
 const upload = require("../middlewares/fileUploadMiddleware");
 const uploadImg = require("../middlewares/imageUploadMiddleware");
@@ -155,18 +155,29 @@ router.post('/listarUsuariosEstado',
 );
 router.post('/subirDocumentosUsuario',
     passport.authenticate('jwt', {session:false}),
-    uploadImg.fields([
+    upload.fields([
         { name: 'url_foto_memo', maxCount: 1 },
         { name: 'url_foto_ci', maxCount: 1 },
         { name: 'url_foto_ddjj', maxCount: 1 },
+        { name: 'url_contrato_pdf', maxCount: 1 },
     ]),
-    upload.single('url_contrato_pdf'),
     subirDocumentosUsuario
+);
+
+router.post('/subirContrato',
+    passport.authenticate('jwt', {session:false}),
+    upload.single( 'url_contrato_pdf'),
+    subirContrato
 );
 
 router.get('/combrobarCiUsuario/:ci',
     passport.authenticate('jwt', {session:false}),
     combrobarCiUsuario
+);
+
+router.get('/obtenerDocsUsr/:ci',
+    passport.authenticate('jwt', {session:false}),
+    obtenerDocsUsr
 );
 
 
