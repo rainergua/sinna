@@ -136,24 +136,32 @@ const listarUsuariosEstado = async (req, res) => {
 
 const subirDocumentosUsuario = async (req, res) => {
     try {
+        console.log(req.files);
+        console.log(req.files['url_foto_memo'][0].filename);
+        console.log(req.files['url_foto_ddjj'][0].filename);
+        console.log(req.files['url_foto_ci'][0].filename);
+        console.log(req.files['url_contrato_pdf'][0].filename);
+        console.log(req.file.filename);
+
         if(typeof req.files['url_foto_memo']!== 'undefined')
             req.body.url_foto_memo = req.files['url_foto_memo'][0].filename;
         else
             req.body.url_foto_memo = null;
+
         if(typeof req.files['url_foto_ci']!== 'undefined')
             req.body.url_foto_ci = req.files['url_foto_ci'][0].filename;
         else
             req.body.url_foto_ci = null;
+
         if(typeof req.files['url_foto_ddjj']!== 'undefined')
             req.body.url_foto_ddjj = req.files['url_foto_ddjj'][0].filename;
         else
-            req.body.url_contrato = null;
-        if(typeof req.files['url_contrato']!== 'undefined')
-            req.body.url_contrato = req.files['url_contrato'][0].filename;
-        else
-            req.body.url_contrato = null;
+            req.body.url_foto_ddjj = null;
 
+        if (typeof req.file !== 'undefined')
+            req.body.url_contrato_pdf = req.file.filename;
 
+        req.body.ci_usuario = req.user.ci;
         const v_json = req.body;
         const query = {
             text: `call workflow.p_gestion_usuarios($1) `,
@@ -173,6 +181,29 @@ const subirDocumentosUsuario = async (req, res) => {
     }
 }
 
+const combrobarCiUsuario = async (req, res) => {
+    //console.log(req.user)
+    const ci=req.params.ci;
+
+    const query = {
+        text: `select * from workflow.f_comprobar_ci_usuario($1) `,
+        values:[ci]
+    };
+
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows;
+            //console.log(resultado)
+            res.status(200).json({
+                datoAdicional: resultado,
+                mensaje:"CI consultado",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
 
 
 module.exports = {
@@ -182,5 +213,6 @@ module.exports = {
     listarModulos,
     gestionUsuarios,
     listarUsuariosEstado,
-    subirDocumentosUsuario
+    subirDocumentosUsuario,
+    combrobarCiUsuario
 }
