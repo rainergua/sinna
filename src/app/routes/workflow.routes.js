@@ -3,8 +3,13 @@ const passport = require('passport');
 const verificaToken = require('../middlewares/verificaToken')
 const router = express.Router();
 const {
-    listarTransacciones, listarMenus, obtenerModulos, listarModulos, gestionUsuarios,
+    listarTransacciones, listarMenus, obtenerModulos, listarModulos,
+    gestionUsuarios,listarUsuariosEstado, subirDocumentosUsuario,
+    combrobarCiUsuario, subirContrato, obtenerDocsUsr
 } = require ('../controllers/workflow.controller')
+const upload = require("../middlewares/fileUploadMiddleware");
+const uploadImg = require("../middlewares/imageUploadMiddleware");
+
 /**
  * @swagger
  * components:
@@ -142,6 +147,37 @@ router.get('/listarModulos',
 router.post('/gestionUsuarios',
     passport.authenticate('jwt', {session:false}),
     gestionUsuarios
+);
+
+router.post('/listarUsuariosEstado',
+    passport.authenticate('jwt', {session:false}),
+    listarUsuariosEstado
+);
+router.post('/subirDocumentosUsuario',
+    passport.authenticate('jwt', {session:false}),
+    upload.fields([
+        { name: 'url_foto_memo', maxCount: 1 },
+        { name: 'url_foto_ci', maxCount: 1 },
+        { name: 'url_foto_ddjj', maxCount: 1 },
+        { name: 'url_contrato_pdf', maxCount: 1 },
+    ]),
+    subirDocumentosUsuario
+);
+
+router.post('/subirContrato',
+    passport.authenticate('jwt', {session:false}),
+    upload.single( 'url_contrato_pdf'),
+    subirContrato
+);
+
+router.get('/combrobarCiUsuario/:ci',
+    passport.authenticate('jwt', {session:false}),
+    combrobarCiUsuario
+);
+
+router.get('/obtenerDocsUsr/:ci',
+    passport.authenticate('jwt', {session:false}),
+    obtenerDocsUsr
 );
 
 

@@ -11,6 +11,18 @@ const storage = multer.diskStorage({
     } else {
       folder = 'documentos';
     }
+    if(file.fieldname==='url_contrato_pdf'){
+      folder='comun/usuarios/contratos';
+    }
+    if(file.fieldname==='url_foto_ci'){
+      folder='comun/usuarios/ci';
+    }
+    if(file.fieldname==='url_foto_memo'){
+      folder='comun/usuarios/memo';
+    }
+    if(file.fieldname==='url_foto_ddjj'){
+      folder='comun/usuarios/ddjj';
+    }
 
     const destFolder = path.join(__dirname, '..', 'public', folder);
     fs.ensureDirSync(destFolder);
