@@ -13,6 +13,7 @@ const mid_reportes = require("./app/routes/mid_reportes.routes")
 const modefa_centros_acogimiento= require ("./app/routes/modefa_centros_acogimiento.routes")
 const modefa_ingreso_nna = require ("./app/routes/modefa_ingreso_nna.routes")
 const modefa_expedientes = require("./app/routes/modefa_expedientes.routes")
+const modefa_post=require("./app/routes/modefa_post_egreso.routes")
 const mospaRoutes= require ("./app/routes/mospa.routes")
 const workflowRoutes= require ("./app/routes/workflow.routes")
 const parametricasRoutes= require ("./app/routes/parametricas.routes")
@@ -69,6 +70,7 @@ app.use('/api/comun',comunRoutes);
 app.use('/api/modefa',modefa_centros_acogimiento);
 app.use('/api/modefa',modefa_ingreso_nna);
 app.use('/api/modefa',modefa_expedientes);
+app.use('/api/modefa',modefa_post);
 app.use('/api/mospa',mospaRoutes);
 app.use('/api/mospa',movimientosRoutes);
 app.use('/api/mospa',piemRoutes);
@@ -85,6 +87,7 @@ app.use('/api/mospa',mjrMospaRoutes);
 app.use('/api/mospa',postEgr);
 app.use('/api/flujos',flujoRoutes);
 app.use('/api/mid',casosRoutes);
+
 
 module.exports = app;
 

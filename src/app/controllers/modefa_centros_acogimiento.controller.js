@@ -73,9 +73,11 @@ const listaCentroAcogida = async (req, res) => {
     }
 }
 
+
 module.exports = {
     getParametricas, 
     getTerritorio,
     gestionCentroAcogida,
-    listaCentroAcogida
+    listaCentroAcogida,
+
 }
