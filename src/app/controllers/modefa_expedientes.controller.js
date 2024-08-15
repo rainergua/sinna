@@ -1,10 +1,27 @@
 const con = require("../../infraestructure/config/config");
 
+const comboExpediente = async (req, res) => {
+    const id = req.params.id
+    const query = {
+        text: `select id, nna_caso as value from sinna_modefa.f_buscar_nna_expediente($1) `,
+        values:[id]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows
+            const resultado =  result.rows
+            res.status(200).json({
+                datos: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
 
 const obtenerDatosBase = async (req, res) => {
     const id = req.params.id
     const query = {
-        text: `select * from sinna_modefa.f_datos_generales_expediente($1) `,
+        text: `select * from sinna_modefa.f_datos_generales_expediente_nna($1) `,
         values:[id]
     };
     await con
@@ -30,6 +47,7 @@ const gestionExpediente = async (req, res) => {
         .query(query)
         .then((result) =>{
             const resultado =  result.rows[0];
+            console.log('Consulta', query);
             res.status(200).json({
                 result: resultado,
             })}
@@ -37,30 +55,12 @@ const gestionExpediente = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
-const comboExpediente = async (req, res) => {
-    const id = req.params.id
-    const query = {
-        text: `select * from sinna_modefa.f_buscar_nna_expediente($1) `,
-        values:[id]
-    };
-    await con
-        .query(query)
-        .then((result) =>{
-            //formateamos el resultado para que retorne solo Rows
-            const resultado =  result.rows
-            res.status(200).json({
-                datos: resultado,
-            })}
-        )
-        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
-}
-
 const listaExpediente = async (req, res) => {
     const id = req.params.id
-    const t = req.params.tipo
+    const tipo_doc = req.params.tipo
     const query = {
         text: `select * from sinna_modefa.f_mostrar_expediente_modefa($1,$2) `,
-        values:[id, t]
+        values:[id, tipo_doc]
     };
     await con
         .query(query)
