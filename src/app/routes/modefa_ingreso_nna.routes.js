@@ -9,7 +9,8 @@ const {
     getParametricasIngreso,
     gestionAcogidaNaa,
     getParametricasTransferencia,
-    getCentrosMunicipio
+    getCentrosMunicipio,
+    getBuscarEstablecimiento
 } = require ('../controllers/modefa_ingreso_nna.controller');
 const upload = require('../middlewares/imageUploadMiddleware');
 
@@ -82,5 +83,6 @@ router.get('/transferencia-parametrica/:id',
     getParametricasTransferencia);
 
 router.get('/centros-municipio/:id', passport.authenticate('jwt', {session:false}), getCentrosMunicipio);
+router.get('/buscar-persona-egreso/:centro/:buscar', passport.authenticate('jwt', {session:false}), getBuscarEstablecimiento);
 
 module.exports = router;
