@@ -77,9 +77,30 @@ const mostrarFamiliaNNA = async (req, res) => {
     }
 }
 
+const listarFamiliaresNna = async (req, res) => {
+    let nna = req.params.id;
+
+    try {
+        await con
+            .query(`SELECT * from comun.f_listar_familiares_nna($1)`,[nna])
+            .then((result) =>{
+                const resultado =  result.rows;
+                res.status(200).json({
+                    datoAdicional: resultado,
+                    mensaje:"Lista de familiares del NNA obtenida",
+                    cod:200
+                })}
+            )
+    }
+    catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
 module.exports = {
     parametricasFamilia, 
     gestionFamilia,
     mostrarFamilia,
-    mostrarFamiliaNNA
+    mostrarFamiliaNNA,
+    listarFamiliaresNna
 }

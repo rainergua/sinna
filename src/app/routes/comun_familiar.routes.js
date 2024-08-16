@@ -5,7 +5,8 @@ const {
     parametricasFamilia, 
     gestionFamilia,
     mostrarFamilia,
-    mostrarFamiliaNNA
+    mostrarFamiliaNNA,
+    listarFamiliaresNna
 } = require ('../controllers/comun_familiar.controller')
 
 /**
@@ -113,7 +114,7 @@ router.get('/familia-parametricas',
  *              description: Peticion Exitosa
  * 
  */
-router.post('/familiar', 
+router.post('/familiar',
     passport.authenticate('jwt', {session:false}), 
     gestionFamilia
 );
@@ -148,6 +149,11 @@ router.post('/mostrar-familiar',
 router.post('/mostrar-familiar-nna', 
     passport.authenticate('jwt', {session:false}), 
     mostrarFamiliaNNA
+);
+
+router.get('/listarFamiliaresNna/:id',
+    passport.authenticate('jwt', {session:false}),
+    listarFamiliaresNna
 );
 
 module.exports = router;
