@@ -130,6 +130,22 @@ const getCentrosMunicipio = async (req, res) => {
     }
 }
 
+const getBuscarEstablecimiento = async (req, res) => {
+    try {
+        let centro = req.params.centro;
+        let buscar = req.params.buscar;
+        const datos = await con.query(`select * from sinna_modefa.f_buscar_persona_egreso($1,$2)`, [centro,buscar]);
+        res.status(200).json({ 
+            datoAdicional: datos.rows,
+            mensaje:"Buscar personas post-egreso",
+            cod:200
+        });
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
+
 module.exports = {
     getCentroAcogidaUsuario,
     getBuscarPersonaMid,
@@ -138,5 +154,6 @@ module.exports = {
     getParametricasIngreso,
     gestionAcogidaNaa,
     getParametricasTransferencia,
-    getCentrosMunicipio
+    getCentrosMunicipio,
+    getBuscarEstablecimiento
 }

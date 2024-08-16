@@ -15,7 +15,6 @@ router.get('/obtenerDatosBase/:id',
     obtenerDatosBase
 );
 
-
 router.post('/gestionExpediente',
     passport.authenticate('jwt',{session:false}),
     gestionExpediente
