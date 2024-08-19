@@ -2,9 +2,13 @@ const express = require('express');
 
 const passport =require('passport')
 const {
-    gestionCaso
+    gestionCaso,
+    listarCasosEstado,
+    comboCasosAgrupar,
+    listarPersonasCasos,
+    gestionPersonasCaso
 } = require("../controllers/mid_casos.controller");
-const upload = require("../middlewares/imageUploadMiddleware");
+const upload = require("../middlewares/fileUploadMiddleware");
 
 const router = express.Router();
 
@@ -19,6 +23,30 @@ router.post('/gestionCaso',
     gestionCaso
 );
 
+
+router.get(
+    '/listarCasosEstado/:est/:id',
+    passport.authenticate('jwt', {session:false}),
+    listarCasosEstado
+);
+
+router.get(
+    '/comboCasosAgrupar/:dna/:id',
+    passport.authenticate('jwt', {session:false}),
+    comboCasosAgrupar
+);
+
+
+router.get(
+    '/listarPersonasCasos/:c/:t',
+    passport.authenticate('jwt', {session:false}),
+    listarPersonasCasos
+);
+
+router.post('/gestionPersonasCaso',
+    passport.authenticate('jwt',{session:false}),
+    gestionPersonasCaso
+);
 
 
 module.exports = router;
