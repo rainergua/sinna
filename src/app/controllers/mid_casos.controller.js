@@ -6,6 +6,7 @@ const gestionCaso = async (req, res) => {
     req.body.ci_usuario = req.user.ci;
     if (typeof req.file !== 'undefined')
         req.body.url_foto_extravio = req.file.filename;
+
     const v_json = req.body;
     const query = {
         text: `call sinna_mid.p_gestion_casos($1) `,

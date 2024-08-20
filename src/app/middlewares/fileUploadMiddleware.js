@@ -23,6 +23,10 @@ const storage = multer.diskStorage({
     if(file.fieldname==='url_foto_ddjj'){
       folder='comun/usuarios/ddjj';
     }
+    if(file.fieldname==='url_foto_extravio'){
+      folder='comun/mid/extraviados';
+    }
+
 
     const destFolder = path.join(__dirname, '..', 'public', folder);
     fs.ensureDirSync(destFolder);
