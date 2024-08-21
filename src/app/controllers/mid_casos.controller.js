@@ -109,6 +109,26 @@ const gestionPersonasCaso = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const comboProfAtencionDna = async (req, res) => {
+    const dna = req.params.dna;
+    const query = {
+        text: `select * from sinna_mid.f_listar_profesionales_atencion_dna($1)`,
+        values:[dna]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows
+            res.status(200).json({
+                datos: resultado,
+                mensaje:"Se obtuvo la lista de profesionales para asignar",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+
 
 
 module.exports = {
@@ -116,5 +136,6 @@ module.exports = {
     listarCasosEstado,
     comboCasosAgrupar,
     listarPersonasCasos,
-    gestionPersonasCaso
+    gestionPersonasCaso,
+    comboProfAtencionDna
 }

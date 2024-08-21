@@ -6,7 +6,8 @@ const {
     listarCasosEstado,
     comboCasosAgrupar,
     listarPersonasCasos,
-    gestionPersonasCaso
+    gestionPersonasCaso,
+    comboProfAtencionDna
 } = require("../controllers/mid_casos.controller");
 const upload = require("../middlewares/fileUploadMiddleware");
 
@@ -46,6 +47,12 @@ router.get(
 router.post('/gestionPersonasCaso',
     passport.authenticate('jwt',{session:false}),
     gestionPersonasCaso
+);
+
+router.get(
+    '/comboProfAtencionDna/:dna',
+    passport.authenticate('jwt', {session:false}),
+    comboProfAtencionDna
 );
 
 
