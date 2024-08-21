@@ -39,10 +39,15 @@ const obtenerDatosBase = async (req, res) => {
 const gestionExpediente = async (req, res) => {
     req.body.ci_usuario = req.user.ci;
     const v_json = req.body;
+    console.log('Consulta', req.body);
     const query = {
         text: `call sinna_modefa.p_gestion_expedientes($1) `,
         values:[v_json]
     };
+
+    console.log(query);
+
+    
     await con
         .query(query)
         .then((result) =>{
@@ -53,6 +58,7 @@ const gestionExpediente = async (req, res) => {
             })}
         )
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+    
 }
 
 const listaExpediente = async (req, res) => {
