@@ -129,6 +129,45 @@ const comboProfAtencionDna = async (req, res) => {
         .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
 }
 
+const lisstarAsignacionesCaso = async (req, res) => {
+    const id_caso = req.params.id;
+    const query = {
+        text: `select * from sinna_mid.f_listar_asignaciones_caso($1)`,
+        values:[id_caso]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows
+            res.status(200).json({
+                datos: resultado,
+                mensaje:"Se obtuvo las asignaciones realizadas",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+
+const gestionAsignacionesCaso = async (req, res) => {
+
+    req.body.ci_usuario = req.user.ci;
+    const v_json = req.body;
+    const query = {
+        text: `call sinna_mid.p_gestion_asignacion_casos($1) `,
+        values:[v_json]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            const resultado =  result.rows[0];
+            res.status(200).json({
+                result: resultado,
+
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
 
 
 module.exports = {
@@ -137,5 +176,7 @@ module.exports = {
     comboCasosAgrupar,
     listarPersonasCasos,
     gestionPersonasCaso,
-    comboProfAtencionDna
+    comboProfAtencionDna,
+    lisstarAsignacionesCaso,
+    gestionAsignacionesCaso
 }
