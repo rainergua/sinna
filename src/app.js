@@ -14,6 +14,8 @@ const modefa_centros_acogimiento= require ("./app/routes/modefa_centros_acogimie
 const modefa_ingreso_nna = require ("./app/routes/modefa_ingreso_nna.routes")
 const modefa_expedientes = require("./app/routes/modefa_expedientes.routes")
 const modefa_post=require("./app/routes/modefa_post_egreso.routes")
+const modefa_restitucion=require("./app/routes/modefa_restitucion.routes")
+const modefa_mayoria_edad=require("./app/routes/modefa_mayoria_edad.routes")
 const mospaRoutes= require ("./app/routes/mospa.routes")
 const workflowRoutes= require ("./app/routes/workflow.routes")
 const parametricasRoutes= require ("./app/routes/parametricas.routes")
@@ -72,6 +74,8 @@ app.use('/api/modefa',modefa_centros_acogimiento);
 app.use('/api/modefa',modefa_ingreso_nna);
 app.use('/api/modefa',modefa_expedientes);
 app.use('/api/modefa',modefa_post);
+app.use('/api/modefa',modefa_restitucion);
+app.use('/api/modefa',modefa_mayoria_edad);
 app.use('/api/mospa',mospaRoutes);
 app.use('/api/mospa',movimientosRoutes);
 app.use('/api/mospa',piemRoutes);
