@@ -192,7 +192,24 @@ const listarJuzgados = async (req, res) => {
         )
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
+const obtenerCdaGralCombo = async (req, res) => {
+    const query = {
+        text: `select * from parametricas.f_obtener_cda_combo_gral() `,
 
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows
+            const resultado =  result.rows
+            res.status(200).json({
+                datoAdicional: resultado,
+                mensaje:"CDA obtenidos correctamente",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
 
 module.exports = {
     obtieneParam,
@@ -204,5 +221,6 @@ module.exports = {
     obtieneDnasMunicipio,
     listaCdaTerritorio,
     listaCentrosMospaDpto,
-    listarJuzgados
+    listarJuzgados,
+    obtenerCdaGralCombo
 }

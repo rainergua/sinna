@@ -208,6 +208,103 @@ const gestionResolucionesNna = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const listarAcogimientoCaso = async (req, res) => {
+    const id_caso = req.params.caso;
+    const query = {
+        text: `select * from sinna_mid.f_listar_acogimiento_caso($1)`,
+        values:[id_caso]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows
+            res.status(200).json({
+                datos: resultado,
+                mensaje:"Se obtuvo las resoluciones de la NNA",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+
+const gestionAcogimientoCaso = async (req, res) => {
+    req.body.ci_usuario = req.user.ci;
+    const v_json = req.body;
+    const query = {
+        text: `call sinna_mid.p_gestion_casos_acogimiento($1) `,
+        values:[v_json]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            const resultado =  result.rows[0];
+            res.status(200).json({
+                result: resultado,
+
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
+const comboDenunciadosDemanda = async (req, res) => {
+    const id_caso = req.params.caso;
+    const query = {
+        text: `select * from sinna_mid.f_combo_denunciados_demandas($1)`,
+        values:[id_caso]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows
+            res.status(200).json({
+                datos: resultado,
+                mensaje:"Se obtuvo los denunciados del caso.",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+
+const listarDemandasCaso = async (req, res) => {
+    const id_caso = req.params.caso;
+    const query = {
+        text: `select * from sinna_mid.f_listar_demandas_caso($1)`,
+        values:[id_caso]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows
+            res.status(200).json({
+                datos: resultado,
+                mensaje:"Se obtuvo las resoluciones de la NNA",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+
+const gestionDemandasCaso = async (req, res) => {
+    req.body.ci_usuario = req.user.ci;
+    const v_json = req.body;
+    const query = {
+        text: `call sinna_mid.p_gestion_demandas_caso($1) `,
+        values:[v_json]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            const resultado =  result.rows[0];
+            res.status(200).json({
+                result: resultado,
+
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
 
 module.exports = {
    gestionCaso,
@@ -219,5 +316,10 @@ module.exports = {
     lisstarAsignacionesCaso,
     gestionAsignacionesCaso,
     listarResolucionesNna,
-    gestionResolucionesNna
+    gestionResolucionesNna,
+    listarAcogimientoCaso,
+    gestionAcogimientoCaso,
+    comboDenunciadosDemanda,
+    listarDemandasCaso,
+    gestionDemandasCaso
 }

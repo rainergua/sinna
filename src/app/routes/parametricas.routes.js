@@ -17,7 +17,8 @@ const {
     obtieneDnasMunicipio,
     listaCdaTerritorio,
     listaCentrosMospaDpto,
-    listarJuzgados
+    listarJuzgados,
+    obtenerCdaGralCombo
 } = require ('../controllers/parametricas.controller')
 
 /**
@@ -144,5 +145,10 @@ router.get('/obtieneMunDpto/:id',
 router.get('/obtenerPoblacionAtiende',
     passport.authenticate('jwt',{session:false}),
     obtenerPoblacionAtiende
+);
+
+router.get('/obtenerCdaGralCombo',
+    passport.authenticate('jwt',{session:false}),
+    obtenerCdaGralCombo
 );
 module.exports = router;
