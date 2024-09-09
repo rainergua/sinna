@@ -16,7 +16,9 @@ const {
     gestionAcogimientoCaso,
     comboDenunciadosDemanda,
     listarDemandasCaso,
-    gestionDemandasCaso
+    gestionDemandasCaso,
+    obtenerHistorialDemanda,
+    obtenerConclusionesCaso
 } = require("../controllers/mid_casos.controller");
 const upload = require("../middlewares/fileUploadMiddleware");
 
@@ -113,6 +115,16 @@ router.get(
 router.post('/gestionDemandasCaso',
     passport.authenticate('jwt',{session:false}),
     gestionDemandasCaso
+);
+
+router.get('/obtenerHistorialDemanda/:id',
+    passport.authenticate('jwt',{session:false}),
+    obtenerHistorialDemanda
+);
+
+router.get('/obtenerConclusionesCaso/:id',
+    passport.authenticate('jwt',{session:false}),
+    obtenerConclusionesCaso
 );
 
 

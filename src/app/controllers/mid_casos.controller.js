@@ -306,6 +306,47 @@ const gestionDemandasCaso = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const obtenerHistorialDemanda = async (req, res) => {
+    const id_demanda = req.params.id;
+    const query = {
+        text: `select * from sinna_mid.f_obtener_historial_demanda_caso($1)`,
+        values:[id_demanda]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows
+            res.status(200).json({
+                datos: resultado,
+                mensaje:"Se obtuvo el historial de la demanda",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+
+const obtenerConclusionesCaso = async (req, res) => {
+    const id_caso = req.params.id;
+    const ci = req.user.ci;
+    const query = {
+        text: `select * from sinna_mid.f_obtener_conclusiones_caso($1,$2)`,
+        values:[ci,id_caso]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows
+            res.status(200).json({
+                datos: resultado,
+                mensaje:"Se obtuvo las conclusiones del caso",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
+
 module.exports = {
    gestionCaso,
     listarCasosEstado,
@@ -321,5 +362,7 @@ module.exports = {
     gestionAcogimientoCaso,
     comboDenunciadosDemanda,
     listarDemandasCaso,
-    gestionDemandasCaso
+    gestionDemandasCaso,
+    obtenerHistorialDemanda,
+    obtenerConclusionesCaso
 }
