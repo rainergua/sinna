@@ -8,37 +8,45 @@ const {
 const {getMe} = require("../controllers/auth.controller");
 /**
  * @swagger
+ * securityDefinitions:
+ *   bearerAuth:
+ *     type: apiKey
+ *     name: Authorization
+ *     in: header
+ */
+/**
+ * @swagger
  * components:
  *  schemas:
- *      Mospa:
+ *      listar_centros:
  *          type: object
  *          properties:
  *              tipo_centro:
  *                  type: integer
  *                  description: tipo de centro del modulo MOSPA, puede ser 4 o 5
- *              alcance:
- *                  type: integer
- *                  description: el id del departamento, en caso de 0 se muestra todos
+ *              estado:
+ *                  type: string
+ *                  description: estado del registro solicitado
  *          required:
  *              - tipo_centro
- *              - alcance
+ *              - estado
  *          example:
  *              tipo_centro: 4
- *              alcance: 3
+ *              estado: CREADO
  */
 /**
  * @swagger
  * /api/mospa/listarCentros:
  *  post:
- *      summary: Obtiene el listado de centros segun el tipo y el alcance<v_json>
- *      tags: [Listar]
+ *      summary: Obtiene el listado de centros segun el tipo y el estado<v_json>
+ *      tags: [Listar,MOSPA Centros]
  *      requestBody:
  *          required: true
  *          content:
  *              application/json:
  *                  schema:
  *                      type: object
- *                      $ref: '#/components/schemas/Mospa'
+ *                      $ref: '#/components/schemas/listar_centros'
  *      responses:
  *          200:
  *              description: Listado ok
@@ -55,7 +63,7 @@ router.post(
  * @swagger
  * components:
  *  schemas:
- *      Gestion:
+ *      gestionCentros:
  *          type: object
  *          properties:
  *              tipo_centro:
@@ -73,10 +81,10 @@ router.post(
  */
 /**
  * @swagger
- * /api/mospa/listarCentros:
+ * /api/mospa/gestionCentros:
  *  post:
  *      summary: Realiza la gestion de los centros
- *      tags: [Listar]
+ *      tags: [Altas, Bajas, Modificaciones, MOSPA Centros]
  *      requestBody:
  *          required: true
  *          content:
@@ -95,13 +103,33 @@ router.post(
     passport.authenticate('jwt',{session:false}),
     gestionCentros
 );
-
+/**
+ * @swagger
+ * /api/mospa/obtenerTerritorioUsr:
+ *  get:
+ *      summary: Obtiene datos de Territorio
+ *      tags: [Listar, MOSPA Centros, Municipio]
+ *      responses:
+ *          200:
+ *              description: Peticion Exitosa
+ *
+ */
 router.get(
     '/obtenerTerritorioUsr',
     passport.authenticate('jwt',{session:false}),
     obtenerTerritorioUsr
 );
-
+/**
+ * @swagger
+ * /api/mospa/datosCentro:
+ *  get:
+ *      summary: Obtiene datos del Centro
+ *      tags: [Listar, MOSPA Centros]
+ *      responses:
+ *          200:
+ *              description: Peticion Exitosa
+ *
+ */
 router.get(
     '/datosCentro',
     passport.authenticate('jwt',{session:false}),
