@@ -96,6 +96,8 @@ router.post(
     gestionCentros
 );
 
+
+
 router.get(
     '/obtenerTerritorioUsr',
     passport.authenticate('jwt',{session:false}),

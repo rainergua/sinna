@@ -21,7 +21,7 @@ const {
  * @swagger
  * components:
  *  schemas:
- *      Defensoria:
+ *      gestiondefensoria:
  *          type: object
  *          properties:
  *              id_defensorias:
@@ -85,47 +85,169 @@ const {
  * /api/mid/gestiondefensoria:
  *  post:
  *      summary: Envía los datos para la gestión de Defensorias (ABM). El obejto en el request debe llarse <v_json>
- *      tags: [Altas, Bajas, Modificaciones]
+ *      tags: [Altas, Bajas, Modificaciones, MID Defensorias]
  *      requestBody:
  *          required: true
  *          content:
  *              application/json:
  *                  schema:
  *                      type: object
- *                      $ref: '#/components/schemas/Defensoria'
+ *                      $ref: '#/components/schemas/gestiondefensoria'
  *      responses:
  *          200:
  *              description: Peticion Exitosa
  * 
  */
 
-router.post('/gestiondefensoria', passport.authenticate('jwt', {session:false}), gestionDefensoria);
+router.post(
+    '/gestiondefensoria',
+    passport.authenticate('jwt', {session:false}),
+    gestionDefensoria
+);
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      gestionregredes:
+ *          type: object
+ *          properties:
+ *              id_reg_red:
+ *                  type: integer
+ *                  description: Id de la Red
+ *              descripcion_red:
+ *                  type: string
+ *                  description: Nombre o descripcion de la red
+ *              municipio_red:
+ *                  type: array
+ *                  items:
+ *                      type: integer
+ *                  description: Id de los municipios que componen la red
+ *              nombre_coord:
+ *                  type: string
+ *                  description: Nombre del coordinador de la RED del VIO
+ *              fono_coord:
+ *                  type: string
+ *                  description: Telefono del coordinador de la RED
+ *              observacion:
+ *                  type: string
+ *                  description: Observaciones del registro
+ *              norma_respaldo:
+ *                  type: string
+ *                  description: Norma o convenio que respalda la implementación de la Red
+ *              estado:
+ *                  type: string
+ *                  description: Estado del registro
+ *              transaccion:
+ *                  type: string
+ *                  description: Transaccion del registro
+ *              ci_usuario:
+ *                  type: string
+ *                  description: CI del usuario que va a crear el registro
+ *          required:
+ *              - id_reg_red
+ *              - descripcion_red
+ *              - municipio_red
+ *              - nombre_coord
+ *              - fono_coord
+ *              - estado
+ *              - transaccion
+ *              - ci_usuario
+ *          example:
+ *              id_reg_red: 1
+ *              descripcion_red: Red 1
+ *              municipio_red: [34, 35, 36]
+ *              nombre_coord: Juan Condori Quehui
+ *              fono_coord: "65222222"
+ *              observacion: Observaciones
+ *              norma_respaldo: Acuerdo 123-23
+ *              estado: CREADO
+ *              transaccion: CREAR
+ *              ci_usuario: "16021"
+ */
+/**
+ * @swagger
+ * /api/mid/gestionregredes:
+ *  post:
+ *      summary: Envía los datos para la gestión de Redes del MID (ABM). El obejto en el request debe llarse <v_json>
+ *      tags: [Altas, Bajas, Modificaciones, MID Redes]
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      $ref: '#/components/schemas/gestionregredes'
+ *      responses:
+ *          200:
+ *              description: Peticion Exitosa
+ *
+ */
+router.post(
+    '/gestionregredes',
+    passport.authenticate('jwt', {session:false}),
+    gestionRedesReg
+);
 
-//
-router.post('/gestionregredes', passport.authenticate('jwt', {session:false}), gestionRedesReg);
-
-router.post('/updfiledef', upload.single('file'), updFileDef);
+router.post(
+    '/updfiledef',
+    upload.single('file'),
+    updFileDef
+);
 
 /**
  * @swagger
  * /api/mid/obtienedefensorias:
  *  get:
  *      summary: Obtiene todas las defensorias del Pais
- *      tags: [Defensorias]
+ *      tags: [Listar, MID Defensorias]
  *      responses:
  *          200:
  *              description: Peticion Exitosa
  * 
  */
-router.get('/obtienedefensorias', passport.authenticate('jwt', {session:false}), obtieneDefensorias);
-router.get ('/obtieneselmunis', passport.authenticate('jwt', {session:false}), obtieneSelMunis)
-router.get('/obtieneredes', passport.authenticate('jwt', {session:false}), obtieneRedes);
+router.get(
+    '/obtienedefensorias',
+    passport.authenticate('jwt', {session:false}),
+    obtieneDefensorias
+);
+/**
+ * @swagger
+ * /api/mid/obtieneselmunis:
+ *  get:
+ *      summary: Obtiene la lista de municipios para Redes
+ *      tags: [Listar, MID Redes]
+ *      responses:
+ *          200:
+ *              description: Peticion Exitosa
+ *
+ */
+router.get (
+    '/obtieneselmunis',
+    passport.authenticate('jwt', {session:false}),
+    obtieneSelMunis
+)
+/**
+ * @swagger
+ * /api/mid/obtieneredes:
+ *  get:
+ *      summary: Obtiene la lista de Redes
+ *      tags: [Listar, MID Redes]
+ *      responses:
+ *          200:
+ *              description: Peticion Exitosa
+ *
+ */
+router.get(
+    '/obtieneredes',
+    passport.authenticate('jwt', {session:false}),
+    obtieneRedes
+);
 /**
  * @swagger
  * /api/mid/obtienedef/{id}:
  *  get:
  *      summary: Obtiene Una defensoria con id = ${id}
- *      tags: [Defensorias]
+ *      tags: [Listar, MID Defensorias]
  *      responses:
  *          200:
  *              description: Peticion Exitosa
@@ -139,25 +261,65 @@ router.get('/obtieneredes', passport.authenticate('jwt', {session:false}), obtie
  *                  style: simple
  * 
  */
-router.get('/obtienedef/:id', passport.authenticate('jwt', {session:false}), obtieneDef);
+router.get(
+    '/obtienedef/:id',
+    passport.authenticate('jwt', {session:false}),
+    obtieneDef
+);
 
-//getdefensoriamuni
-router.get('/getdefensoriamuni/:id_muni', passport.authenticate('jwt', {session:false}), getDefensoriaMuni);
-
+/**
+ * @swagger
+ * /api/mid/getdefensoriamuni/{id_muni}:
+ *  get:
+ *      summary: Obtiene la lista de defensorias que son parte del municipio que sea igual a id_muni = ${id_muni}
+ *      tags: [Listar, MID Defensorias, Municipio]
+ *      responses:
+ *          200:
+ *              description: Peticion Exitosa
+ *      parameters:
+ *           - name: id_muni
+ *             in: path
+ *             description: Id del Municpio
+ *             required: true
+ *             schema:
+ *                  type: integer
+ *                  style: simple
+ *
+ */
+router.get(
+    '/getdefensoriamuni/:id_muni',
+    passport.authenticate('jwt', {session:false}),
+    getDefensoriaMuni
+);
+/**
+ * @swagger
+ * /api/mid/obtieneusudef:
+ *  get:
+ *      summary: Obtiene la lista de usuarios de la defensoria, en base al CI del usuario
+ *      tags: [Listar, MID Defensorias]
+ *      responses:
+ *          200:
+ *              description: Peticion Exitosa
+ */
 router.get(
     '/obtieneusudef',
     passport.authenticate('jwt', {session:false}),
     obtieneUsuarioDefensoria
 );
-
+/**
+ * @swagger
+ * /api/mid/centroUsuario:
+ *  get:
+ *      summary: Obtiene la lista de centros o DNA a las que el usuario tiene acceso, en base al CI del usuario
+ *      tags: [Listar, MID Defensorias]
+ *      responses:
+ *          200:
+ *              description: Peticion Exitosa
+ */
 router.get(
     '/centroUsuario',
     passport.authenticate('jwt', {session:false}),
     centroUsuario
 );
 
-//router.post('/gettoken', getToken);
-
-
-//router.put('/gettoken', getToken);
 module.exports = router;

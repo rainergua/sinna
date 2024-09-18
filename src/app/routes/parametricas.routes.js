@@ -116,7 +116,7 @@ router.get('/obtienemun/:id', passport.authenticate('jwt',{session:false}), obti
  * /api/parametricas/obtieneDnasMunicipio/{id}:
  *  get:
  *      summary: Obtiene las DNA's de un municipio
- *      tags: [Municipio, DNA]
+ *      tags: [Municipio, MID Defensorias]
  *      responses:
  *          200:
  *              description: Peticion Exitosa
@@ -135,7 +135,25 @@ router.get('/obtieneDnasMunicipio/:id',
     passport.authenticate('jwt',{session:false}),
     obtieneDnasMunicipio
 );
-
+/**
+ * @swagger
+ * /api/parametricas/obtieneMunDpto/{id}:
+ *  get:
+ *      summary: Obtiene los municipos de un departamento
+ *      tags: [Municipio]
+ *      responses:
+ *          200:
+ *              description: Peticion Exitosa
+ *      parameters:
+ *           - name: id
+ *             in: path
+ *             description: Id del departamento
+ *             required: true
+ *             schema:
+ *                  type: string
+ *                  style: simple
+ *
+ */
 router.get('/obtieneMunDpto/:id',
     passport.authenticate('jwt',{session:false}),
     obtieneMunDpto

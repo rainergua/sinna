@@ -23,7 +23,7 @@ const {
  *              - ci_usuario
  *              - password
  *          example:
- *              ci_usuario: 6751241
+ *              ci_usuario: 888999
  *              password: admin123
  */
 /**

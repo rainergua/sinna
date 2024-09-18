@@ -31,7 +31,7 @@ const uploadImg = require("../middlewares/imageUploadMiddleware");
  *              - tabla
  *              - estado
  *          example:
- *              ci_usuario: '6751241'
+ *              ci_usuario: '888999'
  *              tabla: '3'
  *              estado: 'CREADO'
  */
@@ -76,7 +76,7 @@ router.post('/listarTransacciones',
  *              - ci_usuario
  *              - modulo
  *          example:
- *              ci_usuario: '6751241'
+ *              ci_usuario: '888999'
  *              modulo: 'MOSPA'
  */
 /**
@@ -115,7 +115,7 @@ router.post('/listarMenus',
  *          required:
  *              - ci_usuario
  *          example:
- *              ci_usuario: '6751241'
+ *              ci_usuario: '888999'
  */
 /**
  * @swagger
