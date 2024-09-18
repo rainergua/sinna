@@ -3,7 +3,7 @@ const express = require('express');
 const passport =require('passport')
 const router = express.Router();
 const {
-    listarCentros, gestionCentros, obtenerTerritorioUsr, obtenerCentro, datosCentro,
+    listarCentros, gestionCentros, obtenerTerritorioUsr, datosCentro,
 } = require ('../controllers/mospa.controller')
 const {getMe} = require("../controllers/auth.controller");
 /**
