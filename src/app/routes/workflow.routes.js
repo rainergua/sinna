@@ -1,6 +1,5 @@
 const express = require('express');
 const passport = require('passport');
-const verificaToken = require('../middlewares/verificaToken')
 const router = express.Router();
 const {
     listarTransacciones, listarMenus, obtenerModulos, listarModulos,
@@ -8,7 +7,6 @@ const {
     combrobarCiUsuario, subirContrato, obtenerDocsUsr
 } = require ('../controllers/workflow.controller')
 const upload = require("../middlewares/fileUploadMiddleware");
-const uploadImg = require("../middlewares/imageUploadMiddleware");
 
 /**
  * @swagger

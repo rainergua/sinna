@@ -1,8 +1,6 @@
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
-
-const  upload = require ('../middlewares/imageUploadMiddleware')
 const { 
     getParametrosDenuncia,
     getMunicipioProvDep,
