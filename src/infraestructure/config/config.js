@@ -3,7 +3,7 @@ const { Pool } = require('pg');
 // BD Ivan
 const con = new Pool({
 	user: "sinna_prod",
-	host: "172.16.100.201",
+	host: "172.16.1.227",
 	password: "s1nn42024#",
 	database: "sinna_prod",
 	port: "5555",
