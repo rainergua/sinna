@@ -443,7 +443,7 @@ router.get(
  * @swagger
  * /api/mid/gestionPersonasCaso:
  *  post:
- *      summary: Envía los datos para la gestión de Personas del caso del MID (ABM). El objeto en el request debe llamarse <v_json>
+ *      summary: Envía los datos para las gestión de Personas del caso del MID (ABM). El objeto en el request debe llamarse <v_json>
  *      tags: [Altas, Bajas, Modificaciones, MID Casos]
  *      requestBody:
  *          required: true
