@@ -74,7 +74,7 @@ router.post('/login', (req, res, next) => {
 
 
 router.post('/loginPublic', (req, res, next) => {
-    req.sub=37;
+    req.sub=3;
     req.ci='44307';
     passport.authenticate('local', { session: false }, (err, user, info) => {
         if (err) {
@@ -87,7 +87,7 @@ router.post('/loginPublic', (req, res, next) => {
             });
         }*/
         const payload = {
-            sub: 37,
+            sub: 3,
             ci: '44307'
         };
         //aca configurar el tiempo del token
@@ -106,7 +106,7 @@ router.post('/loginPublic', (req, res, next) => {
 
 
 router.post('/loginPublicUsr', (req, res, next) => {
-    req.sub=74;
+    req.sub=2;
     req.ci='44300';
     passport.authenticate('local', { session: false }, (err, user, info) => {
         if (err) {
@@ -119,7 +119,7 @@ router.post('/loginPublicUsr', (req, res, next) => {
             });
         }*/
         const payload = {
-            sub: 74,
+            sub: 2,
             ci: '44300'
         };
         //aca configurar el tiempo del token
