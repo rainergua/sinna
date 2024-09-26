@@ -149,9 +149,6 @@ const subirDocumentosUsuario = async (req, res) => {
 
         if(typeof req.files['url_foto_ddjj']!== 'undefined')
             req.body.url_foto_ddjj = req.files['url_foto_ddjj'][0].filename;
-
-
-
         req.body.ci_usuario = req.user.ci;
         const v_json = req.body;
         const query = {
@@ -245,6 +242,27 @@ const obtenerDocsUsr = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const obtenerUsuarioCI = async (req, res) => {
+    const ci=req.user.ci;
+    const query = {
+        text: `select * from workflow.f_obtener_usuario_ci($1) `,
+        values:[ci]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows;
+            //console.log(resultado)
+            res.status(200).json({
+                datoAdicional: resultado,
+                mensaje:"Datos obtenidos del usuario",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
 
 
 module.exports = {
@@ -257,5 +275,6 @@ module.exports = {
     subirDocumentosUsuario,
     combrobarCiUsuario,
     subirContrato,
-    obtenerDocsUsr
+    obtenerDocsUsr,
+    obtenerUsuarioCI
 }
