@@ -4,7 +4,7 @@ const router = express.Router();
 const {
     listarTransacciones, listarMenus, obtenerModulos, listarModulos,
     gestionUsuarios,listarUsuariosEstado, subirDocumentosUsuario,
-    combrobarCiUsuario, subirContrato, obtenerDocsUsr
+    combrobarCiUsuario, subirContrato, obtenerDocsUsr, obtenerUsuarioCI
 } = require ('../controllers/workflow.controller')
 const upload = require("../middlewares/fileUploadMiddleware");
 
@@ -176,6 +176,12 @@ router.get('/combrobarCiUsuario/:ci',
 router.get('/obtenerDocsUsr/:ci',
     passport.authenticate('jwt', {session:false}),
     obtenerDocsUsr
+);
+
+
+router.get('/obtenerUsuarioCI',
+    passport.authenticate('jwt', {session:false}),
+    obtenerUsuarioCI
 );
 
 
