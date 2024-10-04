@@ -263,6 +263,28 @@ const obtenerUsuarioCI = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const obtenerUsuarioConsulta = async (req, res) => {
+    const ci=req.params.ci;
+    const id=req.params.id;
+    const query = {
+        text: `select * from workflow.f_obtener_usuario_ciid($1,$2) `,
+        values:[ci,id]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows;
+            //console.log(resultado)
+            res.status(200).json({
+                datoAdicional: resultado,
+                mensaje:"Datos consultados del usuario",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
 
 
 module.exports = {
@@ -276,5 +298,6 @@ module.exports = {
     combrobarCiUsuario,
     subirContrato,
     obtenerDocsUsr,
-    obtenerUsuarioCI
+    obtenerUsuarioCI,
+    obtenerUsuarioConsulta
 }
