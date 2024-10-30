@@ -31,7 +31,7 @@ const router = express.Router();
  *                  style: simple
  *
  */
-router.get('/comboExpediente/:id',
+router.get('/comboExpediente/:id/:gad',
     passport.authenticate('jwt',{session:false}),
     comboExpediente
 );

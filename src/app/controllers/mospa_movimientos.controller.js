@@ -132,7 +132,7 @@ const gestionPersonasDetalle = async (req, res) => {
 const listarMovimientos = async (req, res) => {
 
     const query = {
-        text: `select * from sinna_mospa.f_listar_movimientos('${req.body.estado}',${req.body.id_centro} ) `,
+        text: `select * from sinna_mospa.f_listar_movimientos('${req.body.estado}',${req.body.id_centro}, ${req.body.id_gad}) `,
 
     };
 
