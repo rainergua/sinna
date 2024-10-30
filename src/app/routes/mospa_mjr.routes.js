@@ -19,7 +19,7 @@ router.post('/gestionMjr',
     gestionMjr
 );
 
-router.get('/listaMjr/:id',
+router.get('/listaMjr/:id/:gad',
     passport.authenticate('jwt',{session:false}),
     listaMjr
 );

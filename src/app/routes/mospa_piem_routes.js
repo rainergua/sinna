@@ -20,7 +20,7 @@ router.post('/gestionPiem',
     gestionPiem
 );
 
-router.get('/listaPiem/:id',
+router.get('/listaPiem/:id/:gad',
     passport.authenticate('jwt',{session:false}),
     listaPiem
 );

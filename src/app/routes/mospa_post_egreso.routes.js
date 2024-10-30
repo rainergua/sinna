@@ -21,7 +21,7 @@ router.post('/gestionPostEgreso',
     gestionPostEgreso
 );
 
-router.get('/listaPostEgreso/:id',
+router.get('/listaPostEgreso/:id/:gad',
     passport.authenticate('jwt',{session:false}),
     listaPostEgreso
 );
