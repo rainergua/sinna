@@ -3,7 +3,7 @@ const express = require('express');
 const passport =require('passport')
 const {
     comboCasosSinPiem,
-    gestionPiem, listaPiem, listaPiemJuzgado, gestionSegPiem, listarSegPiem, comboExpediente, obtenerDatosBase
+    gestionPiem, listaPiem, listaPiemJuzgado, gestionSegPiem, listarSegPiem,
 } = require("../controllers/mospa_piem_controller");
 
 
