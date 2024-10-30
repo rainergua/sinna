@@ -82,9 +82,25 @@ const obtenerTerritorioUsr = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const listaCentrosUsuario = async (req, res) => {
+    try {
+        //const id = req.params.id;
+        const ci = req.user.ci;
+        const datos = await con.query(`select * from sinna_mospa.f_listar_centros_acceso($1)`, [ci]);
+        res.status(200).json({
+            datoAdicional: datos.rows,
+            mensaje:"Se obtuvo los centros de acceso del usuario.",
+            cod:200
+        });
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
 module.exports = {
     listarCentros,
     gestionCentros,
     obtenerTerritorioUsr,
-    datosCentro
+    datosCentro,
+    listaCentrosUsuario
 }

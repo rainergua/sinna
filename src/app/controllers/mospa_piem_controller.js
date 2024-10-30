@@ -42,9 +42,10 @@ const gestionPiem = async (req, res) => {
 
 const listaPiem = async (req, res) => {
     const id = req.params.id
+    const gad = req.params.gad;
     const query = {
-        text: `select * from sinna_mospa.f_listar_piem($1) `,
-        values:[id]
+        text: `select * from sinna_mospa.f_listar_piem($1,$2) `,
+        values:[id,gad]
     };
     await con
         .query(query)
