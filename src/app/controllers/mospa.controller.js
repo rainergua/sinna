@@ -96,11 +96,30 @@ const listaCentrosUsuario = async (req, res) => {
         res.status(500).json({ msg: 'Error: ' + e });
     }
 }
+const obtenerDashboardMospa = async (req, res) => {
+    const id = req.params.id
+    const gad = req.params.gad;
+    const query = {
+        text: `select * from sinna_mospa.f_obtener_nros_dashboard_mospa($1,$2) `,
+        values:[id,gad]
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows
+            const resultado =  result.rows
+            res.status(200).json({
+                datos: resultado,
+            })}
+        )
+        .catch((e) => res.status(500).json({ msg: 'Error:'+ e }))
+}
 
 module.exports = {
     listarCentros,
     gestionCentros,
     obtenerTerritorioUsr,
     datosCentro,
-    listaCentrosUsuario
+    listaCentrosUsuario,
+    obtenerDashboardMospa
 }
