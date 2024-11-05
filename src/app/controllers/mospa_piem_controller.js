@@ -60,9 +60,10 @@ const listaPiem = async (req, res) => {
 }
 
 const listaPiemJuzgado = async (req, res) => {
-
+    let ci = req.user.ci;
     const query = {
-        text: `select * from sinna_mospa.f_listar_piem_juzgados() `
+        text: `select * from sinna_mospa.f_listar_piem_juzgados($1)`,
+        values:[ci]
     };
     await con
         .query(query)
