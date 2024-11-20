@@ -6,6 +6,7 @@ const {
     getTerritorio,
     gestionCentroAcogida,
     listaCentroAcogida,
+    listarCdaAcceso,
 } = require ('../controllers/modefa_centros_acogimiento.controller')
 
 /**
@@ -189,6 +190,10 @@ router.post('/centro-acogida', passport.authenticate('jwt', {session:false}), ge
  */
 router.post('/list-centro-acogida', passport.authenticate('jwt', {session:false}),listaCentroAcogida);
 
+router.get('/listar-cda-acceso',
+    passport.authenticate('jwt', {session:false}),
+    listarCdaAcceso
+);
 
 module.exports = router;
 

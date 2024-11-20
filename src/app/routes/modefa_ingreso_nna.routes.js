@@ -59,7 +59,7 @@ router.get('/centro-usuario',
  *                  style: simple
  * 
  */
-router.get('/buscar-mid/:buscar', passport.authenticate('jwt', {session:false}), getBuscarPersonaMid);
+router.get('/buscar-mid/:cda', passport.authenticate('jwt', {session:false}), getBuscarPersonaMid);
 
 router.post('/acogidos-nna', 
     passport.authenticate('jwt', {session:false}), 
@@ -75,7 +75,7 @@ router.get('/ingreso-parametrica/:id',
 
 router.post('/gestion-acogida', 
     passport.authenticate('jwt', {session:false}), 
-    upload.single('url_foto'),
+    upload.single('url_foto_modefa'),
     gestionAcogidaNaa);
 
 router.get('/transferencia-parametrica/:id', 
