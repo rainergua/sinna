@@ -16,11 +16,11 @@ const getCentroAcogidaUsuario = async (req, res) => {
 
 const getBuscarPersonaMid = async (req, res) => {
     try {
-        let buscar = req.params.buscar;
-        const datos = await con.query(`select * from sinna_modefa.f_buscar_persona_mid($1)`, [buscar]);
+        let cda = req.params.cda;
+        const datos = await con.query(`select * from sinna_modefa.f_combo_casos_mid_dna($1)`, [cda]);
         res.status(200).json({ 
             datoAdicional: datos.rows,
-            mensaje:"Buscar personas en el MID",
+            mensaje:"Casos enviados desde MID obtenidos",
             cod:200
         });
     } catch (e) {
@@ -87,7 +87,7 @@ const gestionAcogidaNaa = async (req, res) => {
         req.body.ci_usuario = req.user.ci;
         //Obtener el nombre de la foto
         if (typeof req.file !== 'undefined')
-            req.body.url_foto = req.file.filename;
+            req.body.url_foto_modefa = req.file.filename;
         const v_json = req.body
         const query = {
             text: `call sinna_modefa.p_acogida_nna($1) `,
@@ -96,7 +96,10 @@ const gestionAcogidaNaa = async (req, res) => {
         const resultado = await con.query(query)
         res.status(200).json(resultado.rows[0]);
     } catch (e) {
-        res.status(500).json({ msg: 'Error: ' + e });
+        res.status(500).json({
+            msg: 'Error: ' + e ,
+            correcto:false,
+        });
     }
 }
 

@@ -39,6 +39,10 @@ const storage = multer.diskStorage({
       folder='comun/usuarios';
     }
 
+    if(file.fieldname==='url_foto_modefa'){
+      folder='modefa/nna';
+    }
+
 
 
     const destFolder = path.join(__dirname, '..', 'public', folder);
