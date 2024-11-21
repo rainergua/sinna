@@ -61,6 +61,7 @@ const gestionCentroAcogida = async (req, res) => {
 }
 
 const listaCentroAcogida = async (req, res) => {
+
     try {
         const listado = await con.query(`select * from sinna_modefa.f_listar_centros_acogida()`);
         res.status(200).json({ 
@@ -73,11 +74,26 @@ const listaCentroAcogida = async (req, res) => {
     }
 }
 
+const listarCdaAcceso = async (req, res) => {
+
+    try {
+        const ci = req.user.ci;
+        const datos = await con.query(`select * from sinna_modefa.f_listar_cda_acceso($1)`, [ci]);
+        res.status(200).json({
+            datoAdicional: datos.rows,
+            mensaje:"CDA de acceso obtenidos",
+            cod:200
+        });
+    } catch (e) {
+        res.status(500).json({ msg: 'Error: ' + e });
+    }
+}
+
 
 module.exports = {
     getParametricas, 
     getTerritorio,
     gestionCentroAcogida,
     listaCentroAcogida,
-
+    listarCdaAcceso
 }
