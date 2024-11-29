@@ -7,10 +7,32 @@ const con = require('../../infraestructure/config/config');
  * @param {res_json} res response en formato json
  */
 const listarResponsables = async (req, res) => {
-
+    let estado=req.params.est;
     const query = {
-        text: `select * from sinna_mospa.f_listar_centros('{ "tipo_centro":${req.body.tipo_centro},"estado":"${req.body.estado}","ci_usuario":"${req.user.ci}" }') `,
+        text: `select * from sinna_modipi.f_listar_responsables_modipi($1)`,
+        values:[estado],
+    };
 
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows;
+            //console.log(resultado)
+            res.status(200).json({
+                datoAdicional: resultado,
+                mensaje:"Se obtuvo el listado de centros correctamente",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
+
+const comboResponsablesPadre = async (req, res) => {
+    let id=req.params.id;
+    const query = {
+        text: `select id_responsable as id, nombre_responsable as value from sinna_modipi.f_listar_responsables_modipi($1) where id_responsable <> ${id} `,
+        values:['ACTIVO'],
     };
 
     await con
@@ -33,7 +55,7 @@ const gestionResponsables = async (req, res) => {
     req.body.ci_usuario = req.user.ci;
     const v_json = req.body
     const query = {
-        text: `call sinna_mospa.p_gestion_centros($1) `,
+        text: `call sinna_modipi.p_gestion_responsables_modipi($1) `,
         values:[v_json]
     };
     await con
@@ -68,5 +90,6 @@ const listarResponsablesUsuario = async (req, res) => {
 module.exports = {
     listarResponsables,
     gestionResponsables,
-    listarResponsablesUsuario
+    listarResponsablesUsuario,
+    comboResponsablesPadre
 }
