@@ -38,6 +38,8 @@ const flujoRoutes=require("./app/routes/comun_flujo.routes")
 const casosRoutes=require("./app/routes/mid_casos.routes")
 const midExpedientes=require("./app/routes/mid_expedientes_caso.routes")
 const modipiResponsables=require("./app/routes/modipi_responsables.routes")
+const modipiLineamientos=require("./app/routes/modipi_lineamientos_routes")
+const modipiIndicadoresLineamientos=require("./app/routes/modipi_indicadores_lineamientos.routes")
 const cors = require("cors")
 
 // Create a new Express app
@@ -97,6 +99,8 @@ app.use('/api/flujos',flujoRoutes);
 app.use('/api/mid',casosRoutes);
 app.use('/api/mid',midExpedientes);
 app.use('/api/modipi',modipiResponsables);
+app.use('/api/modipi',modipiLineamientos);
+app.use('/api/modipi',modipiIndicadoresLineamientos);
 
 
 module.exports = app;
