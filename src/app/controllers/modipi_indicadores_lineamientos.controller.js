@@ -50,9 +50,32 @@ const gestionIndicadores = async (req, res) => {
         .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
 }
 
+const listarAvancesIndicador = async (req, res) => {
+
+    let id=req.params.id;
+    const query = {
+        text: `select * from sinna_modipi.f_listar_avances_indicador_lineamientos($1)`,
+        values:[id],
+    };
+
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows;
+            //console.log(resultado)
+            res.status(200).json({
+                datoAdicional: resultado,
+                mensaje:"Se obtuvo el historial de avances correctamente",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
 
 
 module.exports = {
     listarIndicadoresLineamiento,
     gestionIndicadores,
+    listarAvancesIndicador
 }
