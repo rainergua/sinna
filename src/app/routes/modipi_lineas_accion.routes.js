@@ -3,20 +3,20 @@ const express = require('express');
 const passport =require('passport')
 const router = express.Router();
 const {
-    listarLineamientos,
-    gestionLineamientos
-} = require ('../controllers/modipi_lineamientos_controller')
+    listarLineasAccion,
+    gestionLineasAccion
+} = require ('../controllers/modipi_lineas_accion.controller')
 
 router.get(
-    '/listarLineamientos/:est/:id_resp',
+    '/listarLineasAccion/:est/:id_resp/:l',
     passport.authenticate('jwt',{session:false}),
-    listarLineamientos
+    listarLineasAccion
 );
 
 router.post(
-    '/gestionLineamientos',
+    '/gestionLineasAccion',
     passport.authenticate('jwt',{session:false}),
-    gestionLineamientos
+    gestionLineasAccion
 );
 
 
