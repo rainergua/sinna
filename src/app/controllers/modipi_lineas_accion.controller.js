@@ -6,12 +6,13 @@ const con = require('../../infraestructure/config/config');
  * @param {v_json} req json que envia los datos al SP
  * @param {res_json} res response en formato json
  */
-const listarLineamientos = async (req, res) => {
+const listarLineasAccion = async (req, res) => {
     let estado=req.params.est;
-    let id=req.params.id_resp
+    let id=req.params.id_resp;
+    let l=req.params.l;
     const query = {
-        text: `select * from sinna_modipi.f_listar_lineamientos_estrategicos($1,$2)`,
-        values:[estado,id],
+        text: `select * from sinna_modipi.f_listar_lineas_accion($1,$2,$3)`,
+        values:[estado,id,l],
     };
 
     await con
@@ -22,7 +23,7 @@ const listarLineamientos = async (req, res) => {
             //console.log(resultado)
             res.status(200).json({
                 datoAdicional: resultado,
-                mensaje:"Se obtuvo el listado de lineamientos estrategicos correctamente",
+                mensaje:"Se obtuvo el listado de Lineas de Accion correctamente",
                 cod:200
             })}
         )
@@ -31,11 +32,11 @@ const listarLineamientos = async (req, res) => {
 
 
 
-const gestionLineamientos = async (req, res) => {
+const gestionLineasAccion = async (req, res) => {
     req.body.ci_usuario = req.user.ci;
     const v_json = req.body
     const query = {
-        text: `call sinna_modipi.p_gestion_lineamientos($1) `,
+        text: `call sinna_modipi.p_gestion_lineas_accion($1) `,
         values:[v_json]
     };
     await con
@@ -53,6 +54,6 @@ const gestionLineamientos = async (req, res) => {
 
 
 module.exports = {
-    listarLineamientos,
-    gestionLineamientos,
+    listarLineasAccion,
+    gestionLineasAccion,
 }

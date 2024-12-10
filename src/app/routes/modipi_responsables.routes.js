@@ -15,7 +15,7 @@ router.get(
 );
 
 router.get(
-    '/comboResponsablesPadre/:id',
+    '/comboResponsablesPadre/:id/:t',
     passport.authenticate('jwt',{session:false}),
     comboResponsablesPadre
 );

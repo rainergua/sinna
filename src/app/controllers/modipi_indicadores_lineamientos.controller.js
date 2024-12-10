@@ -9,9 +9,10 @@ const con = require('../../infraestructure/config/config');
 const listarIndicadoresLineamiento = async (req, res) => {
     let estado=req.params.est;
     let id=req.params.id;
+    let resp=req.params.resp;
     const query = {
-        text: `select * from sinna_modipi.f_listar_indicador_lineamiento($1,$2)`,
-        values:[estado,id],
+        text: `select * from sinna_modipi.f_listar_indicador_lineamiento($1,$2,$3)`,
+        values:[estado,id,resp],
     };
 
     await con

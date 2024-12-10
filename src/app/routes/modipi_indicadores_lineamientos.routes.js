@@ -9,7 +9,7 @@ const {
 } = require("../controllers/modipi_indicadores_lineamientos.controller");
 
 router.get(
-    '/listarIndicadoresLineamiento/:est/:id',
+    '/listarIndicadoresLineamiento/:est/:id/:resp',
     passport.authenticate('jwt',{session:false}),
     listarIndicadoresLineamiento
 );

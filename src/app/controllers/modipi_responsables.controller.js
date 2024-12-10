@@ -30,9 +30,10 @@ const listarResponsables = async (req, res) => {
 
 const comboResponsablesPadre = async (req, res) => {
     let id=req.params.id;
+    let tipo=req.params.t;
     const query = {
-        text: `select id_responsable as id, nombre_responsable as value from sinna_modipi.f_listar_responsables_modipi($1) where id_responsable <> ${id} `,
-        values:['ACTIVO'],
+        text: `select * from sinna_modipi.f_combo_responsables_modipi($1,$2)`,
+        values:[id,tipo],
     };
 
     await con
@@ -76,10 +77,10 @@ const listarResponsablesUsuario = async (req, res) => {
     try {
         //const id = req.params.id;
         const ci = req.user.ci;
-        const datos = await con.query(`select * from sinna_mospa.f_listar_centros_acceso($1)`, [ci]);
+        const datos = await con.query(`select * from sinna_modipi.f_listar_resposables_acceso_modipi($1)`, [ci]);
         res.status(200).json({
             datoAdicional: datos.rows,
-            mensaje:"Se obtuvo los centros de acceso del usuario.",
+            mensaje:"Se obtuvo los responsables de acceso del usuario.",
             cod:200
         });
     } catch (e) {
