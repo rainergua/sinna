@@ -26,6 +26,9 @@ const storage = multer.diskStorage({
     if(file.fieldname==='url_foto_extravio'){
       folder='comun/mid/extraviados';
     }
+    if(file.fieldname==='url_acta_subconsejo_aprobacion'){
+      folder='modipi';
+    }
 
 
     const destFolder = path.join(__dirname, '..', 'public', folder);

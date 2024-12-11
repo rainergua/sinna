@@ -54,6 +54,7 @@ const aprobarPlanAccion = async (req, res) => {
             req.body.url_acta_subconsejo_aprobacion = req.files['url_acta_subconsejo_aprobacion'][0].filename;
         req.body.ci_usuario = req.user.ci;
         const v_json = req.body;
+
         const query = {
             text: `call sinna_modipi.p_gestion_plan_accion($1) `,
             values:[v_json]
@@ -72,10 +73,30 @@ const aprobarPlanAccion = async (req, res) => {
     }
 }
 
-
+const lstarConfigPlanAccion = async (req, res) => {
+    let id=req.params.id;
+    const query = {
+        text: `select * from sinna_modipi.f_listar_configuracion_plan_accion($1)`,
+        values:[id],
+    };
+    await con
+        .query(query)
+        .then((result) =>{
+            //formateamos el resultado para que retorne solo Rows y Fields
+            const resultado =  result.rows;
+            //console.log(resultado)
+            res.status(200).json({
+                datoAdicional: resultado,
+                mensaje:"Configuración obtenida",
+                cod:200
+            })}
+        )
+        .catch((e) => res.status(500).json({ mensaje: 'Error:'+ e }))
+}
 
 module.exports = {
     listarPlanAccion,
     gestionPlanAccion,
     aprobarPlanAccion,
+    lstarConfigPlanAccion
 }

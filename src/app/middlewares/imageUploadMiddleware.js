@@ -45,6 +45,8 @@ const storage = multer.diskStorage({
 
 
 
+
+
     const destFolder = path.join(__dirname, '..', 'public', folder);
     //const destFolder = path.join('D:\\archivos', folder);
     //console.log(destFolder)

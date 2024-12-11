@@ -5,9 +5,10 @@ const router = express.Router();
 const {
     listarPlanAccion,
     gestionPlanAccion,
-    aprobarPlanAccion
+    aprobarPlanAccion,
+    lstarConfigPlanAccion
 } = require ('../controllers/modipi_plan_accion.controller')
-const upload = require("../middlewares/imageUploadMiddleware");
+const upload = require("../middlewares/fileUploadMiddleware");
 
 router.get(
     '/listarPlanAccion/:est',
@@ -32,4 +33,10 @@ router.post(
     aprobarPlanAccion
 );
 
+
+router.get(
+    '/lstarConfigPlanAccion/:id',
+    passport.authenticate('jwt',{session:false}),
+    lstarConfigPlanAccion
+);
 module.exports = router;
