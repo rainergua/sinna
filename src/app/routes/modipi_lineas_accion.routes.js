@@ -19,6 +19,4 @@ router.post(
     gestionLineasAccion
 );
 
-
-
 module.exports = router;
