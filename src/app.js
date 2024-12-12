@@ -42,6 +42,8 @@ const modipiLineamientos=require("./app/routes/modipi_lineamientos_routes")
 const modipiIndicadoresLineamientos=require("./app/routes/modipi_indicadores_lineamientos.routes")
 const modipiLineasAccion=require("./app/routes/modipi_lineas_accion.routes")
 const modipiPlanAccion=require("./app/routes/modipi_plan_accion.routes")
+const modipiPlanes=require("./app/routes/modipi_planes.routes")
+const modipiResultadosPlan=require("./app/routes/modipi_resultados_plan.routes")
 const cors = require("cors")
 
 // Create a new Express app
@@ -105,6 +107,8 @@ app.use('/api/modipi',modipiLineamientos);
 app.use('/api/modipi',modipiIndicadoresLineamientos);
 app.use('/api/modipi',modipiLineasAccion);
 app.use('/api/modipi',modipiPlanAccion);
+app.use('/api/modipi',modipiPlanes);
+app.use('/api/modipi',modipiResultadosPlan);
 
 
 module.exports = app;
