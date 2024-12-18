@@ -30,6 +30,10 @@ const storage = multer.diskStorage({
       folder='modipi';
     }
 
+    if(file.fieldname==='url_doc_envio_formal'){
+      folder='modipi/notas_planes';
+    }
+
 
     const destFolder = path.join(__dirname, '..', 'public', folder);
     fs.ensureDirSync(destFolder);

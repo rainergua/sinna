@@ -19,6 +19,9 @@ router.get(
 router.post(
     '/gestionPlan',
     passport.authenticate('jwt',{session:false}),
+    upload.fields([
+        { name: 'url_doc_envio_formal', maxCount: 1 },
+    ]),
     gestionPlan
 );
 

@@ -31,6 +31,8 @@ const listarPlan = async (req, res) => {
 
 
 const gestionPlan = async (req, res) => {
+    if(typeof req.files['url_doc_envio_formal']!== 'undefined')
+        req.body.url_doc_envio_formal = req.files['url_doc_envio_formal'][0].filename;
     req.body.ci_usuario = req.user.ci;
     const v_json = req.body
     const query = {
