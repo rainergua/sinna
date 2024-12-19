@@ -33,7 +33,7 @@ const gestionResultadoPlan = async (req, res) => {
     req.body.ci_usuario = req.user.ci;
     const v_json = req.body
     const query = {
-        text: `call sinna_modipi.p_gestion_planes_resultado($1) `,
+        text: `call sinna_modipi.p_gestion_plan_resultados($1) `,
         values:[v_json]
     };
     await con
