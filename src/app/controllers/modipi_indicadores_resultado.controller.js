@@ -20,7 +20,7 @@ const listarIndicadoresRes = async (req, res) => {
             //console.log(resultado)
             res.status(200).json({
                 datoAdicional: resultado,
-                mensaje:"Se obtuvo la lista de resultados planificados",
+                mensaje:"Se obtuvo la lista de indicadores del resultado planificados",
                 cod:200
             })}
         )
