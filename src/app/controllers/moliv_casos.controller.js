@@ -9,7 +9,7 @@ const gestionCasoMoliv = async (req, res) => {
 
     const v_json = req.body;
     const query = {
-        text: `call sinna_mid.p_gestion_casos($1) `,
+        text: `call sinna_moliv.p_gestion_casos_moliv($1) `,
         values:[v_json]
     };
     await con
