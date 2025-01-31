@@ -45,6 +45,8 @@ const modipiPlanAccion=require("./app/routes/modipi_plan_accion.routes")
 const modipiPlanes=require("./app/routes/modipi_planes.routes")
 const modipiResultadosPlan=require("./app/routes/modipi_resultados_plan.routes")
 const modipiIndicadoresResultado=require("./app/routes/modipi_indicadores_resultado.routes")
+const molivCasos=require("./app/routes/moliv_casos.routes")
+
 const cors = require("cors")
 
 // Create a new Express app
@@ -111,6 +113,7 @@ app.use('/api/modipi',modipiPlanAccion);
 app.use('/api/modipi',modipiPlanes);
 app.use('/api/modipi',modipiResultadosPlan);
 app.use('/api/modipi',modipiIndicadoresResultado);
+app.use('/api/moliv', molivCasos);
 
 
 module.exports = app;
